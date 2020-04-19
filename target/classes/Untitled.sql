@@ -16,29 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `acaunt`
+-- Table structure for table `Account`
 --
 
-DROP TABLE IF EXISTS `acaunt`;
+DROP TABLE IF EXISTS `Account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `acaunt` (
+CREATE TABLE `Account` (
   `name` varchar(60) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_role` int(11) NOT NULL,
+  `password` varchar(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `FKfh0vsd708y9umbjfik75coxs6` (`id_role`),
+  CONSTRAINT `FKfh0vsd708y9umbjfik75coxs6` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`),
+  CONSTRAINT `fk_acaunt_role` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `acaunt`
+-- Dumping data for table `Account`
 --
 
-LOCK TABLES `acaunt` WRITE;
-/*!40000 ALTER TABLE `acaunt` DISABLE KEYS */;
-/*!40000 ALTER TABLE `acaunt` ENABLE KEYS */;
+LOCK TABLES `Account` WRITE;
+/*!40000 ALTER TABLE `Account` DISABLE KEYS */;
+INSERT INTO `Account` VALUES ('admin','o.elshan@yandex.ru',1,1,'admin');
+/*!40000 ALTER TABLE `Account` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -80,7 +86,7 @@ CREATE TABLE `order` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_order_acaunt_idx` (`id_acaunt`),
-  CONSTRAINT `fk_order_acaunt` FOREIGN KEY (`id_acaunt`) REFERENCES account (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `fk__order_acaunt` FOREIGN KEY (`id_acaunt`) REFERENCES `account` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -133,7 +139,7 @@ DROP TABLE IF EXISTS `producer`;
 CREATE TABLE `producer` (
   `id` bigint(20) NOT NULL,
   `name` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`,`name`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -177,6 +183,30 @@ LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `role`
+--
+
+DROP TABLE IF EXISTS `role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role` varchar(15) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role`
+--
+
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (1,'USER'),(2,'ADMIN');
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -187,4 +217,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-31 23:43:29
+-- Dump completed on 2020-04-13 23:43:47
