@@ -9,7 +9,7 @@ public class WelcomeController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String welcome() {
-        return "home1";
+        return "home";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
