@@ -1,21 +1,43 @@
 package isha.ishop.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class Account {
     private String name;
     private String email;
-    private long id;
+    private Long id;
     private String password;
     private Role role;
+    private List<Order> orders;
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id",unique = true,nullable = false)
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_role")
     public Role getRole() {
         return role;
+    }
+
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public void setRole(Role role) {
@@ -52,28 +74,20 @@ public class Account {
         this.email = email;
     }
 
-    @Id
-    @Column(name = "id")
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return id == account.id &&
-                Objects.equals(name, account.name) &&
-                Objects.equals(email, account.email);
+        return Objects.equals(name, account.name) &&
+                Objects.equals(email, account.email) &&
+                Objects.equals(id, account.id) &&
+                Objects.equals(password, account.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, email, id);
+        return Objects.hash(name, email, id, password);
     }
 }

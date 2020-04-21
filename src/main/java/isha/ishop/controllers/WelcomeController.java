@@ -16,4 +16,6 @@ public class WelcomeController {
     public String login() {
         return "login-and-register";
     }
+
+
 }

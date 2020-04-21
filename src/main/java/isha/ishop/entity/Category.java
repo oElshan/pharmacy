@@ -1,26 +1,35 @@
 package isha.ishop.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class Category {
-    private long id;
+    private Long id;
     private String name;
     private Integer count;
     private String url;
+    private List<Product> products;
 
     @Id
-    @Column(name = "id")
-    public long getId() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id",unique = true,nullable = false)
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     @Basic
@@ -58,7 +67,7 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return id == category.id &&
+        return Objects.equals(id, category.id) &&
                 Objects.equals(name, category.name) &&
                 Objects.equals(count, category.count) &&
                 Objects.equals(url, category.url);

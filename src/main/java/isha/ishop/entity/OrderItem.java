@@ -6,29 +6,39 @@ import java.util.Objects;
 @Entity
 @Table(name = "order_item", schema = "ishop", catalog = "")
 public class OrderItem {
-    private long id;
-    private long idProduct;
+    private Long id;
     private int count;
-    private long idOrder;
+    private Order order;
+    private Product product;
+
 
     @Id
-    @Column(name = "id")
-    public long getId() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id",unique = true,nullable = false)
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "id_product")
-    public long getIdProduct() {
-        return idProduct;
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Order getOrder() {
+        return order;
     }
 
-    public void setIdProduct(long idProduct) {
-        this.idProduct = idProduct;
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @Basic
@@ -41,29 +51,17 @@ public class OrderItem {
         this.count = count;
     }
 
-    @Basic
-    @Column(name = "id_order")
-    public long getIdOrder() {
-        return idOrder;
-    }
-
-    public void setIdOrder(long idOrder) {
-        this.idOrder = idOrder;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderItem orderItem = (OrderItem) o;
-        return id == orderItem.id &&
-                idProduct == orderItem.idProduct &&
-                count == orderItem.count &&
-                idOrder == orderItem.idOrder;
+        return count == orderItem.count &&
+                Objects.equals(id, orderItem.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, idProduct, count, idOrder);
+        return Objects.hash(id, count);
     }
 }

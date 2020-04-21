@@ -1,24 +1,33 @@
 package isha.ishop.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class Producer {
-    private long id;
+    private Long id;
     private String name;
+    private List<Product> products;
 
     @Id
-    @Column(name = "id")
-    public long getId() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id",unique = true,nullable = false)
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    @OneToMany(mappedBy = "producer", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     @Basic
@@ -36,7 +45,7 @@ public class Producer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Producer producer = (Producer) o;
-        return id == producer.id &&
+        return Objects.equals(id, producer.id) &&
                 Objects.equals(name, producer.name);
     }
 

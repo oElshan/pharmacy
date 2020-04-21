@@ -1,36 +1,44 @@
 package isha.ishop.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class Order {
-    private long id;
-    private long idAcaunt;
+    private Long id;
+    private Account account;
     private Timestamp created;
+    private List<OrderItem> orderItems;
 
     @Id
-    @Column(name = "id")
-    public long getId() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id",unique = true,nullable = false)
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "id_acaunt")
-    public long getIdAcaunt() {
-        return idAcaunt;
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public void setIdAcaunt(long idAcaunt) {
-        this.idAcaunt = idAcaunt;
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Basic
@@ -48,13 +56,12 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return id == order.id &&
-                idAcaunt == order.idAcaunt &&
+        return Objects.equals(id, order.id) &&
                 Objects.equals(created, order.created);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, idAcaunt, created);
+        return Objects.hash(id, created);
     }
 }

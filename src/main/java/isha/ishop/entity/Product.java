@@ -1,30 +1,59 @@
 package isha.ishop.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class Product {
-    private long id;
+    private Long id;
     private String name;
-    private long idCategory;
+    private Category category;
     private String description;
     private String imgLink;
     private BigDecimal price;
-    private long idProducer;
+    private List<OrderItem> items;
+    private Producer producer;
+
 
     @Id
-    @Column(name = "id")
-    public long getId() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", unique = true, nullable = false)
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Producer getProducer() {
+        return producer;
+    }
+
+    public void setProducer(Producer producer) {
+        this.producer = producer;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
     }
 
     @Basic
@@ -37,15 +66,6 @@ public class Product {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "id_category")
-    public long getIdCategory() {
-        return idCategory;
-    }
-
-    public void setIdCategory(long idCategory) {
-        this.idCategory = idCategory;
-    }
 
     @Basic
     @Column(name = "description")
@@ -77,32 +97,21 @@ public class Product {
         this.price = price;
     }
 
-    @Basic
-    @Column(name = "id_producer")
-    public long getIdProducer() {
-        return idProducer;
-    }
-
-    public void setIdProducer(long idProducer) {
-        this.idProducer = idProducer;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return id == product.id &&
-                idCategory == product.idCategory &&
-                price == product.price &&
-                idProducer == product.idProducer &&
+        return Objects.equals(id, product.id) &&
                 Objects.equals(name, product.name) &&
-                Objects.equals(description, product.description) &&
-                Objects.equals(imgLink, product.imgLink);
+                Objects.equals(imgLink, product.imgLink) &&
+                Objects.equals(price, product.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, idCategory, description, imgLink, price, idProducer);
+        return Objects.hash(id, name, imgLink, price);
     }
 }
+
