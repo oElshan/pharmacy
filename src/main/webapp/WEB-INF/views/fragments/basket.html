@@ -2,13 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<ul th:fragment="basketHeader" id="site-header-cart" class="site-header-cart menu">
-    <li class="animate-dropdown dropdown ">
+<ul th:fragment="basketHeader" id="site-header-cart" class="site-header-cart menu" >
+    <li class="animate-dropdown dropdown " th:object="${#session.getAttribute('CURRENT_SHOPPING_CART')}">
         <a class="cart-contents" href="cart.html" data-toggle="dropdown" title="View your shopping cart">
             <i class="tm tm-shopping-bag"></i>
-            <span class="count">2</span>
+            <span class="count" th:text="*{totalCount}">2</span>
             <span class="amount">
-                                        <span class="price-label">Your Cart</span>&#036;136.99</span>
+                <span class="price-label">Your Cart</span>
+                <span class="amount">&#036;<span class="amount"th:text="*{totalCost}">$100</span></span>
+            </span>
         </a>
         <ul class="dropdown-menu dropdown-menu-mini-cart">
             <li>

@@ -1,14 +1,31 @@
 package isha.ishop.controllers;
 
+import isha.ishop.model.ShoppingCart;
+import isha.ishop.utils.Constants;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class WelcomeController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String welcome() {
+
+
+/**        1. Найти в сессии корзину
+ *         2. если ее там нету найти ее в куки
+ *              2.1 найти атрибут корзина = сериализация корзины
+ *              2.2 востановить корзину
+ *         3.если нету завести новую каррзину
+ *         4.сохранить корзину в сессию
+ *         5.сохранить данные карзины в куки
+ *
+ */
         return "home";
     }
 

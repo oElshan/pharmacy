@@ -1,5 +1,7 @@
 package isha.ishop.config;
 
+import isha.ishop.interceptors.CategoryProducerInterceptor;
+import isha.ishop.interceptors.ShoppingCartInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -7,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
@@ -68,6 +71,24 @@ public class WebConfig  implements WebMvcConfigurer {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+
+    }
+
+    @Bean
+    public ShoppingCartInterceptor getShoppingCartInterceptor() {
+        return new ShoppingCartInterceptor();
+    }
+
+    @Bean
+    public CategoryProducerInterceptor getCategoryProducerInterceptor () {
+        return new CategoryProducerInterceptor();
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(getShoppingCartInterceptor()).addPathPatterns("/*");
+        registry.addInterceptor(getCategoryProducerInterceptor()).addPathPatterns("/*");
+
 
     }
 }
