@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Product {
     private Long id;
     private String name;
-    private Category category;
+    private Subcategory subcategory;
     private String description;
     private String imgLink;
     private BigDecimal price;
@@ -39,12 +39,12 @@ public class Product {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    public Category getCategory() {
-        return category;
+    public Subcategory getSubcategory() {
+        return subcategory;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setSubcategory(Subcategory subcategory) {
+        this.subcategory = subcategory;
     }
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})

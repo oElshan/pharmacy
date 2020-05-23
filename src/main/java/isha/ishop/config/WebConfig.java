@@ -1,6 +1,5 @@
 package isha.ishop.config;
 
-import isha.ishop.interceptors.CategoryProducerInterceptor;
 import isha.ishop.interceptors.ShoppingCartInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -79,16 +78,10 @@ public class WebConfig  implements WebMvcConfigurer {
         return new ShoppingCartInterceptor();
     }
 
-    @Bean
-    public CategoryProducerInterceptor getCategoryProducerInterceptor () {
-        return new CategoryProducerInterceptor();
-    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(getShoppingCartInterceptor()).addPathPatterns("/*");
-        registry.addInterceptor(getCategoryProducerInterceptor()).addPathPatterns("/*");
-
 
     }
 }

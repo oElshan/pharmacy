@@ -1,6 +1,6 @@
 package isha.ishop.services.impl;
 
-import isha.ishop.entity.Category;
+import isha.ishop.entity.Subcategory;
 import isha.ishop.entity.Producer;
 import isha.ishop.entity.Product;
 import isha.ishop.repository.CategoryRepo;
@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepo.findProductById(id);
     }
 
-    public List<Category> findAllCategory() {
+    public List<Subcategory> findAllCategory() {
         return categoryRepo.findAll();
     }
 
