@@ -23,7 +23,6 @@ public class WelcomeController {
     public String welcome(){
 
 
-        System.out.println("producers - "+servletContext.getAttribute(Constants.PRODUCER_LIST));
 
 
 /**        1. Найти в сессии корзину

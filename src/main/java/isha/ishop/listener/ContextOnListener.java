@@ -23,6 +23,7 @@ public class ContextOnListener implements ApplicationListener<ContextRefreshedEv
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
         servletContext.setAttribute(Constants.CATEGORY_LIST,productService.findAllCategory());
+        servletContext.setAttribute(Constants.SUBCATEGORY_LIST, productService.findAllSubCategory());
         servletContext.setAttribute(Constants.PRODUCER_LIST, productService.findAllProducer());
 
     }

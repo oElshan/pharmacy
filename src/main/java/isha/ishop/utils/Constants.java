@@ -15,6 +15,8 @@ public final class Constants {
 
     public static final String CATEGORY_LIST = "CATEGORY_LIST";
 
+    public static final String SUBCATEGORY_LIST = "SUBCATEGORY_LIST";
+
     public static final String PRODUCER_LIST = "PRODUCER_LIST";
 
     public static final String CURRENT_ACCOUNT = "CURRENT_ACCOUNT";

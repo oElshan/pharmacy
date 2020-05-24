@@ -1,4 +1,12 @@
 package isha.ishop.repository;
 
-public interface Category {
+import isha.ishop.entity.Category;
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
+
+public interface CategoryRepo extends CrudRepository<Category, Integer> {
+
+    List<Category> findAll();
+
 }
