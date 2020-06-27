@@ -11,6 +11,6 @@ public class ProductController {
     @RequestMapping(value = "/subcategory/{value}" ,method = RequestMethod.GET)
     public  String showProducrBySubcategory(@PathVariable String value) {
 
-        return "shop-listing-large";
+        return "shop-fullwidth";
     }
 }
