@@ -1,51 +1,64 @@
-// Bourbon
-// See: http://bourbon.io/docs/
-@import 'bourbon';
+//===================================================================================*/
+//  Variables
+//===================================================================================*/
 
-// Susy
-// Susy grid system. See: http://susydocs.oddbird.net/en/latest/
-@import 'node_modules/susy/sass/susy';
+$green-color:         #59B210;
+$blue-color:          #3498db;
+$red-color:           #e74c3c;
+$orange-color:        #F27A24;
+$navy-color:          #34495E;
+$dark-green-color:    #21b68e;
 
-// Some common variables and mixins to get you started.
-// Variables allow you to re-use colors, sizes, and other values without repeating
-// yourself. This means that changes that should be small, such as tweaking the
-// coloring or the sizing, can be done in one place, not all over the stylesheet.
+$second-color:        #F9F9F9;
+$black:               #3D3D3D;
+$light-black:         #636363;
 
-$base-font: 		"Rubik", "Source Sans Pro", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-$header-font: 		$base-font;
-$ms-base:           1em, .875em;
-$ms-ratio:          1.618;
+$blue:                #0E53A5;
+$highlight-txt:       #fff;
+
+$text-color:          #5D5D5D;
+
+$container-md:        985px;
+$container-lg:        1200px;
+
+$title-color:         #434343;
+$content-color:       #747474;
 
 
-// base color scheme
-$body-background: 	  #ffffff;
-$primary-color:       #0063d1;
-$secondary-btn-color: #444444;
-$color_body: 		  #43454b;
-$color_links: 		  #2c2d33;
-$color_border:		  rgba(0,0,0,0.05);
-$color_woocommerce:   #fed700;
-$error: 			  #e2401c;
-$success: 			  #0f834d;
-$info: 				  #3D9CD2;
+//== Media queries breakpoints
+//
+//## Define the breakpoints at which your layout will change, adapting to different screen sizes.
 
-// layout sizes
-$desktop:			768px;
-$handheld:			568px;
-$container-width:	100%;
+// Extra small screen / phone
+// Note: Deprecated $screen-xs and $screen-phone as of v3.0.1
+$screen-xs:                  480px;
+$screen-xs-min:              $screen-xs;
+$screen-phone:               $screen-xs-min;
 
-$susy: (
-	columns: 12,
-	gutters: 1,
-	math: fluid,
-	output: float,
-	gutter-position: after,
+// Small screen / tablet
+// Note: Deprecated $screen-sm and $screen-tablet as of v3.0.1
+$screen-sm:                  768px;
+$screen-sm-min:              $screen-sm;
+$screen-tablet:              $screen-sm-min;
 
-	use-custom: (
-		box-sizing: false
-	)
-);
+// Medium screen / desktop
+// Note: Deprecated $screen-md and $screen-desktop as of v3.0.1
+$screen-md:                  992px;
+$screen-md-min:              $screen-md;
+$screen-desktop:             $screen-md-min;
 
-// Bootstrap Variables
+// Large screen / wide desktop
+// Note: Deprecated $screen-lg and $screen-lg-desktop as of v3.0.1
+$screen-lg:                  1200px;
+$screen-lg-min:              $screen-lg;
+$screen-lg-desktop:          $screen-lg-min;
 
-$enable-hover-media-query:  false !default;
+// So media queries don't overlap when required, provide a maximum
+$screen-xs-max:              ($screen-sm-min - 1);
+$screen-sm-max:              ($screen-md-min - 1);
+$screen-md-max:              ($screen-lg-min - 1);
+
+
+$enable-transitions:        true !default;
+
+@import 'integrations/fontawesome-variables';

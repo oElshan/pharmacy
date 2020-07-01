@@ -2,10 +2,8 @@
 /*  Green Color
 /*===================================================================================*/
 
-@import '../bs-variables';
-@import '../variables';
-@import '../mixins';
+@import "../variables.scss";
 
-$primary-color: #62ab00;
+$primary-color:        $green-color;
 
-@import 'color';
+@import "color.scss";

@@ -2,10 +2,8 @@
 /*  Orange Color
 /*===================================================================================*/
 
-@import '../bs-variables';
-@import '../variables';
-@import '../mixins';
+@import "../variables.scss";
 
-$primary-color: #fd6602;
+$primary-color:        #F27A24;
 
-@import 'color';
+@import "color.scss";

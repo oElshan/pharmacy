@@ -2,10 +2,8 @@
 /*  Blue Color
 /*===================================================================================*/
 
-@import '../bs-variables';
-@import '../variables';
-@import '../mixins';
+@import "../variables.scss";
 
-$primary-color: #0063d1;
+$primary-color:        #3498db;
 
-@import 'color';
+@import "color.scss";

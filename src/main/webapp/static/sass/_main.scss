@@ -1,116 +1,76 @@
-// Core variables and mixins
-@import 'bs-variables';
-@import 'variables';
-@import 'mixins';
+/*
+Template: 		Media Center
+Description: 	Responsive Electronics eCommerce Bootstrap 3 Template
+Version: 		1.0
+Author: 		Amin & Ibrahim
+Demo URI: 		http://demo.transvelo.com/media-center
 
-// Vendors
-// External libraries and frameworks.
-@import 'vendors/modular-scale';
-@import 'vendors/font-awesome/font-awesome';
-@import 'vendors/slick/slick';
-@import 'vendors/slick/slick-theme';
+===================================================================================
+Table of Contents
+===================================================================================
 
-// Base
-@import 'base/base';
-@import 'base/embeds';
-@import 'base/forms';
-@import 'base/layout';
-@import 'base/media';
-@import 'base/tables';
-@import 'base/typography';
-@import 'base/utils';
-@import 'base/uppercase';
-@import 'base/page';
+1.  General Styles
+2.  Top Navbar
+3.  Header
+4.  Sidemenu
+5.  Megamenu
+6.  Breadcrumb
+7.  Sections
+8.  Controls
+9.  Carousel
+10. Product Item
+11. Pages : Home
+12. Pages : Single Product
+13. Pages : Shopping Cart
+14. Pages : About
+15. Pages : Contact
+16. Pages : Authentication
+17. Pages : FAQ
+18. Pages : Blog
+19. Pages : Wishlist
+20. Pages : Compare
+21. Pages : 404
+22. Pages : Track Your Order
+23. Sidebar
+24. Footer
+25. Browser Fixes
+26. Responsive 
+27. Helper Classes
+*/
 
-// Blocks
-@import 'blocks/comments';
-@import 'blocks/content';
-@import 'blocks/footer';
-@import 'blocks/header';
-@import 'blocks/menu';
-@import 'blocks/section-products-isotope';
-@import 'blocks/sliders';
-@import 'blocks/banners';
-@import 'blocks/features-list';
-@import 'blocks/brands-carousel';
-@import 'blocks/top-bar';
-@import 'blocks/section-products-carousel-widget-with-tabs';
-@import 'blocks/deals-carousel';
-@import 'blocks/section-product-categories-filter';
-@import 'blocks/product-categories-list';
-@import 'blocks/product-isotope-v1';
-@import 'blocks/product-isotope-v2';
-@import 'blocks/posts';
-@import 'blocks/mobile-header';
-@import 'blocks/widgets';
-@import 'blocks/section-products-tabs';
+@import "font-awesome/variables";
+@import "variables";
+@import "mixins";
+@import "helper";
+@import "general";
 
-// Components
-// Includes all the main Techmarket css.
-@import 'components/captions';
-@import 'components/gallery';
-@import 'components/jplayer';
-@import 'components/icons';
-@import 'components/pagination';
-@import 'components/shop-control-bar';
-@import 'components/primary-menu';
-@import 'components/secondary-menu';
-@import 'components/navbar-search';
-@import 'components/departments-menu';
-@import 'components/site-header-cart';
-@import 'components/compare-wishlist';
-@import 'components/megamenu';
-@import 'components/dropdown-mini-cart';
-@import 'components/deal-progress-bar';
-@import 'components/ribbon';
-@import 'components/select2';
-@import 'components/slider-with-banners';
-@import 'components/post-item';
-@import 'components/jumbotron';
-@import 'components/scrollup';
-@import 'components/pace';
-@import 'components/mobile-menu';
-@import 'components/html-changes';
+@import "top-navbar";
+@import "header";
+@import "sidemenu";
+@import "megamenu";
+@import "breadcrumb";
 
-// Widgets
-@import 'widgets/general';
-@import 'widgets/widget-product-categories';
-@import 'widgets/footer-widgets';
-@import 'widgets/footer-newsletter';
-@import 'widgets/footer-payment-secure';
-@import 'widgets/footer-social-icons';
-@import 'widgets/footer-contact';
-@import 'widgets/footer-payment';
-@import 'widgets/home-feature-list-widget';
-@import 'widgets/home-post-carousel-widget';
-@import 'widgets/home-product-carousel-widget';
-@import 'widgets/home-banner-widget';
-@import 'widgets/blog-widget';
+@import "sections";
+@import "controls";
+@import "carousel";
+@import "product-item";
 
-// Pages
-@import 'pages/404';
-@import 'pages/home';
-@import 'pages/home-v1';
-@import 'pages/home-v2';
-@import 'pages/home-v3';
-@import 'pages/home-v4';
-@import 'pages/home-v5';
-@import 'pages/home-v6';
-@import 'pages/faq';
-@import 'pages/terms-conditions';
-@import 'pages/about-us';
-@import 'pages/contact';
-@import 'pages/landing-page-v1';
-@import 'pages/landing-page-v2';
-@import 'pages/wishlist';
-@import 'pages/compare';
-@import 'pages/shop';
+@import "page-home";
+@import "page-single-product";
+@import "page-cart";
+@import "page-checkout";
+@import "page-about";
+@import "page-contact";
+@import "page-authentication";
+@import "page-faq";
+@import "page-blog";
+@import "page-wishlist";
+@import "page-compare";
+@import "page-404";
+@import "page-track-your-order";
 
-//Responsive
-@import 'responsive/screen-below-34em';
-@import 'responsive/screen-below-48em';
-@import 'responsive/screen-btw-34em-and-48em';
-@import 'responsive/screen-above-62em';
+@import "sidebar";
+@import "footer";
 
-//E-commerce
-@import 'e-commerce/e-commerce';
+@import "browsers";
+@import "responsive";

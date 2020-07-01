@@ -1,11 +1,9 @@
 /*===================================================================================*/
-/*  Grey Color
+/*  Red Color
 /*===================================================================================*/
 
-@import '../bs-variables';
-@import '../variables';
-@import '../mixins';
+@import "../variables.scss";
 
-$primary-color: #f5363e;
+$primary-color:        #e74c3c;
 
-@import 'color';
+@import "color.scss";

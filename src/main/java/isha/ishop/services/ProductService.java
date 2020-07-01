@@ -8,6 +8,7 @@ import isha.ishop.entity.Product;
 import java.util.List;
 
 public interface ProductService {
+
     public Product findProductById(Long id);
 
     public List<Subcategory> findAllSubCategory();

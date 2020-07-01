@@ -1,64 +1,80 @@
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<div th th:fragment="topbar" class="top-bar top-bar-v1">
-    <div class="col-full">
+    <nav th:fragment="topbar" class="top-bar animate-dropdown">
+        <div class="container">
+            <div class="col-xs-12 col-sm-6 no-margin">
+                <ul>
+                    <li><a href="index-2.html">Home</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle"  data-toggle="dropdown" href="#change-colors">Change Colors</a>
 
-        <ul id="menu-top-bar-left" class="nav justify-content-center">
-            <nav id="secondary-navigation" class="secondary-navigation" aria-label="Secondary Navigation" >
-                <ul id="menu-secondary-menu" class="nav">
-                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2802 animate-dropdown">
-                        <a title="Track Your Order" href="track-your-order.html">
-                            <i class="tm tm-order-tracking"></i>Track Your Order</a>
-                    </li>
-                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-487 animate-dropdown dropdown">
-                        <a title="Dollar (US)" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" href="#">
-                            <i class="tm tm-dollar"></i>Dollar (US)
-                            <span class="caret"></span>
-                        </a>
-                        <ul role="menu" class=" dropdown-menu">
-                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-489 animate-dropdown">
-                                <a title="AUD" href="#">AUD</a>
-                            </li>
-                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-490 animate-dropdown">
-                                <a title="INR" href="#">INR</a>
-                            </li>
-                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-491 animate-dropdown">
-                                <a title="AED" href="#">AED</a>
-                            </li>
-                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-492 animate-dropdown">
-                                <a title="SGD" href="#">SGD</a>
-                            </li>
+                        <ul class="dropdown-menu" role="menu" >
+                            <li role="presentation"><a role="menuitem" class="changecolor green-text" tabindex="-1" href="#" title="Green color">Green</a></li>
+                            <li role="presentation"><a role="menuitem" class="changecolor blue-text" tabindex="-1" href="#" title="Blue color">Blue</a></li>
+                            <li role="presentation"><a role="menuitem" class="changecolor red-text" tabindex="-1" href="#" title="Red color">Red</a></li>
+                            <li role="presentation"><a role="menuitem" class="changecolor orange-text" tabindex="-1" href="#" title="Orange color">Orange</a></li>
+                            <li role="presentation"><a role="menuitem" class="changecolor navy-text" tabindex="-1" href="#" title="Navy color">Navy</a></li>
+                            <li role="presentation"><a role="menuitem" class="changecolor dark-green-text" tabindex="-1" href="#" title="Darkgreen color">Dark Green</a></li>
                         </ul>
-                        <!-- .dropdown-menu -->
                     </li>
-                    <li class="menu-item">
-                        <a title="My Account" href="login-and-register.html">
-                            <i class="tm tm-login-register"></i>Register or Sign in</a>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#pages">Pages</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="index-2.html">Home Alt</a></li>
+                            <li><a href="category-grid.html">Category - Grid/List</a></li>
+                            <li><a href="category-grid-2.html">Category 2 - Grid/List</a></li>
+                            <li><a href="single-product.html">Single Product</a></li>
+                            <li><a href="single-product-sidebar.html">Single Product with Sidebar</a></li>
+                            <li><a href="cart.html">Shopping Cart</a></li>
+                            <li><a href="checkout.html">Checkout</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="blog-fullwidth.html">Blog Full Width</a></li>
+                            <li><a href="blog-post.html">Blog Post</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                            <li><a href="terms.html">Terms & Conditions</a></li>
+                            <li><a href="authentication.html">Login/Register</a></li>
+                            <li><a href="404.html">404</a></li>
+                            <li><a href="wishlist.html">Wishlist</a></li>
+                            <li><a href="compare.html">Product Comparison</a></li>
+                            <li><a href="track-your-order.html">Track your Order</a></li>
+                        </ul>
                     </li>
-
                 </ul>
-                <!-- .nav -->
-            </nav>
+            </div><!-- /.col -->
 
-            <!--<li class="menu-item animate-dropdown">-->
-                <!--<a title="TechMarket eCommerce - Always free delivery" href="contact-v1.html">TechMarket eCommerce &#8211; Always free delivery</a>-->
-            <!--</li>-->
-            <!--<li class="menu-item animate-dropdown">-->
-                <!--<a title="Quality Guarantee of products" href="shop.html">Quality Guarantee of products</a>-->
-            <!--</li>-->
-            <!--<li class="menu-item animate-dropdown">-->
-                <!--<a title="Fast returnings program" href="track-your-order.html">Fast returnings program</a>-->
-            <!--</li>-->
-            <!--<li class="menu-item animate-dropdown">-->
-                <!--<a title="No additional fees" href="contact-v2.html">No additional fees</a>-->
-            <!--</li>-->
-        </ul>
-        <!-- .nav -->
-    </div>
-    <!-- .col-full -->
-</div>
-
-
-</html>
+            <div class="col-xs-12 col-sm-6 no-margin">
+                <ul class="right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle"  data-toggle="dropdown" href="#change-language">English</a>
+                        <ul class="dropdown-menu" role="menu" >
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Turkish</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tamil</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">French</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Russian</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle"  data-toggle="dropdown" href="#change-currency">Dollar (US)</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Euro (EU)</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Turkish Lira (TL)</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Indian Rupee (INR)</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Dollar (US)</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="authentication.html">Register</a></li>
+                    <li><a href="authentication.html">Login</a></li>
+                </ul>
+            </div><!-- /.col -->
+        </div><!-- /.container -->
+    </nav><!-- /.top-bar -->
+</html>>
