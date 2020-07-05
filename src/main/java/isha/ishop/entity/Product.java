@@ -1,5 +1,7 @@
 package isha.ishop.entity;
 
+import org.hibernate.annotations.JoinColumnOrFormula;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
@@ -30,6 +32,7 @@ public class Product {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_producer")
     public Producer getProducer() {
         return producer;
     }

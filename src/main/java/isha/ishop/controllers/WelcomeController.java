@@ -1,10 +1,12 @@
 package isha.ishop.controllers;
 
 import isha.ishop.entity.Producer;
+import isha.ishop.entity.Product;
 import isha.ishop.model.ShoppingCart;
 import isha.ishop.services.ProductService;
 import isha.ishop.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +30,9 @@ public class WelcomeController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String welcome(Model model){
+        List<Product> products = productService.listAllProducts(1, Constants.MAX_PRODUCTS_PER_HTML_PAGE);
 
-
-    model.addAttribute("hello","hello world");
+        model.addAttribute("products", products);
 
 /**        1. Найти в сессии корзину
  *         2. если ее там нету найти ее в куки

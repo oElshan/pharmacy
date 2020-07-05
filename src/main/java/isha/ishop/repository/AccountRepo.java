@@ -1,11 +1,11 @@
 package isha.ishop.repository;
 
 import isha.ishop.entity.Account;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface AccountRepo extends CrudRepository<Account, Long> {
+public interface AccountRepo extends JpaRepository<Account, Long> {
 
     Account findByName(String name);
 

@@ -10,6 +10,7 @@ import isha.ishop.repository.ProducerRepo;
 import isha.ishop.repository.ProductRepo;
 import isha.ishop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,6 +39,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Subcategory> findAllSubCategory() {
         return subCategoryRepo.findAll();
+    }
+
+    /**
+     * метод возвращает список продуктов , передаются праметры
+     * @param page номер старницы
+     * @param limit скольок будет данных на странице
+     * этот обьект используется методом для того чтобы запросить данный по лимиту , каждая страничка это опредленый лимит данных
+     * @return
+     */
+    @Override
+    public List<Product> listAllProducts(int page, int limit) {
+        return productRepo.findAll(PageRequest.of(page - 1, limit)).getContent();
     }
 
     @Override
