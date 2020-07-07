@@ -1,5 +1,7 @@
 package isha.ishop.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import isha.ishop.utils.Views;
 import org.hibernate.annotations.JoinColumnOrFormula;
 
 import javax.persistence.*;
@@ -9,11 +11,14 @@ import java.util.Objects;
 
 @Entity
 public class Product {
+    @JsonView(Views.Public.class)
     private Long id;
+    @JsonView(Views.Public.class)
     private String name;
     private Subcategory subcategory;
     private String description;
     private String imgLink;
+    @JsonView(Views.Public.class)
     private BigDecimal price;
     private List<OrderItem> items;
     private Producer producer;

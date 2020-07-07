@@ -1,13 +1,30 @@
 (function($) {
     "use strict";
 
-    // $(document).ready(function () {
-    //     var addToShopingCart = function () {
-    //         $('#productItem ').
-    //
-    //     }
-    //
-    // });
+    $(document).ready(function () {
+        var basketStatus = function () {
+            $.ajax({
+                url : 'ajax/json/shopingCart',
+                method : 'GET',
+                cache: false,
+                success : function(shoppingCart) {
+                    $('#currentShoppingCart .hidden').removeClass('hidden');
+                    $('#currentShoppingCart .count').text(shoppingCart.totalCount);
+                    $('#currentShoppingCart .value').text(shoppingCart.totalCost);
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error');
+                    }
+                }
+            });
+
+        };
+        basketStatus();
+
+    });
 
 
     /*===================================================================================*/

@@ -4,73 +4,47 @@
       html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div th:fragment="shopingCart" class="top-cart-holder dropdown animate-dropdown">
-    <div class="basket" th:object="${#session.getAttribute('CURRENT_SHOPPING_CART')}">
+    <div class="basket" id="currentShoppingCart" th:object="${#session.getAttribute('CURRENT_SHOPPING_CART')}">
 
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <a class="dropdown-toggle hidden" data-toggle="dropdown"  href="#">
             <div class="basket-item-count">
-                <span class="count" th:text="*{totalCount}">3</span>
+                <span class="count" >3</span>
                 <img src="/static/images/icon-cart.png" alt="" />
             </div>
 
             <div class="total-price-basket">
                 <span class="lbl">your cart:</span>
                 <span class="total-price">
-                    <span class="sign">Azn</span><span class="value" th:text="*{totalCost}">3219,00</span>
+                    <span class="value" >3219,00</span>
+                    <span class="sign">Azn</span>
                 </span>
             </div>
         </a>
 
         <ul class="dropdown-menu">
-            <li>
+            <!--<li th:if= "${products == null}">-->
+                <!--<div class="alert-info"> You basket is empty! </div>-->
+            <!--</li>-->
+
+            <li th:each="productMap : *{products}">
                 <div class="basket-item">
                     <div class="row">
                         <div class="col-xs-4 col-sm-4 no-margin text-center">
                             <div class="thumb">
-                                <img alt="" src="assets/images/products/product-small-01.jpg" />
+                                <img alt="" src="/static/images/products/product-small-01.jpg" />
                             </div>
                         </div>
                         <div class="col-xs-8 col-sm-8 no-margin">
-                            <div class="title">Blueberry</div>
-                            <div class="price">$270.00</div>
+                            <div class="title" th:text="${productMap.value.product.name}">Blueberry</div>
+                            <div class="price" th:text="|${productMap.value.product.price} azn|">$270.00</div>
+                            <div class="price" th:text="|count: ${productMap.value.count}|"></div>
                         </div>
                     </div>
                     <a class="close-btn" href="#"></a>
                 </div>
             </li>
 
-            <li>
-                <div class="basket-item">
-                    <div class="row">
-                        <div class="col-xs-4 col-sm-4 no-margin text-center">
-                            <div class="thumb">
-                                <img alt="" src="assets/images/products/product-small-01.jpg" />
-                            </div>
-                        </div>
-                        <div class="col-xs-8 col-sm-8 no-margin">
-                            <div class="title">Blueberry</div>
-                            <div class="price">$270.00</div>
-                        </div>
-                    </div>
-                    <a class="close-btn" href="#"></a>
-                </div>
-            </li>
 
-            <li>
-                <div class="basket-item">
-                    <div class="row">
-                        <div class="col-xs-4 col-sm-4 no-margin text-center">
-                            <div class="thumb">
-                                <img alt="" src="assets/images/products/product-small-01.jpg" />
-                            </div>
-                        </div>
-                        <div class="col-xs-8 col-sm-8 no-margin">
-                            <div class="title">Blueberry</div>
-                            <div class="price">$270.00</div>
-                        </div>
-                    </div>
-                    <a class="close-btn" href="#"></a>
-                </div>
-            </li>
 
             <li class="checkout">
                 <div class="basket-item">

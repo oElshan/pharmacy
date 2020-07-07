@@ -780,7 +780,7 @@ header {
           color: #3D3D3D;
           display: block; }
         header .top-cart-row .top-cart-holder .dropdown-toggle .total-price {
-          font-size: 22px;
+          /*font-size: 22px;*/
           font-weight: bold; }
         header .top-cart-row .top-cart-holder .dropdown-toggle:after {
           display: none; }

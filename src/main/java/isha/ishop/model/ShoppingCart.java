@@ -1,6 +1,8 @@
 package isha.ishop.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import isha.ishop.entity.Product;
+import isha.ishop.utils.Views;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -9,11 +11,11 @@ import java.util.Map;
 
 public class ShoppingCart {
 
-
     private Map<Long, ShoppingCartItem> products = new LinkedHashMap<>();
 
+    @JsonView(Views.Public.class)
     private BigDecimal totalCost = BigDecimal.ZERO;
-
+    @JsonView(Views.Public.class)
     private int totalCount = 0;
 
 
@@ -74,5 +76,13 @@ public class ShoppingCart {
 
     public void setTotalCount(int totalCount) {
         this.totalCount = totalCount;
+    }
+
+    @Override
+    public String toString() {
+        return "ShoppingCart{" +
+                "totalCost=" + totalCost +
+                ", totalCount=" + totalCount +
+                '}';
     }
 }
