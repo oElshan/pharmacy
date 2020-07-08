@@ -2,6 +2,16 @@
     "use strict";
 
     $(document).ready(function () {
+
+        var addProductToCart = function () {
+
+            var idProduct = $(this).attr('data-id-product');
+            alert(idProduct);
+
+        };
+
+        $('#addProduct').click(addProductToCart);
+
         var basketStatus = function () {
             $.ajax({
                 url : 'ajax/json/shopingCart',
