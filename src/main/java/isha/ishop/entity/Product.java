@@ -121,5 +121,15 @@ public class Product {
     public int hashCode() {
         return Objects.hash(id, name, imgLink, price);
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", imgLink='" + imgLink + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }
 

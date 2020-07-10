@@ -1,16 +1,42 @@
 (function($) {
     "use strict";
 
+
     $(document).ready(function () {
 
-        var addProductToCart = function () {
+        var addProductToCart = function() {
 
-            var idProduct = $(this).attr('data-id-product');
+            var idProduct = $(this).attr('data-product_id');
             alert(idProduct);
+            var url = '/ajax/json/product/add?idProduct=' + idProduct;
+            $('#shoppingCart').load(url);
+            $('#currentShoppingCart .hidden').removeClass('hidden');
+
+
+            // $.ajax({
+            //     url : '/ajax/json/product/add?idProduct='+idProduct,
+            //     method : 'GET',
+            //     cache: false,
+            //     success : function() {
+            //         basketStatus();
+            //     },
+            //     error : function(xhr) {
+            //         if (xhr.status == 400) {
+            //             alert(xhr.responseJSON.message);
+            //         } else {
+            //             alert('Error');
+            //         }
+            //     }
+            // });
 
         };
 
-        $('#addProduct').click(addProductToCart);
+        // $('#addProduct').on( 'click', );
+
+
+        $(".product-item .le-button").on('click',addProductToCart);
+
+
 
         var basketStatus = function () {
             $.ajax({

@@ -12,6 +12,7 @@ public interface ProductService {
 
     public Product findProductById(Long id);
 
+
     public List<Subcategory> findAllSubCategory();
 
     public List<Category> findAllCategory();

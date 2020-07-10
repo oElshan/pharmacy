@@ -3,64 +3,63 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<div th:fragment="shopingCart" class="top-cart-holder dropdown animate-dropdown">
-    <div class="basket" id="currentShoppingCart" th:object="${#session.getAttribute('CURRENT_SHOPPING_CART')}">
+    <div th:fragment="shopingCart"  class="top-cart-holder dropdown animate-dropdown">
+        <div class="basket" id="currentShoppingCart" th:object="${#session.getAttribute('CURRENT_SHOPPING_CART')}">
 
-        <a class="dropdown-toggle hidden" data-toggle="dropdown"  href="#">
-            <div class="basket-item-count">
-                <span class="count" >3</span>
-                <img src="/static/images/icon-cart.png" alt="" />
-            </div>
+            <a class="dropdown-toggle hidden" data-toggle="dropdown" href="#">
+                <div class="basket-item-count">
+                    <span class="count">3</span>
+                    <img src="/static/images/icon-cart.png" alt=""/>
+                </div>
 
-            <div class="total-price-basket">
-                <span class="lbl">your cart:</span>
-                <span class="total-price">
-                    <span class="value" >3219,00</span>
+                <div class="total-price-basket">
+                    <span class="lbl">your cart:</span>
+                    <span class="total-price">
+                    <span class="value">3219,00</span>
                     <span class="sign">Azn</span>
                 </span>
-            </div>
-        </a>
+                </div>
+            </a>
 
-        <ul class="dropdown-menu">
-            <!--<li th:if= "${products == null}">-->
+            <ul class="dropdown-menu">
+                <!--<li th:if= "${products == null}">-->
                 <!--<div class="alert-info"> You basket is empty! </div>-->
-            <!--</li>-->
+                <!--</li>-->
 
-            <li th:each="productMap : *{products}">
-                <div class="basket-item">
-                    <div class="row">
-                        <div class="col-xs-4 col-sm-4 no-margin text-center">
-                            <div class="thumb">
-                                <img alt="" src="/static/images/products/product-small-01.jpg" />
+                <li th:each="productMap : *{products}">
+                    <div class="basket-item">
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-4 no-margin text-center">
+                                <div class="thumb">
+                                    <img alt="" src="/static/images/products/product-small-01.jpg"/>
+                                </div>
+                            </div>
+                            <div class="col-xs-8 col-sm-8 no-margin">
+                                <div class="title" th:text="${productMap.value.product.name}">Blueberry</div>
+                                <div class="price" th:text="|${productMap.value.product.price} azn|">$270.00</div>
+                                <div class="price" th:text="|count: ${productMap.value.count}|"></div>
                             </div>
                         </div>
-                        <div class="col-xs-8 col-sm-8 no-margin">
-                            <div class="title" th:text="${productMap.value.product.name}">Blueberry</div>
-                            <div class="price" th:text="|${productMap.value.product.price} azn|">$270.00</div>
-                            <div class="price" th:text="|count: ${productMap.value.count}|"></div>
+                        <a class="close-btn" href="#"></a>
+                    </div>
+                </li>
+
+
+                <li class="checkout">
+                    <div class="basket-item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6">
+                                <a href="cart.html" class="le-button inverse">View cart</a>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <a href="checkout.html" class="le-button">Checkout</a>
+                            </div>
                         </div>
                     </div>
-                    <a class="close-btn" href="#"></a>
-                </div>
-            </li>
+                </li>
 
+            </ul>
+        </div><!-- /.basket -->
+    </div><!-- /.top-cart-holder -->
 
-
-            <li class="checkout">
-                <div class="basket-item">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                            <a href="cart.html" class="le-button inverse">View cart</a>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <a href="checkout.html" class="le-button">Checkout</a>
-                        </div>
-                    </div>
-                </div>
-            </li>
-
-        </ul>
-    </div><!-- /.basket -->
-</div><!-- /.top-cart-holder -->
-
-</html>>
+</html>
