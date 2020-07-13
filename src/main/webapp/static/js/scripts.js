@@ -4,13 +4,22 @@
 
     $(document).ready(function () {
 
+
         var addProductToCart = function() {
 
             var idProduct = $(this).attr('data-product_id');
             alert(idProduct);
             var url = '/ajax/json/product/add?idProduct=' + idProduct;
             $('#shoppingCart').load(url);
-            $('#currentShoppingCart .hidden').removeClass('hidden');
+            $('#currentShoppingCart').remove('.hidden');
+
+
+            //
+            // load(url);
+            // $('#currentShoppingCart').removeClass('hidden');
+
+
+            // $('#currentShoppingCart .dropdown-toggle .hidden').removeClass('hidden');
 
 
             // $.ajax({
@@ -44,7 +53,7 @@
                 method : 'GET',
                 cache: false,
                 success : function(shoppingCart) {
-                    $('#currentShoppingCart .hidden').removeClass('hidden');
+                    // $('.basket.hidden').removeClass('hidden');
                     $('#currentShoppingCart .count').text(shoppingCart.totalCount);
                     $('#currentShoppingCart .value').text(shoppingCart.totalCost);
                 },
