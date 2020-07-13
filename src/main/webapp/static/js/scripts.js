@@ -4,56 +4,24 @@
 
     $(document).ready(function () {
 
-
+        //добавление товара в корзину
         var addProductToCart = function() {
-
             var idProduct = $(this).attr('data-product_id');
-            alert(idProduct);
             var url = '/ajax/json/product/add?idProduct=' + idProduct;
             $('#shoppingCart').load(url);
-            $('#currentShoppingCart').remove('.hidden');
-
-
-            //
-            // load(url);
-            // $('#currentShoppingCart').removeClass('hidden');
-
-
-            // $('#currentShoppingCart .dropdown-toggle .hidden').removeClass('hidden');
-
-
-            // $.ajax({
-            //     url : '/ajax/json/product/add?idProduct='+idProduct,
-            //     method : 'GET',
-            //     cache: false,
-            //     success : function() {
-            //         basketStatus();
-            //     },
-            //     error : function(xhr) {
-            //         if (xhr.status == 400) {
-            //             alert(xhr.responseJSON.message);
-            //         } else {
-            //             alert('Error');
-            //         }
-            //     }
-            // });
-
         };
-
-        // $('#addProduct').on( 'click', );
 
 
         $(".product-item .le-button").on('click',addProductToCart);
 
 
-
+        //обновление статуса корзины
         var basketStatus = function () {
             $.ajax({
                 url : 'ajax/json/shopingCart',
                 method : 'GET',
                 cache: false,
                 success : function(shoppingCart) {
-                    // $('.basket.hidden').removeClass('hidden');
                     $('#currentShoppingCart .count').text(shoppingCart.totalCount);
                     $('#currentShoppingCart .value').text(shoppingCart.totalCost);
                 },

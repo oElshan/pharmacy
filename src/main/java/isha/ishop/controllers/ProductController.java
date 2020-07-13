@@ -13,4 +13,12 @@ public class ProductController {
 
         return "category-grid";
     }
+
+    @RequestMapping(value = "/cart" ,method = RequestMethod.GET)
+    public  String showCart() {
+
+        return "cart";
+    }
+
+
 }
