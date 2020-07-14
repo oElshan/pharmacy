@@ -14,10 +14,10 @@ public class CurrentUser extends User {
 
 
     public CurrentUser(Account account) {
-        super(account.getName(), account.getPassword(), Arrays.asList(new SimpleGrantedAuthority(account.getRole().getRoleName())));
+        super(account.getName(), account.getPassword(), Arrays.asList(new SimpleGrantedAuthority(account.getRole().getName())));
         this.email = account.getEmail();
         this.id = account.getId();
-        this.role = account.getRole().getRoleName();
+        this.role = account.getRole().getName();
 
     }
 
@@ -43,5 +43,14 @@ public class CurrentUser extends User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "CurrentUser{" +
+                "email='" + email + '\'' +
+                ", id=" + id +
+                ", role='" + role + '\'' +
+                '}';
     }
 }

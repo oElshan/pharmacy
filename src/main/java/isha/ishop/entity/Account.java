@@ -25,7 +25,7 @@ public class Account {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_role")
     public Role getRole() {
         return role;

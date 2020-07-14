@@ -7,7 +7,7 @@ import java.util.Objects;
 @Entity
 public class Role {
     private Integer id;
-    private String roleName;
+    private String name;
     private List<Account> accounts;
 
 
@@ -33,13 +33,13 @@ public class Role {
     }
 
     @Basic
-    @Column(name = "role")
-    public String getRoleName() {
-        return roleName;
+    @Column(name = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setRoleName(String role) {
-        this.roleName = role;
+    public void setName(String role) {
+        this.name = role;
     }
 
     @Override
@@ -48,11 +48,11 @@ public class Role {
         if (o == null || getClass() != o.getClass()) return false;
         Role role = (Role) o;
         return Objects.equals(id, role.id) &&
-                Objects.equals(roleName, role.roleName);
+                Objects.equals(name, role.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, roleName);
+        return Objects.hash(id, name);
     }
 }

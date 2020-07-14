@@ -12,9 +12,13 @@
                 </ul>
             </div><!-- /.col -->
 
+
+
             <div class="col-xs-12 col-sm-6 no-margin">
                 <ul class="right">
-                    <li><a href="/login">Login</a></li>
+                    <!--<span sec:authentication="name">Bob</span>-->
+                    <li sec:authorize="false"><a href="/login">Login</a></li>
+                    <li sec:authorize="hasAuthority('ADMIN')"><a href="/login" >Admin page</a></li>
                 </ul>
             </div><!-- /.col -->
         </div><!-- /.container -->

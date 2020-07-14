@@ -47,6 +47,14 @@ public class LoginController {
         return "authentication";
     }
 
+//    @RequestMapping(value = "/sign-in", method = RequestMethod.GET)
+//    public String signIn(@AuthenticationPrincipal CurrentUser currentUser, HttpSession session, Model model) {
+//        System.out.println("------------------------------"+currentUser);
+//        session.setAttribute(Constants.CURRENT_ACCOUNT, currentUser);
+//
+//        return "redirect : /";
+//    }
+
     // Login form with error
     @RequestMapping("/sign-in-failed")
     public String loginError(Model model) {

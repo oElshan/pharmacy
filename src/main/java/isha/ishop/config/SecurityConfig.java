@@ -1,13 +1,17 @@
 package isha.ishop.config;
 
 
+import isha.ishop.utils.NoPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -24,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/static/**","/","/cart","/ajax/**","/about","/subcategory/**").permitAll()
+                .antMatchers("/static/**","/","/cart","/ajax/**","/checkout","/about","/subcategory/**").permitAll()
                 .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/user/**").hasAnyAuthority("ADMIN","USER")
                 .anyRequest().authenticated();
@@ -78,18 +82,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .invalidateHttpSession(true);
 
     }
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new NoPasswordEncoder();
-//    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new NoPasswordEncoder();
+    }
 //@Bean
 //    public PasswordEncoder passwordEncoder() {
 //        return new ;
 //    }
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-//    }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
 
 }
