@@ -1,21 +1,15 @@
 package isha.ishop.controllers;
 
-import isha.ishop.entity.Producer;
 import isha.ishop.entity.Product;
-import isha.ishop.model.ShoppingCart;
 import isha.ishop.services.ProductService;
 import isha.ishop.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -54,10 +48,6 @@ public class WelcomeController {
         return "index-2";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
-        return "authentication";
-    }
 
 
 }

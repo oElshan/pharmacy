@@ -49,15 +49,16 @@
                                 <p>Hello, Welcome to your account</p>
 
 
-                                <form role="form" class="login-form cf-style-1">
+                                <form role="form" class="login-form cf-style-1" th:action="@{/sign-in}" method="post" >
+                                    <p th:if="${loginError}" class="alert-danger">Wrong user or password</p>
                                     <div class="field-row">
                                         <label>Login</label>
-                                        <input type="text" class="le-input">
+                                        <input type="text" class="le-input" name="username" autofocus="autofocus" >
                                     </div><!-- /.field-row -->
 
                                     <div class="field-row">
                                         <label>Password</label>
-                                        <input type="text" class="le-input">
+                                        <input type="text" class="le-input" name="password">
                                     </div><!-- /.field-row -->
 
                                     <div class="field-row clearfix">
