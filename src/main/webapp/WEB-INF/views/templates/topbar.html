@@ -17,8 +17,12 @@
             <div class="col-xs-12 col-sm-6 no-margin">
                 <ul class="right">
                     <!--<span sec:authentication="name">Bob</span>-->
-                    <li sec:authorize="false"><a href="/login">Login</a></li>
-                    <li sec:authorize="hasAuthority('ADMIN')"><a href="/login" >Admin page</a></li>
+                    <li sec:authorize="isAnonymous()"><a href="/login">Login</a></li>
+                    <ul sec:authorize="hasAuthority('ADMIN')">
+                        <li><a href="/admin" >Admin page</a>
+                        <li><a href="/logout" class="text-danger">Logout</a>
+                    </ul>
+                    </li>
                 </ul>
             </div><!-- /.col -->
         </div><!-- /.container -->

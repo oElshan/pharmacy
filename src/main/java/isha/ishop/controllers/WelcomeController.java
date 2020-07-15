@@ -48,6 +48,10 @@ public class WelcomeController {
         return "index-2";
     }
 
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String adminPage(Model model,HttpSession session) {
 
+        return "";
+    }
 
 }
