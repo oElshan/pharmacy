@@ -90,7 +90,10 @@ h2, a, a:hover, a:focus, a:active, .primary-color, .le-color, .breadcrumb-nav-ho
     border-color: #42830c !important; } }
 
 .logo-svg {
-  fill: #59B210; }
+  /*fill: #59B210; */
+  fill: #4d9b0e;
+  /*fill: #8BC34A;*/
+}
 
 .owl-pagination .owl-page.active span, .owl-pagination .owl-page:hover span, .owl-dots .owl-dot.active span, .owl-dots .owl-dot:hover span {
   background: #59B210; }

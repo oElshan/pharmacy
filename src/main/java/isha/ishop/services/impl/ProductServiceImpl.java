@@ -63,5 +63,10 @@ public class ProductServiceImpl implements ProductService {
         return categoryRepo.findAll();
     }
 
+    @Override
+    public List <Product> findProductByNameLike(String name) {
+       List <Product> products = productRepo.findByNameContaining(name);
+        return products;
+    }
 
 }

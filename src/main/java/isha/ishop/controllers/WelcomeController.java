@@ -51,7 +51,18 @@ public class WelcomeController {
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String adminPage(Model model,HttpSession session) {
 
-        return "";
+        return "admin";
     }
 
+    @RequestMapping(value = "/admin/orders", method = RequestMethod.GET)
+    public String showOrders(Model model,HttpSession session) {
+
+        return "orders";
+    }
+
+    @RequestMapping(value = "/admin/items", method = RequestMethod.GET)
+    public String showItems(Model model,HttpSession session) {
+
+        return "items";
+    }
 }
