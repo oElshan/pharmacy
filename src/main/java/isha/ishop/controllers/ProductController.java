@@ -1,13 +1,19 @@
 package isha.ishop.controllers;
 
+import isha.ishop.entity.Product;
+import isha.ishop.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class ProductController {
+
+    @Autowired
+    ProductService productService;
 
     @RequestMapping(value = "/subcategory/{value}" ,method = RequestMethod.GET)
     public  String showProducrBySubcategory(@PathVariable String value) {
@@ -24,6 +30,14 @@ public class ProductController {
         model.addAttribute("x1", "'это x1 ");
 //        теперь в cart можно типлифом найти  перменную x1 и распечатать в нудный тег
         return "cart";
+    }
+
+    @GetMapping(value = "/search{search}")
+    public String searchItemGrid(@RequestParam("search") String search, Model model) {
+
+        List<Product> products = productService.findProductByNameLike(search);
+        model.addAttribute("products", products);
+        return "category-grid";
     }
 
 

@@ -50,9 +50,9 @@
             </div><!-- /.contact-row -->
             <!-- ============================================================= SEARCH AREA ============================================================= -->
             <div class="search-area" >
-                <form>
+                <form action="/search" method="get">
                     <div class="control-group">
-                        <input class="search-field" placeholder="Search for item" />
+                        <input class="search-field" placeholder="Search for item" name="search" type="text" />
 
                         <ul class="categories-filter animate-dropdown">
                             <li class="dropdown">
@@ -61,7 +61,7 @@
 
                                 <ul class="dropdown-menu" role="menu" >
                                     <li role="presentation" th:each="category:${#servletContext.getAttribute('CATEGORY_LIST')}">
-                                        <a role="menuitem" tabindex="-1" href="category-grid.html" th:text="${category.name}">laptops</a>
+                                        <a role="menuitem" tabindex="-1" href="#" th:text="${category.name}">laptops</a>
                                     </li>
                                 </ul>
                             </li>

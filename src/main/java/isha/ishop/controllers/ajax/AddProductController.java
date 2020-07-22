@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import isha.ishop.entity.Product;
 import isha.ishop.model.ShoppingCart;
 import isha.ishop.services.ProductService;
+import isha.ishop.utils.Constants;
 import isha.ishop.utils.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,9 +40,9 @@ public class AddProductController {
         Product product =  productService.findProductById(idProduct);
         System.out.println(product.toString());
 /**  считываем с сессии обьект shoppingCart и кладем туда выбранный товар */
-        ShoppingCart shoppingCart =(ShoppingCart) session.getAttribute("CURRENT_SHOPPING_CART");
+        ShoppingCart shoppingCart =(ShoppingCart) session.getAttribute(Constants.CURRENT_SHOPPING_CART);
         shoppingCart.addProduct(product,1);
-        session.setAttribute("CURRENT_SHOPPING_CART", shoppingCart);
+        session.setAttribute(Constants.CURRENT_SHOPPING_CART, shoppingCart);
 /** возвращаем из  sopingCart.html  фрагемент shopingCart */
         return "fragment/shopingCart :: shopingCart";
     }

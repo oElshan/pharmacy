@@ -38,6 +38,18 @@ public class ShoppingCart {
 
     }
 
+    public void removeProduct(Long idProduct, int count) {
+        ShoppingCartItem shoppingCartItem = products.get(idProduct);
+        if (shoppingCartItem != null) {
+            if (shoppingCartItem.getCount() > count) {
+                shoppingCartItem.setCount(shoppingCartItem.getCount() - count);
+            } else {
+                products.remove(idProduct);
+            }
+            refreshStatistics();
+        }
+    }
+
     /**
      Метод обновляет данные в корзине
      */

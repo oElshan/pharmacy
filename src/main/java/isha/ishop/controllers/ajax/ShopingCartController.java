@@ -6,13 +6,14 @@ import isha.ishop.utils.Constants;
 import isha.ishop.utils.Views;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class ShopingCartController {
+
 
     @JsonView(Views.Public.class)
     @GetMapping(value = "/ajax/json/shopingCart",produces ="application/json" )
@@ -23,5 +24,16 @@ public class ShopingCartController {
 
         return shoppingCart;
     }
+
+    @JsonView(Views.Public.class)
+    @GetMapping("/ajax/deleteItem")
+    public String addShopingCart(@RequestParam("idProduct") long idProduct, HttpSession session) {
+       ShoppingCart shoppingCart =(ShoppingCart) session.getAttribute(Constants.CURRENT_SHOPPING_CART);
+       shoppingCart.removeProduct(idProduct,1);
+       session.setAttribute(Constants.CURRENT_SHOPPING_CART,shoppingCart);
+
+        return "fragment/shopingCart :: shopingCart";
+    }
+
 
 }

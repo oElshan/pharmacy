@@ -4,6 +4,31 @@
 
     $(document).ready(function () {
 
+        var deleteItemfromShoppingCart = function () {
+            var idProduct = $(this).attr('data-product_id');
+            $.ajax({
+                url : 'ajax/deleteItem?idProduct='+idProduct,
+                method : 'GET',
+                cache: false,
+                success : function(shoppingCart) {
+                    $('#shoppingCart').html(shoppingCart);
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error');
+                    }
+                }
+            });
+
+        };
+
+        $(document).on('click', '.basket-item .close-btn', deleteItemfromShoppingCart);
+        $(document).on('click', '.cart-item .close-btn', deleteItemfromShoppingCart);
+
+        // $(".basket-item .close-btn").on('click',deleteItemfromShoppingCart);
+
         //добавление товара в корзину
         var addProductToCart = function() {
             var idProduct = $(this).attr('data-product_id');

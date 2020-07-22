@@ -36,7 +36,7 @@
                                 <div class="price" th:text="|count: ${productMap.value.count}|"></div>
                             </div>
                         </div>
-                        <a class="close-btn" href="#"></a>
+                        <a class="close-btn" data-product_id="" th:attr="data-product_id=${productMap.value.product.id}" href="#"></a>
                     </div>
                 </li>
 
