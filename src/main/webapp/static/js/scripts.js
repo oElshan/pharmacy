@@ -4,6 +4,7 @@
 
     $(document).ready(function () {
 
+
         var deleteItemfromShoppingCart = function () {
             var idProduct = $(this).attr('data-product_id');
             $.ajax({
@@ -24,10 +25,52 @@
 
         };
 
-        $(document).on('click', '.basket-item .close-btn', deleteItemfromShoppingCart);
-        $(document).on('click', '.cart-item .close-btn', deleteItemfromShoppingCart);
+        var deleteItemfromViewShoppingCart = function (idProduct) {
 
-        // $(".basket-item .close-btn").on('click',deleteItemfromShoppingCart);
+            $.ajax({
+                url : 'ajax/deleteItem?idProduct='+idProduct,
+                method : 'GET',
+                cache: false,
+                success : function(shoppingCart) {
+                    $('#shoppingCart').html(shoppingCart);
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error');
+                    }
+                }
+            });
+
+        };
+
+        $(document).on('click', '.basket-item .close-btn', deleteItemfromShoppingCart);
+        $(document).on('click', '.cart-item .close-btn',function () {
+            var idProduct = $(this).attr('data-product_id');
+            deleteItemfromViewShoppingCart(idProduct);
+
+            $.ajax({
+                url : '/ajax/deleteItemFromShoppingCart',
+                method : 'GET',
+                cache: false,
+                success : function(viewCart) {
+                    $('#cart-page').html(viewCart);
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error');
+                    }
+                }
+            });
+
+
+        });
+        // $(document).on('click', '.cart-item .close-btn',deleteItemfromShoppingCart);
+
+
 
         //добавление товара в корзину
         var addProductToCart = function() {

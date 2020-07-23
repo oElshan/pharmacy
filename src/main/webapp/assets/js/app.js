@@ -11,7 +11,7 @@
 
     //Мой кусок
     $(document).ready(function () {
-        var $result = $('#datatable-buttons');
+        var $result = $('#tech-companies-1');
 
         $('#search').on('keyup', function(){
             var search = $(this).val();

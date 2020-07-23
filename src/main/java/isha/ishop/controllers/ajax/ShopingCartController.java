@@ -25,9 +25,8 @@ public class ShopingCartController {
         return shoppingCart;
     }
 
-    @JsonView(Views.Public.class)
     @GetMapping("/ajax/deleteItem")
-    public String addShopingCart(@RequestParam("idProduct") long idProduct, HttpSession session) {
+    public String deleteIetemFromShopingCart(@RequestParam("idProduct") long idProduct, HttpSession session) {
        ShoppingCart shoppingCart =(ShoppingCart) session.getAttribute(Constants.CURRENT_SHOPPING_CART);
        shoppingCart.removeProduct(idProduct,1);
        session.setAttribute(Constants.CURRENT_SHOPPING_CART,shoppingCart);
@@ -35,5 +34,10 @@ public class ShopingCartController {
         return "fragment/shopingCart :: shopingCart";
     }
 
+    @GetMapping("/ajax/deleteItemFromShoppingCart")
+    public String deleteItemFromShoppingCartView(HttpSession session) {
+
+        return "fragment/viewShoppingCart :: viewSoppingCart";
+    }
 
 }
