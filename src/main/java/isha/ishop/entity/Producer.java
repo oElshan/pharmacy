@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "producer")
 public class Producer {
     private Long id;
     private String name;
     private List<Product> products;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",unique = true,nullable = false)
     public Long getId() {
         return id;

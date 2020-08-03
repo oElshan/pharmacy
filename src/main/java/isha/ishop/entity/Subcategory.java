@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "subcategory")
 public class Subcategory {
     private Long id;
     private String name;
@@ -14,7 +15,7 @@ public class Subcategory {
     private Category category;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",unique = true,nullable = false)
     public Long getId() {
         return id;

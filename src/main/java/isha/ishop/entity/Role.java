@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "role")
 public class Role {
     private Integer id;
     private String name;
@@ -13,7 +14,7 @@ public class Role {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",unique = true,nullable = false)
     public Integer getId() {
         return id;

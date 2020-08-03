@@ -142,7 +142,7 @@ CREATE TABLE `order_item` (
   KEY `fk_item_product_idx` (`id_product`),
   KEY `FK6xyequv6tp9t8c10gi3cxnql1` (`product_id`),
   CONSTRAINT `FK6xyequv6tp9t8c10gi3cxnql1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
-  CONSTRAINT `fk_item_order` FOREIGN KEY (`id_order`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_item_order` FOREIGN KEY (`id_order`) REFERENCES clientOrder (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_item_product` FOREIGN KEY (`id_product`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

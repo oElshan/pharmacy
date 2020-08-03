@@ -16,7 +16,7 @@ public class ShopingCartController {
 
 
     @JsonView(Views.Public.class)
-    @GetMapping(value = "/ajax/json/shopingCart",produces ="application/json" )
+    @GetMapping(value = "/ajax/json/shoppingCart",produces ="application/json" )
     @ResponseBody
     public ShoppingCart shopingCartStatus(HttpSession session) {
 

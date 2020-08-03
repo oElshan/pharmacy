@@ -4,17 +4,17 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "order_item", schema = "ishop", catalog = "")
+@Table(name = "order_item")
 public class OrderItem {
     private Long id;
     private int count;
-    private Order order;
+    private ClientOrder clientOrder;
     private Product product;
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id",unique = true,nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public Long getId() {
         return id;
     }
@@ -23,16 +23,18 @@ public class OrderItem {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    public Order getOrder() {
-        return order;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_order")
+    public ClientOrder getClientOrder() {
+        return clientOrder;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setClientOrder(ClientOrder clientOrder) {
+        this.clientOrder = clientOrder;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_product")
     public Product getProduct() {
         return product;
     }

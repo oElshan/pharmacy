@@ -1,21 +1,20 @@
 package isha.ishop.entity;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "account")
 public class Account {
     private String name;
     private String email;
     private Long id;
     private String password;
     private Role role;
-    private List<Order> orders;
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",unique = true,nullable = false)
     public Long getId() {
         return id;
@@ -29,15 +28,6 @@ public class Account {
     @JoinColumn(name = "id_role")
     public Role getRole() {
         return role;
-    }
-
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
     }
 
     public void setRole(Role role) {

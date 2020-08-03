@@ -2,7 +2,6 @@ package isha.ishop.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import isha.ishop.utils.Views;
-import org.hibernate.annotations.JoinColumnOrFormula;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "product")
 public class Product {
     @JsonView(Views.Public.class)
     private Long id;
@@ -25,8 +25,8 @@ public class Product {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
 
     public Long getId() {
         return id;
@@ -55,7 +55,7 @@ public class Product {
         this.subcategory = subcategory;
     }
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<OrderItem> getItems() {
         return items;
     }

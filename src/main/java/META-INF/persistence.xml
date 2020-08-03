@@ -5,12 +5,14 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>isha.ishop.entity.Account</class>
         <class>isha.ishop.entity.Subcategory</class>
-        <class>isha.ishop.entity.Order</class>
+        <class>isha.ishop.entity.ClientOrder</class>
         <class>isha.ishop.entity.OrderItem</class>
         <class>isha.ishop.entity.Producer</class>
         <class>isha.ishop.entity.Product</class>
         <class>isha.ishop.entity.Role</class>
         <class>isha.ishop.entity.Category</class>
+        <class>isha.ishop.entity.Client</class>
+        <class>isha.ishop.entity.Status</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/ishop"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>

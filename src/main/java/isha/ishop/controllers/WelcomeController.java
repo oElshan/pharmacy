@@ -1,6 +1,7 @@
 package isha.ishop.controllers;
 
 import isha.ishop.entity.Product;
+import isha.ishop.form.OrderForm;
 import isha.ishop.services.ProductService;
 import isha.ishop.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,13 @@ public class WelcomeController {
     public String showItems(Model model,HttpSession session) {
 
         return "items";
+    }
+
+    @RequestMapping(value = "/checkout" ,method = RequestMethod.GET)
+    public  String createOrder(  Model model) {
+        model.addAttribute("orderForm", new OrderForm());
+
+
+        return "checkout";
     }
 }

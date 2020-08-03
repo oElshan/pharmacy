@@ -4,6 +4,89 @@
 
     $(document).ready(function () {
 
+        //AJAX для заказа
+        var newClientsOrder = function (orderForm) {
+            
+            
+            $.ajax({
+                url : 'ajax/client/order',
+                method : 'POST',
+                cache: false,
+                contentType: 'application/json',
+                data:   JSON.stringify(orderForm),
+                success : function(ceckoutOrder) {
+                    $('#checkout-page').html(ceckoutOrder);
+                    basketStatus();
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error new clients order');
+                        alert(JSON.stringify(orderForm));
+                    }
+                }
+            });
+
+        };
+
+        // форма заказа слиента
+        $(document).on('click', '#btnOrderForm', function () {
+            var orderForm = {
+                firstName: $('[name="firstName"]').val(),
+                lastName: $('[name="lastName"]').val(),
+                streetAddress: $('[name="streetAddress"]').val(),
+                town: $('[name="town"]').val(),
+                zipCode: $('[name="zipCode"]').val(),
+                email: $('[name="email"]').val(),
+                phone: $('[name="phone"]').val()
+            };
+            newClientsOrder(orderForm);
+        });
+        // $('#orderForm').submit(function (){
+        //
+        //     var orderForm = {
+        //         firstName: $('[name="firstName"]').val(),
+        //         lastName: $('[name="lastName"]').val(),
+        //         streetAddress: $('[name="streetAddress"]').val(),
+        //         town: $('[name="town"]').val(),
+        //         zipCode: $('[name="zipCode"]').val(),
+        //         email: $('[name="email"]').val(),
+        //         phone: $('[name="phone"]').val()
+        //     };
+        //     alert(JSON.stringify(orderForm));
+        //
+        //     newClientsOrder(orderForm);
+        //     // $.ajax({
+        //     //     type: "POST",
+        //     //     url: "/sign-up",
+        //     //     cache: false,
+        //     //     contentType : "text",
+        //     //     // data: JSON.stringify(jsonSignUp),
+        //     //     data:   JSON.stringify(jsonSignUp),
+        //     //     // contentType: 'text; charset=UTF-8',
+        //     //     // dataType: 'json',
+        //     //     success : function(data){
+        //     //         // alert(JSON.stringify(data));
+        //     //         // alert(JSON.stringify(data));
+        //     //         alert(data);
+        //     //         $('#regWindow').modal('hide');
+        //     //     },
+        //     //     error:  function(xhr, str){
+        //     //
+        //     //         $('#regWindow').modal('hide');
+        //     //         alert("Ошибка")
+        //     //         alert(JSON.stringify($('#signUpForm').serialize()));
+        //     //         alert(JSON.stringify(jsonSignUp));
+        //     //
+        //     //
+        //     //     }
+        //     //
+        //     // });
+        //     return false;
+        // })
+
+
 
         var deleteItemfromShoppingCart = function () {
             var idProduct = $(this).attr('data-product_id');
@@ -24,6 +107,7 @@
             });
 
         };
+
 
         var deleteItemfromViewShoppingCart = function (idProduct) {
 
@@ -46,6 +130,13 @@
         };
 
         $(document).on('click', '.basket-item .close-btn', deleteItemfromShoppingCart);
+
+        $(document).on('click', '.plus', function () {
+            var countItems = $('countItems').attr('value');
+            alert(countItems);
+
+        });
+
         $(document).on('click', '.cart-item .close-btn',function () {
             var idProduct = $(this).attr('data-product_id');
             deleteItemfromViewShoppingCart(idProduct);
@@ -86,7 +177,7 @@
         //обновление статуса корзины
         var basketStatus = function () {
             $.ajax({
-                url : 'ajax/json/shopingCart',
+                url : 'ajax/json/shoppingCart',
                 method : 'GET',
                 cache: false,
                 success : function(shoppingCart) {
@@ -97,7 +188,7 @@
                     if (xhr.status == 400) {
                         alert(xhr.responseJSON.message);
                     } else {
-                        alert('Error');
+                        alert('Error status shopping cart');
                     }
                 }
             });

@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "category")
 public class Category {
     private int id;
     private String name;
     private List<Subcategory> subcategoryList;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",unique = true,nullable = false)
     public int getId() {
         return id;
