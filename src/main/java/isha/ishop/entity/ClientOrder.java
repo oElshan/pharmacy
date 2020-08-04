@@ -10,6 +10,18 @@ public class ClientOrder {
     private Long id;
     private Client client;
     private List<OrderItem> orderItems;
+    private Status status;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_status")
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -11,11 +11,34 @@
 
     //Мой кусок
     $(document).ready(function () {
-        var $result = $('#tech-companies-1');
+
+        // $(document).on('click', '#editItem',function (){
+        //     var idProduct = $(this).attr('data-product_id');
+        //     alert(idProduct);
+        //
+        //     $.ajax({
+        //         url : '/admin/itemEdit?id='+idProduct,
+        //         method : 'GET',
+        //         cache: false,
+        //         success : function() {
+        //             window.location = data
+        //         },
+        //         error : function(xhr) {
+        //             if (xhr.status == 400) {
+        //                 alert(xhr.responseJSON.message);
+        //             } else {
+        //                 alert('Error edit item');
+        //             }
+        //         }
+        //     });
+        //
+        // });
+
+        var $result = $('#itemsTable');
 
         $('#search').on('keyup', function(){
             var search = $(this).val();
-            if ((search !== '') && (search.length > 4)){
+            if ((search !== '') && (search.length > 2)){
                 $.ajax({
                     type: "POST",
                     url: "/ajax/json/searchItems",
@@ -28,7 +51,8 @@
                         $result.html(msg);
                         if(msg !== ''){
                                 $result.fadeIn();
-                        } else {
+                        }
+                        else {
                             $result.fadeOut(100);
                         }
                     },
@@ -41,18 +65,19 @@
                     }
 
                 });
-            } else {
-                $result.html('');
+            }
+            else {
+                // $result.html('');
                 $result.fadeOut(100);
             }
         });
 
-        $(document).on('click', function(e){
-            if (!$(e.target).closest('.search_box').length){
-                $result.html('');
-                $result.fadeOut(100);
-            }
-        });
+        // $(document).on('click', function(e){
+        //     if (!$(e.target).closest('.search_box').length){
+        //         $result.html('');
+        //         $result.fadeOut(100);
+        //     }
+        // });
 
     });
 

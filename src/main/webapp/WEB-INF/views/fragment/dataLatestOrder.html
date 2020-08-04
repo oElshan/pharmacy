@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div >
+
+    <div class="col-xl-8 col-sm-12 col-md-8" th:fragment="dataLatestOrder">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="mt-0 header-title mb-4">Latest Order</h4>
+                <div class="table-responsive order-table">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th scope="col">(#) Id</th>
+                            <th scope="col">Client Name</th>
+                            <th scope="col">Date/Time</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col" colspan="1">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">#14562</th>
+                            <td>
+                                Matthew Drapeau
+                            </td>
+                            <td>17/8/2018
+                                <p class="font-13 text-muted mb-0">8:26AM</p>
+                            </td>
+                            <td>$104</td>
+                            <td><span class="badge  badge-danger"><i class="mdi mdi-checkbox-blank-circle text-primary"></i> new </span></td>
+                            <td>
+                                <div>
+                                    <a href="#" class="btn btn-primary btn-sm">update</a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

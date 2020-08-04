@@ -1,15 +1,24 @@
 package isha.ishop.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class Status {
     private String name;
     private int id;
+    private List<ClientOrder> clientOrders;
+
+
+    @OneToMany(mappedBy = "status", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<ClientOrder> getClientOrders() {
+        return clientOrders;
+    }
+
+    public void setClientOrders(List<ClientOrder> clientOrders) {
+        this.clientOrders = clientOrders;
+    }
 
     @Basic
     @Column(name = "name")
@@ -22,6 +31,7 @@ public class Status {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     public int getId() {
         return id;

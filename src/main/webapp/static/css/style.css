@@ -3695,7 +3695,8 @@ select.top-drop-menu {
     width: 100% !important;
     padding: 0; }
   #hero .caption {
-    background-color: rgba(255, 255, 255, 0.5); }
+    background-color: rgba(255, 255, 255, 0.5);
+  }
   .product-grid-holder .product-item-holder {
     border-right: 1px solid #ececec;
     margin-bottom: 10px; }
