@@ -9,5 +9,6 @@ public interface ProducerRepo extends JpaRepository<Producer, Long> {
 
     List<Producer> findAll();
 
+    Producer findByName(String name);
 
 }

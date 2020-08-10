@@ -1,19 +1,22 @@
 package isha.ishop.services.impl;
 
-import isha.ishop.entity.Category;
-import isha.ishop.entity.Subcategory;
-import isha.ishop.entity.Producer;
-import isha.ishop.entity.Product;
-import isha.ishop.repository.CategoryRepo;
-import isha.ishop.repository.SubCategoryRepo;
-import isha.ishop.repository.ProducerRepo;
-import isha.ishop.repository.ProductRepo;
+import isha.ishop.entity.*;
+import isha.ishop.form.EditProductForm;
+import isha.ishop.repository.*;
 import isha.ishop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -31,6 +34,16 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     CategoryRepo categoryRepo;
 
+    @Autowired
+    SpecCategoryRepo specCategoryRepo;
+    @Autowired
+    Environment env;
+
+
+    @Override
+    public List<SpecCategory> listAllSpecCategory() {
+        return specCategoryRepo.findAll();
+    }
     @Override
     public Product findProductById(Long id) {
         return productRepo.findProductById(id);
@@ -69,4 +82,54 @@ public class ProductServiceImpl implements ProductService {
         return products;
     }
 
+    @Override
+    @Transactional
+    public Product editProduct(EditProductForm editProductForm)  {
+
+
+        Product product =  productRepo.findProductById(editProductForm.getId());
+        product.setName(editProductForm.getProductName());
+        product.setPrice(editProductForm.getPrice());
+        product.setDescription(editProductForm.getDescription());
+        SpecCategory specCategory = specCategoryRepo.findByName(editProductForm.getSpecCategory());
+        product.setSpecCategory(specCategory);
+        Subcategory subcategory = subCategoryRepo.findByName(editProductForm.getCategory());
+        product.setSubcategory(subcategory);
+        product.setVisible(editProductForm.getVisible());
+
+        MultipartFile file = editProductForm.getPhoto();
+        if (file != null && !file.getOriginalFilename().isEmpty()) {
+            File uploadDir = new File(env.getProperty("upload.path"));
+
+
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFilename = uuidFile + "." + file.getOriginalFilename();
+            System.out.println("resultFilename-------"+resultFilename);
+
+            try {
+                file.transferTo(new File(env.getProperty("upload.path") + "/" + resultFilename));
+            } catch (IOException e) {
+                System.out.println("error save file to disk");
+                e.printStackTrace();
+            }
+            product.setImgLink(resultFilename);
+
+        }
+
+        Producer producer = producerRepo.findByName(editProductForm.getProducer());
+        if (producer == null) {
+            producer = new Producer();
+            producer.setName(editProductForm.getProducer());
+
+        }
+        producer.setProducts(new ArrayList<Product>(Arrays.asList(product)));
+        product.setProducer(producer);
+
+        productRepo.save(product);
+
+        return product;
+    }
 }

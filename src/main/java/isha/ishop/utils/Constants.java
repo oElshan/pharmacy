@@ -25,6 +25,12 @@ public final class Constants {
 
     public static final String CURRENT_REQUEST_URL = "CURRENT_REQUEST_URL";
 
+    public static final long MAX_FILE_SIZE = 1024 * 1024 * 25;//25MB
+
+    public static final long MAX_REQUEST_SIZE = 1024 * 1024 * 30;//30MB
+
+    public static final int FILE_SIZE_THRESHOLD = 0;
+
     public enum Cookie {
         //1 year ttl
         SHOPPING_CART("iSCC", 60 * 60 * 24 * 365);

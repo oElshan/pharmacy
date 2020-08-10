@@ -22,7 +22,7 @@ public class Producer {
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "producer", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "producer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<Product> getProducts() {
         return products;
     }

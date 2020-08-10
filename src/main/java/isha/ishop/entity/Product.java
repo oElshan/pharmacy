@@ -5,6 +5,7 @@ import isha.ishop.utils.Views;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +23,40 @@ public class Product {
     private BigDecimal price;
     private List<OrderItem> items;
     private Producer producer;
+    private SpecCategory specCategory;
+    private String visible;
+    private Date date;
 
+    @Basic
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date")
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    @Basic
+    @Column(name = "visible")
+    public String getVisible() {
+        return visible;
+    }
+
+    public void setVisible(String visible) {
+        this.visible = visible;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_specCategory")
+    public SpecCategory getSpecCategory() {
+        return specCategory;
+    }
+
+    public void setSpecCategory(SpecCategory specCategory) {
+        this.specCategory = specCategory;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +70,7 @@ public class Product {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
     @JoinColumn(name = "id_producer")
     public Producer getProducer() {
         return producer;
@@ -127,8 +161,13 @@ public class Product {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", subcategory=" + subcategory +
+                ", description='" + description + '\'' +
                 ", imgLink='" + imgLink + '\'' +
                 ", price=" + price +
+                ", producer=" + producer +
+                ", visible='" + visible + '\'' +
+                ", date=" + date +
                 '}';
     }
 }

@@ -1,10 +1,9 @@
 package isha.ishop.services;
 
-import isha.ishop.entity.Category;
-import isha.ishop.entity.Producer;
-import isha.ishop.entity.Product;
-import isha.ishop.entity.Subcategory;
+import isha.ishop.entity.*;
+import isha.ishop.form.EditProductForm;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ProductService {
@@ -20,6 +19,11 @@ public interface ProductService {
     public List<Producer> findAllProducer();
 
     public List<Product> listAllProducts(int page, int limit);
+
+    public List<SpecCategory> listAllSpecCategory();
+
+    Product editProduct(EditProductForm editProductForm) throws IOException;
+
 
 
 

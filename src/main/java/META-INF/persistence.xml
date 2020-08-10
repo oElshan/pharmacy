@@ -13,6 +13,7 @@
         <class>isha.ishop.entity.Category</class>
         <class>isha.ishop.entity.Client</class>
         <class>isha.ishop.entity.Status</class>
+        <class>isha.ishop.entity.SpecCategory</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/ishop"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
