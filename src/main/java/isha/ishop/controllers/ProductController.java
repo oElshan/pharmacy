@@ -3,11 +3,15 @@ package isha.ishop.controllers;
 import isha.ishop.entity.Product;
 import isha.ishop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class ProductController {
@@ -32,11 +36,22 @@ public class ProductController {
         return "cart";
     }
 
-    @GetMapping(value = "/search{search}")
-    public String searchItemGrid(@RequestParam("search") String search, Model model) {
-
-        List<Product> products = productService.findProductByNameLike(search);
+    @GetMapping(value = "/search")
+    public String searchItemGrid(@RequestParam("search") String search,@RequestParam("page") Optional<Integer> page, Model model) {
+        int currentPage = page.orElse(1);
+        Page<Product> productsPage = productService.findProductByNameLike(search,currentPage,12);
+        List<Product> products = productsPage.getContent();
+        int totalPages = productsPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
         model.addAttribute("products", products);
+        model.addAttribute("productsPage", productsPage);
+        model.addAttribute("search", search);
+
         return "category-grid";
     }
 

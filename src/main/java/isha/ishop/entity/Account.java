@@ -25,7 +25,8 @@ public class Account {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_role")
+    @JoinColumn(name = "id_role",foreignKey = @ForeignKey(name = "fk_acaunt_role"))
+
     public Role getRole() {
         return role;
     }

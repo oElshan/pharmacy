@@ -4,18 +4,18 @@ package isha.ishop.services.impl;
 import isha.ishop.entity.Client;
 import isha.ishop.entity.ClientOrder;
 import isha.ishop.entity.OrderItem;
+import isha.ishop.entity.Status;
 import isha.ishop.form.OrderForm;
 import isha.ishop.model.ShoppingCart;
 import isha.ishop.model.ShoppingCartItem;
-import isha.ishop.repository.ClientRepo;
-import isha.ishop.repository.OrderItemRepo;
-import isha.ishop.repository.OrderRepo;
-import isha.ishop.repository.ProductRepo;
+import isha.ishop.repository.*;
 import isha.ishop.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -35,6 +35,9 @@ public class ClientServiceImpl  implements ClientService {
     @Autowired
     OrderRepo orderRepo;
 
+    @Autowired
+    StatusRepo statusRepo;
+
     @Transactional
     public ClientOrder newClientOrder(ShoppingCart shoppingCart, OrderForm orderForm) {
 
@@ -42,6 +45,7 @@ public class ClientServiceImpl  implements ClientService {
         ClientOrder clientOrder = new ClientOrder();
         List<OrderItem> orderItems = new ArrayList<>();
         clientOrder.setOrderItems(orderItems);
+        clientOrder.setCreated(Timestamp.valueOf(LocalDateTime.now()));
 
         for (ShoppingCartItem item : items) {
             OrderItem orderItem = new OrderItem();
@@ -67,6 +71,8 @@ public class ClientServiceImpl  implements ClientService {
             client.setPhone(orderForm.getPhone());
         }
         clientOrder.setClient(client);
+        Status status = statusRepo.getById(1);
+        clientOrder.setStatus(status);
         clientOrders.add(orderRepo.save(clientOrder));
         client.setClientOrders(clientOrders);
 

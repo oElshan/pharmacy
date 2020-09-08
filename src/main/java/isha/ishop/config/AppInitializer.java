@@ -27,6 +27,7 @@ public class AppInitializer extends
 
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
         registration.setMultipartConfig(getMultipartConfigElement());
     }
 
@@ -34,4 +35,7 @@ public class AppInitializer extends
     private MultipartConfigElement getMultipartConfigElement(){
     return new MultipartConfigElement("", Constants.MAX_FILE_SIZE,Constants.MAX_REQUEST_SIZE,Constants.FILE_SIZE_THRESHOLD);
     }
+
+
+
 }

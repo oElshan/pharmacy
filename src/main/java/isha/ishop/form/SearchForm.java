@@ -1,13 +1,13 @@
 package isha.ishop.form;
 
-public class SearchItemsForm {
+public class SearchForm {
     private String searchName;
 
-    public SearchItemsForm(String searchName) {
+    public SearchForm(String searchName) {
         this.searchName = searchName;
     }
 
-    public SearchItemsForm() {
+    public SearchForm() {
     }
 
     public String getSearchName() {
@@ -20,7 +20,7 @@ public class SearchItemsForm {
 
     @Override
     public String toString() {
-        return "SearchItemsForm{" +
+        return "SearchForm{" +
                 "search='" + searchName + '\'' +
                 '}';
     }

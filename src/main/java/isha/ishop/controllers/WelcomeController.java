@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -19,9 +18,6 @@ public class WelcomeController {
 
     @Autowired
     private ProductService productService;
-
-    @Autowired
-    private ServletContext servletContext;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String welcome(Model model,HttpSession session){
@@ -49,28 +45,10 @@ public class WelcomeController {
         return "index-2";
     }
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String adminPage(Model model,HttpSession session) {
-
-        return "admin";
-    }
-
-    @RequestMapping(value = "/admin/orders", method = RequestMethod.GET)
-    public String showOrders(Model model,HttpSession session) {
-
-        return "orders";
-    }
-
-    @RequestMapping(value = "/admin/items", method = RequestMethod.GET)
-    public String showItems(Model model,HttpSession session) {
-
-        return "items";
-    }
 
     @RequestMapping(value = "/checkout" ,method = RequestMethod.GET)
     public  String createOrder(  Model model) {
         model.addAttribute("orderForm", new OrderForm());
-
 
         return "checkout";
     }

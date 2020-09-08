@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "status")
 public class Status {
     private String name;
-    private int id;
+    private Integer id;
     private List<ClientOrder> clientOrders;
 
 
@@ -31,13 +32,13 @@ public class Status {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

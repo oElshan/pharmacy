@@ -1,6 +1,5 @@
 package isha.ishop.controllers.ajax;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import isha.ishop.entity.ClientOrder;
 import isha.ishop.entity.Product;
 import isha.ishop.form.OrderForm;
@@ -8,7 +7,6 @@ import isha.ishop.model.ShoppingCart;
 import isha.ishop.services.ClientService;
 import isha.ishop.services.ProductService;
 import isha.ishop.utils.Constants;
-import isha.ishop.utils.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +36,6 @@ public class ClientController {
         System.out.println(orderForm);
         ShoppingCart shoppingCart = (ShoppingCart) session.getAttribute(Constants.CURRENT_SHOPPING_CART);
         ClientOrder clientOrder = clientService.newClientOrder(shoppingCart,orderForm);
-        System.out.println(clientOrder);
         model.addAttribute("totalCost", shoppingCart.getTotalCost().doubleValue());
 
         shoppingCart.getItems().clear();
@@ -46,6 +43,8 @@ public class ClientController {
         shoppingCart.setTotalCount(0);
         session.setAttribute(Constants.CURRENT_SHOPPING_CART,shoppingCart);
         model.addAttribute("clientOrder", clientOrder);
+        System.out.println(clientOrder);
+
         return "fragment/orderComplete :: orderComplete";
     }
 
@@ -59,7 +58,6 @@ public class ClientController {
      * @return
      */
 
-    @JsonView(Views.Public.class)
     @GetMapping("/ajax/json/product/add")
     public String addShopingCart(@RequestParam("idProduct") long idProduct, HttpSession session) {
 

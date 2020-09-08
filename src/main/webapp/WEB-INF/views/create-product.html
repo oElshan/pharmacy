@@ -39,20 +39,14 @@
                                     <div class="card m-b-20">
                                         <div class="card-body">
             
-                                            <h4 class="mt-0 header-title text-primary" th:text="|Edit product: ${editProduct.name}|">Textual inputs</h4>
+                                            <h4 class="mt-0 header-title text-primary" >New Product</h4>
 
-                                            <form  action="/admin/edit-product" method="post"  enctype="multipart/form-data" th:object="${editProductForm}">
-
-                                                <div class="form-group hidden row">
-                                                    <div class="col-sm-10">
-                                                        <input class="form-control" name="id" type="hidden"  th:value="${editProduct.id}">
-                                                    </div>
-                                                </div>
+                                            <form  action="/admin/create/product" method="post"  enctype="multipart/form-data" th:object="${newProductForm}">
 
                                                 <div class="form-group row">
                                                     <label for="name" class="col-sm-2 col-form-label">Name</label>
                                                     <div class="col-sm-10">
-                                                        <input class="form-control" name="productName" type="text" th:name="productName" th:value="${editProduct.name}" id="name" >
+                                                        <input class="form-control" name="productName" type="text" th:field="*{productName}"  id="name" >
                                                         <p th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}" class="alert alert-danger" >Error field</p>
                                                     </div>
                                                 </div>
@@ -60,15 +54,14 @@
                                                 <div class="form-group row">
                                                     <label for="producer" class="col-sm-2 col-form-label">Producer</label>
                                                     <div class="col-sm-10">
-                                                        <input class="form-control" type="text" name="producer" th:if="${editProduct.producer}!=null" th:value="${editProduct.producer.name}" id="producer">
-                                                        <input class="form-control" type="text" name="producer" th:if="${editProduct.producer}==null" id="producer">
+                                                        <input class="form-control" type="text" name="producer" id="producer">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group row">
                                                     <label for="price" class="col-sm-2 col-form-label">Price(Azn)</label>
                                                     <div class="col-sm-10">
-                                                        <input class="form-control" name="price" type="text" th:value="${editProduct.price}" id="price" th:field="${editProduct.price}">
+                                                        <input class="form-control" name="price" type="text"  id="price" th:field="*{price}" placeholder="Используйте . для разделения">
                                                         <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="alert alert-danger" >Error field</p>
 
                                                     </div>
@@ -78,7 +71,7 @@
                                                     <label for="elm1" class="col-sm-2 col-form-label">Description</label>
                                                     <div class="col-sm-10">
                                                         <!--<input class="form-control" id="elm1" name="area" type="search"  id="description">-->
-                                                        <textarea id="elm1" name="description" th:value="${editProduct.description}"></textarea>
+                                                        <textarea id="elm1" name="description"></textarea>
                                                     </div>
                                                 </div>
 
@@ -93,13 +86,8 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-2 col-form-label">Catalog(Category)</label>
                                                     <div class="col-sm-10">
-                                                        <select class="form-control" name="category" >
-                                                            <option th:each="category:${#servletContext.getAttribute('CATEGORY_LIST')}" th:value="${category.name}" th:text="${category.name}"
-                                                                    <!--th:selected="${category.name==editProduct.subcategory.name?true:false}"-->
-                                                            >Select</option>
-                                                            <!--<option th:each="category:${#servletContext.getAttribute('CATEGORY_LIST')}"-->
-                                                             <!--th:text="${category.name==editProduct.subcategory}?${editProduct.subcategory}:${category.name}"-->
-                                                            <!--&gt;Select</option>-->
+                                                        <select class="form-control" name="category">
+                                                            <option th:each="category:${#servletContext.getAttribute('CATEGORY_LIST')}" th:text="${category.name}">Select</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -108,9 +96,7 @@
                                                     <label class="col-sm-2 col-form-label">Special Category</label>
                                                     <div class="col-sm-10">
                                                         <select class="form-control" name="specCategory">
-                                                            <option th:each="category:${specCategoryList}" th:value="${category.name}" th:text="${category.name}"
-                                                                    th:selected="${category.name==editProduct.specCategory.name?true:false}"
-                                                            >Select</option>
+                                                            <option th:each="category:${specCategoryList}" th:text="${category.name}">Select</option>
                                                         </select>
                                                     </div>
                                                 </div>

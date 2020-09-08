@@ -24,7 +24,7 @@ public class OrderItem {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_order")
+    @JoinColumn(name = "id_order",foreignKey = @ForeignKey(name = "order_item_order__fk"))
     public ClientOrder getClientOrder() {
         return clientOrder;
     }
@@ -34,7 +34,7 @@ public class OrderItem {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_product")
+    @JoinColumn(name = "id_product",foreignKey = @ForeignKey(name = "fk_item_product"))
     public Product getProduct() {
         return product;
     }
@@ -65,5 +65,14 @@ public class OrderItem {
     @Override
     public int hashCode() {
         return Objects.hash(id, count);
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", count=" + count +
+                ", product=" + product.getId() +
+                '}';
     }
 }

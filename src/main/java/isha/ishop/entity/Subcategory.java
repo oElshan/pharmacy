@@ -26,7 +26,7 @@ public class Subcategory {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_category")
+    @JoinColumn(name = "id_category",foreignKey = @ForeignKey(name = "subcategory_category__fk"))
     public Category getCategory() {
         return category;
     }

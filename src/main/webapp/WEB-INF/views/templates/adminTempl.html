@@ -45,56 +45,13 @@
         <nav class="navbar-custom">
 
             <ul class="navbar-right d-flex list-inline float-right mb-0">
-                <li class="dropdown notification-list">
-                    <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <i class="mdi mdi-bell noti-icon"></i>
-                        <span class="badge badge-pill badge-info noti-icon-badge">3</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
-                        <!-- item-->
-                        <h6 class="dropdown-item-text">
-                            Notifications (37)
-                        </h6>
-                        <div class="slimscroll notification-item-list">
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item active">
-                                <div class="notify-icon bg-success"><i class="mdi mdi-cart-outline"></i></div>
-                                <p class="notify-details">Your order is placed<span class="text-muted">Dummy text of the printing and typesetting industry.</span></p>
-                            </a>
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <div class="notify-icon bg-warning"><i class="mdi mdi-message"></i></div>
-                                <p class="notify-details">New Message received<span class="text-muted">You have 87 unread messages</span></p>
-                            </a>
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <div class="notify-icon bg-info"><i class="mdi mdi-flag"></i></div>
-                                <p class="notify-details">Your item is shipped<span class="text-muted">It is a long established fact that a reader will</span></p>
-                            </a>
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <div class="notify-icon bg-primary"><i class="mdi mdi-cart-outline"></i></div>
-                                <p class="notify-details">Your order is placed<span class="text-muted">Dummy text of the printing and typesetting industry.</span></p>
-                            </a>
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <div class="notify-icon bg-danger"><i class="mdi mdi-message"></i></div>
-                                <p class="notify-details">New Message received<span class="text-muted">You have 87 unread messages</span></p>
-                            </a>
-                        </div>
-                        <!-- All-->
-                        <a href="javascript:void(0);" class="dropdown-item text-center text-primary">
-                            View all <i class="fi-arrow-right"></i>
-                        </a>
-                    </div>
-                </li>
+                <div id="orderAlert" th:insert="~{fragment/orderAlert :: orderAlert}"></div>
+
                 <li class="dropdown notification-list">
                     <a class="nav-link arrow-none waves-effect waves-light"  href="/logout" role="button" aria-haspopup="false" aria-expanded="false">
                         <i class="mdi mdi-exit-to-app noti-icon"></i>
                     </a>
-
                 </li>
-
 
             </ul>
 
@@ -112,7 +69,7 @@
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="#">Item</a>
+                            <a class="dropdown-item" href="/admin/create/product">Product</a>
                             <a class="dropdown-item" href="#">Banner</a>
                         </div>
                     </div>
@@ -135,14 +92,23 @@
 
                     <li>
                         <a href="/admin" class="waves-effect">
-                            <i class="mdi mdi-home"></i> <span> Dashboard </span>
+                            <i class="fas fa-store-alt"></i> <span> Dashboard </span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="/admin/orders" class="waves-effect">
-                            <i class="ion-social-buffer-outline"></i> <span> Orders </span>
+                        <a href="javascript:void(0);" class="waves-effect">
+
+                            <i class="fas fa-th-list"></i>
+                            <span> Orders <span class="badge badge-pill badge-danger noti-icon-badge hidden " id="orderCount"></span>
+<span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span></span>
                         </a>
+
+                        <ul class="submenu">
+                            <li><a href="/admin/search-orders">Search orders</a></li>
+                            <li><a href="/admin/new-orders" >Show new orders</a></li>
+                            <li><a href="#">--</a></li>
+                        </ul>
                     </li>
 
                     <!--<li>-->
@@ -151,18 +117,21 @@
                         <!--</a>-->
                     <!--</li>-->
                     <li>
-                        <a href="javascript:void(0);" class="waves-effect"><i class="ion-search"></i><span> Products <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
+                        <a href="javascript:void(0);" class="waves-effect"><i class="fas fa-shopping-bag"></i><span> Products <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
                         <ul class="submenu">
                             <li><a href="/admin/items">Search products</a></li>
-                            <li><a href="/admin/newItems">New product</a></li>
-                            <li><a href="/admin/ctalogItems">Product catalog</a></li>
+                            <li><a href="/admin/create/product">New product</a></li>
+                            <li><a href="/admin/productCatalog">Product catalog</a></li>
                         </ul>
                     </li>
 
                     <li>
-                        <a href="#" class="waves-effect">
-                            <i class="ion-social-buffer-outline"></i> <span> Banners</span>
-                        </a>
+                        <a href="javascript:void(0);" class="waves-effect"><i class="fas fa-images"></i><span> Banners <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
+                        <ul class="submenu">
+                            <li><a href="#">Main banner</a></li>
+                            <li><a href="#">---</a></li>
+                            <li><a href="#">--</a></li>
+                        </ul>
                     </li>
 
                 </ul>

@@ -14,77 +14,6 @@
 
     <!-- ============================================================= HEADER : END ============================================================= -->
 
-            <!--<div class="animate-dropdown">-->
-                <!--&lt;!&ndash; ========================================= BREADCRUMB ========================================= &ndash;&gt;-->
-                <!--<div id="top-mega-nav">-->
-                    <!--<div class="container">-->
-                        <!--<nav>-->
-                            <!--<ul class="inline">-->
-                                <!--<li class="dropdown le-dropdown">-->
-                                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
-                                        <!--<i class="fa fa-list"></i> shop by department-->
-                                    <!--</a>-->
-
-                                    <!--<ul class="dropdown-menu">-->
-                                        <!--<li><a href="#">Computer Cases & Accessories</a></li>-->
-                                        <!--<li><a href="#">CPUs, Processors</a></li>-->
-                                        <!--<li><a href="#">Fans, Heatsinks &amp; Cooling</a></li>-->
-                                        <!--<li><a href="#">Graphics, Video Cards</a></li>-->
-                                        <!--<li><a href="#">Interface, Add-On Cards</a></li>-->
-                                        <!--<li><a href="#">Laptop Replacement Parts</a></li>-->
-                                        <!--<li><a href="#">Memory (RAM)</a></li>-->
-                                        <!--<li><a href="#">Motherboards</a></li>-->
-                                        <!--<li><a href="#">Motherboard &amp; CPU Combos</a></li>-->
-                                        <!--<li><a href="#">Motherboard Components</a></li>-->
-                                    <!--</ul>-->
-                                <!--</li>-->
-
-                                <!--<li class="breadcrumb-nav-holder">-->
-                                    <!--<ul>-->
-                                        <!--<li class="dropdown breadcrumb-item">-->
-                                            <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">laptops &amp; computers </a>-->
-                                            <!--<ul class="dropdown-menu">-->
-                                                <!--<li>-->
-                                                    <!--<a href="#">PDA</a>-->
-                                                    <!--<a href="#">accesories</a>-->
-                                                    <!--<a href="#">tablets</a>-->
-                                                    <!--<a href="#">games</a>-->
-                                                    <!--<a href="#">consoles</a>-->
-                                                <!--</li>-->
-                                            <!--</ul>-->
-                                        <!--</li>&lt;!&ndash; /.breadcrumb-item &ndash;&gt;-->
-
-                                        <!--<li class="dropdown breadcrumb-item">-->
-                                            <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Desktop PC </a>-->
-                                            <!--<ul class="dropdown-menu">-->
-                                                <!--<li>-->
-                                                    <!--<a href="#">PDA</a>-->
-                                                    <!--<a href="#">accesories</a>-->
-                                                    <!--<a href="#">tablets</a>-->
-                                                    <!--<a href="#">games</a>-->
-                                                    <!--<a href="#">consoles</a>-->
-                                                <!--</li>-->
-                                            <!--</ul>-->
-                                        <!--</li>&lt;!&ndash; /.breadcrumb-item &ndash;&gt;-->
-
-                                        <!--<li class="breadcrumb-item">-->
-                                            <!--<a href="#">Gaming</a>-->
-                                        <!--</li>&lt;!&ndash; /.breadcrumb-item &ndash;&gt;-->
-
-                                        <!--<li class="breadcrumb-item current">-->
-                                            <!--<a href="#">VAIO Fit Laptop - Windows</a>-->
-                                        <!--</li>&lt;!&ndash; /.breadcrumb-item &ndash;&gt;-->
-                                    <!--</ul>-->
-                                <!--</li>&lt;!&ndash; /.breadcrumb-nav-holder &ndash;&gt;-->
-
-                            <!--</ul>&lt;!&ndash; /.inline &ndash;&gt;-->
-                        <!--</nav>-->
-
-                    <!--</div>&lt;!&ndash; /.container &ndash;&gt;-->
-                <!--</div>&lt;!&ndash; /#top-mega-nav &ndash;&gt;-->
-                <!--&lt;!&ndash; ========================================= BREADCRUMB : END ========================================= &ndash;&gt;-->
-            <!--</div>-->
-
             <section id="category-grid">
                 <div class="container">
                     <!-- ========================================= SIDEBAR ========================================= -->
@@ -126,11 +55,6 @@
                         <!-- ========================================= PRODUCT FILTER : END ========================================= -->
 
 
-                        <div class="widget">
-                            <div class="simple-banner">
-                                <a href="#"><img alt="" class="img-responsive" src="/static/images/blank.gif" data-echo="assets/images/banners/banner-simple.jpg" /></a>
-                            </div>
-                        </div>
                     </div>
                     <!-- ========================================= SIDEBAR : END ========================================= -->
 
@@ -142,22 +66,6 @@
                                 <h2 class="section-title">Gaming</h2>
 
                                 <div class="control-bar">
-                                    <div id="popularity-sort" class="le-select" >
-                                        <select data-placeholder="sort by popularity">
-                                            <option value="1">1-100 players</option>
-                                            <option value="2">101-200 players</option>
-                                            <option value="3">200+ players</option>
-                                        </select>
-                                    </div>
-
-                                    <div id="item-count" class="le-select">
-                                        <select>
-                                            <option value="1">24 per page</option>
-                                            <option value="2">48 per page</option>
-                                            <option value="3">32 per page</option>
-                                        </select>
-                                    </div>
-
                                     <div class="grid-list-buttons">
                                         <ul>
                                             <li class="grid-list-button-item active"><a data-toggle="tab" href="#grid-view"><i class="fa fa-th-large"></i> Grid</a></li>
@@ -191,11 +99,7 @@
                                                         </div>
                                                         <div class="hover-area">
                                                             <div class="add-cart-button">
-                                                                <a href="#" class="le-button"  data-product_id="" th:attr="data-product_id=${product.id}">add to cart</a>
-                                                            </div>
-                                                            <div class="wish-compare">
-                                                                <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
-                                                                <a class="btn-add-to-compare" href="#">compare</a>
+                                                                <a href = "javascript:void(0);"  th:id="|add-${product.id}|" class="le-button"  data-product_id="" th:attr="data-product_id=${product.id}">add to cart</a>
                                                             </div>
                                                         </div>
                                                     </div><!-- /.product-item -->
@@ -207,20 +111,20 @@
 
                                         <div class="pagination-holder">
                                             <div class="row">
-
                                                 <div class="col-xs-12 col-sm-6 text-left" >
-                                                    <ul class="pagination ">
-                                                        <li class="current"><a  href="#">1</a></li>
-                                                        <li><a href="#">2</a></li>
-                                                        <li><a href="#">3</a></li>
-                                                        <li><a href="#">4</a></li>
-                                                        <li><a href="#">next</a></li>
+                                                    <ul class="pagination "  th:if="${productsPage.totalPages > 0}">
+                                                        <li th:each="pageNumber : ${pageNumbers}" th:class="${pageNumber==productsPage.number + 1} ? 'current' ">
+                                                            <a th:href="@{/search(search=${search},page=${pageNumber})}" th:text="${pageNumber}" >1</a>
+                                                        </li>
+                                                        <li>
+                                                            <a >next</a>
+                                                        </li>
                                                     </ul>
                                                 </div>
 
                                                 <div class="col-xs-12 col-sm-6">
                                                     <div class="result-counter">
-                                                        Showing <span>1-9</span> of <span>11</span> results
+                                                        Showing <span>1-9</span> of <span th:text="${productsPage.totalPages}">11</span> results
                                                     </div>
                                                 </div>
 
@@ -260,8 +164,6 @@
                                                             <div class="price-current" th:text="|${product.price} Azn|">$1199.00</div>
                                                             <!--<div class="price-prev">$1399.00</div>-->
                                                             <div class="availability"><label>availability:</label><span class="available">  in stock</span></div>
-                                                            <a class="le-button" href="#">add to cart</a>
-                                                            <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
                                                         </div>
                                                     </div><!-- /.price-area -->
                                                 </div><!-- /.row -->
@@ -272,20 +174,23 @@
 
                                         <div class="pagination-holder">
                                             <div class="row">
-                                                <div class="col-xs-12 col-sm-6 text-left">
-                                                    <ul class="pagination">
-                                                        <li class="current"><a  href="#">1</a></li>
-                                                        <li><a href="#">2</a></li>
-                                                        <li><a href="#">3</a></li>
-                                                        <li><a href="#">4</a></li>
-                                                        <li><a href="#">next</a></li>
-                                                    </ul><!-- /.pagination -->
+                                                <div class="col-xs-12 col-sm-6 text-left" >
+                                                    <ul class="pagination "  th:if="${productsPage.totalPages > 0}">
+                                                        <li th:each="pageNumber : ${pageNumbers}" th:class="${pageNumber==productsPage.number + 1} ? 'current' ">
+                                                            <a th:href="@{/search(search=${search},page=${pageNumber})}" th:text="${pageNumber}" >1</a>
+                                                        </li>
+                                                        <li>
+                                                            <a >next</a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
+
                                                 <div class="col-xs-12 col-sm-6">
                                                     <div class="result-counter">
-                                                        Showing <span>1-9</span> of <span>11</span> results
-                                                    </div><!-- /.result-counter -->
+                                                        Showing <span>1-9</span> of <span th:text="${productsPage.totalPages}">11</span> results
+                                                    </div>
                                                 </div>
+
                                             </div><!-- /.row -->
                                         </div><!-- /.pagination-holder -->
 

@@ -33,10 +33,21 @@ public class WebConfig  implements WebMvcConfigurer {
         registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
     }
 
-    @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
-    }
+//    @Override
+//    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+//        configurer.enable();
+//    }
+
+//    @Override
+//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+//        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
+//                .indentOutput(true)
+//                .dateFormat(new SimpleDateFormat("yyyy-MM-dd"))
+//                .modulesToInstall(new ParameterNamesModule());
+//        converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
+//        converters.add(new MappingJackson2XmlHttpMessageConverter(builder.createXmlMapper(true).build()));
+//    }
+
 
     @Bean
     public SpringTemplateEngine templateEngine(){
@@ -88,4 +99,6 @@ public class WebConfig  implements WebMvcConfigurer {
     public MultipartResolver multipartResolver() {
         return new StandardServletMultipartResolver();
     }
+
+
 }

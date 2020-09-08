@@ -15,32 +15,58 @@
                         <tr>
                             <th scope="col">(#) Id</th>
                             <th scope="col">Client Name</th>
-                            <th scope="col">Date/Time</th>
+                            <th scope="col">Phone</th>
                             <th scope="col">Amount</th>
                             <th scope="col" colspan="1">Status</th>
+                            <th scope="col" >Date created</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">#14562</th>
-                            <td>
+                        <tr th:each="order : ${orders}">
+                            <th scope="row" th:text="${order.id}">#14562</th>
+                            <td th:text="|${order.client.firstName} ${order.client.lastName}|">
                                 Matthew Drapeau
                             </td>
-                            <td>17/8/2018
-                                <p class="font-13 text-muted mb-0">8:26AM</p>
+                            <td th:text="${order.client.phone}">
+                                Matthew Drapeau
                             </td>
-                            <td>$104</td>
-                            <td><span class="badge  badge-danger"><i class="mdi mdi-checkbox-blank-circle text-primary"></i> new </span></td>
-                            <td>
-                                <div>
-                                    <a href="#" class="btn btn-primary btn-sm">update</a>
-                                </div>
+                            <!--<td >17/8/2018-->
+                                <!--<p class="font-13 text-muted mb-0">8:26AM</p>-->
+                            <!--</td>-->
+                            <td th:text="${#arrays.length(order.orderItems)}">$104</td>
+                            <td ><span class="badge  badge-danger" th:text="${order.status.name}"><i class="mdi mdi-checkbox-blank-circle text-primary"></i> new </span></td>
+                            <td th:text="${order.created}">
+                                Matthew Drapeau
                             </td>
+                            <!--<td>-->
+                                <!--<div>-->
+                                    <!--<a href="#" class="btn btn-primary btn-sm">update</a>-->
+                                <!--</div>-->
+                            <!--</td>-->
                         </tr>
-
                         </tbody>
                     </table>
                 </div>
+                <nav aria-label="...">
+                    <ul class="pagination justify-content-center" th:if="${clientOrdersPage.totalPages > 0}" >
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li th:each="pageNumber : ${pageNumbers}" th:class="${pageNumber==clientOrdersPage.number + 1} ? 'page-item active' : page-item">
+                            <a class="page-link" th:href="@{/admin(page=${pageNumber})}" th:text="${pageNumber}" >1</a>
+                        </li>
+                        <li class="page-item disabled" >
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+                <!--<div th:if="${clientOrdersPage.totalPages > 0}" class="pagination">-->
+                    <!--<a th:each="pageNumber : ${pageNumbers}" th:href="@{/listBooks(size=${clientOrdersPage.size}, page=${pageNumber})}"-->
+                       <!--th:text="${pageNumber}"-->
+                       <!--th:class="${pageNumber==clientOrdersPage.number + 1} ? active"></a>-->
+                <!--</div>-->
+
+
             </div>
         </div>
     </div>

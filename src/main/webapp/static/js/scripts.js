@@ -167,7 +167,28 @@
         var addProductToCart = function() {
             var idProduct = $(this).attr('data-product_id');
             var url = '/ajax/json/product/add?idProduct=' + idProduct;
-            $('#shoppingCart').load(url);
+            // $('#shoppingCart').load(url);
+            $.ajax({
+                url : url,
+                method : 'GET',
+                cache: false,
+                success : function(shoppingCart) {
+                    $('#shoppingCart').html(shoppingCart);
+                    $('#add-'+idProduct).text("added!");
+                    setTimeout(function () {
+                        $('#add-'+idProduct).text("add to cart");
+                    },2000);
+
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error status shopping cart');
+                    }
+                }
+            });
+
         };
 
 

@@ -687,7 +687,7 @@ header {
       header .top-search-holder .search-area .search-field {
         border-radius: 5px 0 0 5px;
         border: none;
-        width: 65%;
+        width: 90%;
         padding: 13px; }
       header .top-search-holder .search-area .search-button {
         float: right;
@@ -706,8 +706,8 @@ header {
           text-rendering: auto;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
-          font-size: 25px;
-          line-height: 25px;
+          /*font-size: 10px;*/
+          line-height: 20px;
           vertical-align: sub;
           color: #fff; }
   header .top-cart-row {
@@ -2238,7 +2238,8 @@ header {
 
 #owl-main .caption {
   letter-spacing: -3px;
-  color: #636363;
+  color: #4d9b0e;
+  /*color: #636363;*/
   position: absolute;
   z-index: 100;
   top: 11%;
@@ -2252,7 +2253,7 @@ header {
     line-height: 64px; }
     #owl-main .caption .big-text .big {
       display: block;
-      font-size: 90px;
+      font-size: 40px;
       font-weight: 800;
       line-height: 70px;
       top: -11px;
@@ -3639,7 +3640,7 @@ select.top-drop-menu {
     padding: 0 9px !important; }
   .logo > a {
     display: block;
-    margin-bottom: 20px; }
+    margin-bottom: 0px; }
     .logo > a > svg {
       display: block;
       margin: 0 auto; }
@@ -3661,7 +3662,7 @@ select.top-drop-menu {
         margin-bottom: 5px;
         display: block !important; }
     header .top-search-holder .search-area .search-button {
-      margin: -51px -3px 0 0;
+      /*margin: -51px -3px 0 0;*/
       border-radius: 0 0 5px 0; }
     header .top-search-holder .search-area .categories-filter {
       border-top: 1px solid #e0e0e0;
@@ -3809,7 +3810,7 @@ select.top-drop-menu {
     padding: 0 9px !important; }
   .logo > a {
     display: block;
-    margin-bottom: 20px; }
+    margin-bottom: 0px; }
     .logo > a > svg {
       display: block;
       margin: 0 auto; }
@@ -3922,3 +3923,65 @@ select.top-drop-menu {
 @media (min-width: 1200px) {
   .owl-buttons {
     display: block; } }
+.whatsapp-button {
+  position: fixed;
+  right: 13px;
+  bottom: 10px;
+  transform: translate(-50%, -50%);
+  background: #25D366; /*цвет кнопки*/
+  border-radius: 50%;
+  width: 55px; /*ширина кнопки*/
+  height: 55px; /*высота кнопки*/
+  color: #fff;
+  text-align: center;
+  line-height: 53px; /*центровка иконки в кнопке*/
+  font-size: 35px; /*размер иконки*/
+  z-index: 9999;
+}
+.whatsapp-button a {
+  color: #fff;
+}
+.whatsapp-button:before,
+.whatsapp-button:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  border: 50%;
+  border: 1px solid #25D366; /*цвет анимированных волн от кнопки*/
+  left: -20px;
+  right: -20px;
+  top: -20px;
+  bottom: -20px;
+  border-radius: 50%;
+  animation: animate 1.5s linear infinite;
+  opacity: 0;
+  backface-visibility: hidden;
+}
+
+.whatsapp-button:after{
+  animation-delay: .5s;
+}
+
+@keyframes animate
+{
+  0%
+  {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50%
+  {
+    opacity: 1;
+  }
+  100%
+  {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+@media (max-width : 800px) {
+  .whatsapp-button {
+    bottom: 5px; /*отступ кнопки снизу от экрана*/
+    left: 70px; /*отступ кнопки слева от экрана(right - справа)*/
+  }
+}

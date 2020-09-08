@@ -17,7 +17,7 @@ public class Client {
     private List<ClientOrder> clientOrders;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public Long getId() {
         return id;
@@ -27,7 +27,7 @@ public class Client {
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public List<ClientOrder> getClientOrders() {
         return clientOrders;
     }

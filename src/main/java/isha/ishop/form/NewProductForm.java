@@ -6,9 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-public class EditProductForm {
-
-    private Long id;
+public class NewProductForm {
     @NotEmpty(message = "Пустое поле! Введите имя клиента!")
     @Size(max = 50,message = "max size  = 50  ")
     private String productName;
@@ -20,18 +18,8 @@ public class EditProductForm {
     private String dateCreation;
     private String category;
     private String specCategory;
-
-
     private String visible;
     private MultipartFile photo;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public MultipartFile getPhoto() {
         return photo;

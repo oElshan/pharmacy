@@ -25,19 +25,7 @@
                                     <div class="container-fluid">
                                         <div class="caption vertical-center text-left right" style="padding-right:0; ">
                                             <div class="big-text fadeInDown-1">
-                                                Save up to a<span class="big"><span class="sign">$</span>400</span>
-                                            </div>
-
-                                            <div class="excerpt fadeInDown-2">
-                                                on selected laptops<br>
-                                                &amp; desktop pcs or<br>
-                                                smartphones
-                                            </div>
-                                            <div class="small fadeInDown-2">
-                                                terms and conditions apply
-                                            </div>
-                                            <div class="button-holder fadeInDown-3">
-                                                <a href="single-product.html" class="big le-button ">shop now</a>
+                                                Ekonom aptek<span class="big"><span class="sign"></span>Get a discount when buying online</span>
                                             </div>
                                         </div><!-- /.caption -->
                                     </div><!-- /.container-fluid -->
@@ -49,7 +37,6 @@
                                             <div class="big-text fadeInDown-1">
                                                 Want a<span class="big"><span class="sign">$</span>200</span>Discount?
                                             </div>
-
                                             <div class="excerpt fadeInDown-2">
                                                 on desktop pcs
                                             </div>
@@ -62,7 +49,6 @@
                                         </div><!-- /.caption -->
                                     </div><!-- /.container-fluid -->
                                 </div><!-- /.item -->
-
                             </div><!-- /.owl-carousel -->
                         </div>
                         <!-- ========================================= SECTION – HERO : END ========================================= -->
@@ -89,29 +75,22 @@
                                 <div class="product-grid-holder" th:each="product : ${products}" >
                                     <div class="col-sm-2 col-md-2  no-margin product-item-holder hover">
                                         <div class="product-item" >
-                                            <!--<div class="ribbon red"><span>sale</span></div>-->
                                             <div class="image">
                                                 <img alt="" src="/static/images/blank.gif" data-echo="/static/images/products/fuflomicin.jpg" />
                                             </div>
                                             <div class="body">
-                                                <!--<div class="label-discount green">-50% sale</div>-->
                                                 <div class="title">
                                                     <a href="single-product.html" th:text="${product.name}">VAIO Fit Laptop - Windows 8 SVF14322CXW</a>
                                                 </div>
-                                                <div class="brand">sony</div>
+                                                <div class="brand">Bayer</div>
                                             </div>
                                             <div class="prices">
-                                                <!--<div class="price-prev" th:text="${product.price}">$1399.00</div>-->
                                                 <div class="price-current pull-right" th:text="|${product.price} AZN|">$1199.00</div>
                                             </div>
 
                                             <div class="hover-area">
                                                 <div class="add-cart-button">
-                                                    <a href="#" class="le-button "  data-product_id="" th:attr="data-product_id=${product.id}">add to cart</a>
-                                                </div>
-                                                <div class="wish-compare">
-                                                    <a class="btn-add-to-wishlist"  href="#">add to wishlist</a>
-                                                    <a class="btn-add-to-compare" href="#">compare</a>
+                                                    <a href = "javascript:void(0);" class="le-button " th:id="|add-${product.id}|" data-product_id="" th:attr="data-product_id=${product.id}">add to cart</a>
                                                 </div>
                                             </div>
                                         </div>

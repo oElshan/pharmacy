@@ -49,7 +49,7 @@ public class Product {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_specCategory")
+    @JoinColumn(name = "id_specCategory",foreignKey = @ForeignKey(name = "product_spCategory__fk"))
     public SpecCategory getSpecCategory() {
         return specCategory;
     }
@@ -71,7 +71,7 @@ public class Product {
     }
 
     @ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_producer")
+    @JoinColumn(name = "id_producer",foreignKey = @ForeignKey(name = "product_producer__fk"))
     public Producer getProducer() {
         return producer;
     }
@@ -81,6 +81,7 @@ public class Product {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_subcategory",foreignKey = @ForeignKey(name = "product_subcategory__fk"))
     public Subcategory getSubcategory() {
         return subcategory;
     }
@@ -166,6 +167,7 @@ public class Product {
                 ", imgLink='" + imgLink + '\'' +
                 ", price=" + price +
                 ", producer=" + producer +
+                ", specCategory=" + specCategory +
                 ", visible='" + visible + '\'' +
                 ", date=" + date +
                 '}';

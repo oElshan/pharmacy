@@ -12,36 +12,47 @@
     //Мой кусок
     $(document).ready(function () {
 
-        // $(document).on('click', '#editItem',function (){
-        //     var idProduct = $(this).attr('data-product_id');
-        //     alert(idProduct);
-        //
-        //     $.ajax({
-        //         url : '/admin/itemEdit?id='+idProduct,
-        //         method : 'GET',
-        //         cache: false,
-        //         success : function() {
-        //             window.location = data
-        //         },
-        //         error : function(xhr) {
-        //             if (xhr.status == 400) {
-        //                 alert(xhr.responseJSON.message);
-        //             } else {
-        //                 alert('Error edit item');
-        //             }
-        //         }
-        //     });
+        //проверка новых ордеров
+        var interval = 5000;  // 1000 = 1 second, 3000 = 3 seconds
+        function doAjax() {
+            $.ajax({
+                dataType: "json",
+                type: 'GET',
+                url: '/ajax/admin/orderStatus',
+                success: function (data) {
+                    $('#orderCount').removeClass('hidden');
+                    $('#orderCount').text(data.count);
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error');
+                    }
+                },
+                complete: function (data) {
+                    // Schedule the next
+                    setTimeout(doAjax, interval);
+                }
+            });
+        }
+        setTimeout(doAjax, interval);
+
+
+
+        // $(document).on('click', '#showNewOrders',function (){
+        //     $('#latestOrder').load('/ajax/admin/newOrder');
         //
         // });
 
-        var $result = $('#itemsTable');
-
-        $('#search').on('keyup', function(){
+        //Поиск товава в админке
+        $('#searchItem').on('keyup', function(){
+            var $result = $('#itemsTable');
             var search = $(this).val();
             if ((search !== '') && (search.length > 2)){
                 $.ajax({
                     type: "POST",
-                    url: "/ajax/json/searchItems",
+                    url: "/ajax/json/search-items",
                     data: JSON.stringify({
                         searchName: search
                     }),
@@ -72,12 +83,43 @@
             }
         });
 
-        // $(document).on('click', function(e){
-        //     if (!$(e.target).closest('.search_box').length){
-        //         $result.html('');
-        //         $result.fadeOut(100);
-        //     }
-        // });
+        //Поиск ордеров
+        $('#searchOrder').on('keyup', function(){
+            var $result = $('#ordersTable');
+            var search = $(this).val();
+            if ((search !== '') && (search.length > 2)){
+                $.ajax({
+                    type: "POST",
+                    url: "/ajax/json/search-orders",
+                    data: JSON.stringify({
+                        searchName: search
+                    }),
+                    contentType: 'application/json',
+                    success: function(msg){
+                        $result.html(msg);
+                        if(msg !== ''){
+                            $result.fadeIn();
+                        }
+                        else {
+                            $result.fadeOut(100);
+                        }
+                    },
+                    error : function(xhr) {
+                        if (xhr.status == 400) {
+                            alert(xhr.responseJSON.message);
+                        } else {
+                            alert('Error');
+                        }
+                    }
+
+                });
+            }
+            else {
+                // $result.html('');
+                $result.fadeOut(100);
+            }
+        });
+
 
     });
 
