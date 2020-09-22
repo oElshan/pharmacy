@@ -12,6 +12,41 @@
     //Мой кусок
     $(document).ready(function () {
 
+        /** изменямемая форма использует библиотеку https://vitalets.github.io/x-editable/
+         * изменение статуса ордера в LatestOrder не допилино
+        **/
+        // $.fn.editableform.buttons =
+        //     '<button type="submit" class="btn btn-success editable-submit btn-sm waves-effect waves-light"><i class="mdi mdi-check"></i></button>' +
+        //     '<button type="button" class="btn btn-danger editable-cancel btn-sm waves-effect waves-light"><i class="mdi mdi-close"></i></button>';
+        //
+        // var selectOrders = $('#select-orders option:eq(2)').text();
+        //
+        // $('.inline-status').editable({
+        //     prepend: selectOrders,
+        //     mode: 'inline',
+        //     inputclass: 'form-control-sm',
+        //     source: [
+        //         {value: 1, text: selectOrders[0]},
+        //         {value: 1, text: ''},
+        //         {value: 1, text: ''},
+        //         {value: 2, text: 'Female'}
+        //     ],
+        //     display: function (value, sourceData) {
+        //         var colors = {"": "#98a6ad", 1: "#5fbeaa", 2: "#5d9cec"},
+        //             elem = $.grep(sourceData, function (o) {
+        //                 return o.value == value;
+        //             });
+        //
+        //         if (elem.length) {
+        //             $(this).text(elem[0].text).css("color", colors[value]);
+        //         } else {
+        //             $(this).empty();
+        //         }
+        //     }
+        // });
+
+
+
         //проверка новых ордеров
         var interval = 5000;  // 1000 = 1 second, 3000 = 3 seconds
         function doAjax() {
@@ -38,14 +73,74 @@
         }
         setTimeout(doAjax, interval);
 
+        //здесь будет изменение ордера и вызов модалки edit order
+        $(document).on('click', '#latestOrder .btn-sm', function () {
+            var orderId = $(this).attr("order-id");
+            $.ajax({
+                type: 'GET',
+                url: '/ajax/admin/edit-order?id='+orderId,
+                success: function (data) {
+                    $('#'+orderId).html(data);
+                    $('#'+orderId+' .bd-example-modal-lg').modal('show');
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error');
+                    }
+                },
+            });
+
+        });
+        $(document).on('click', '#latestOrder .btn-sm', function () {
 
 
-        // $(document).on('click', '#showNewOrders',function (){
-        //     $('#latestOrder').load('/ajax/admin/newOrder');
-        //
-        // });
+        });
 
-        //Поиск товава в админке
+        //загрузка ордеров в dashboard
+        $(document).on('click', '.page-link', function () {
+            var selectOrders  = $('#select-orders').val();
+            var pageNumber = $(this).attr("page-number");
+            $.ajax({
+                type: 'GET',
+                url: '/ajax/admin?page=' + pageNumber + '&select=' + selectOrders,
+                success: function (data) {
+
+                    $('#latestOrder').html(data);
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error');
+                    }
+                },
+            });
+
+        });
+        //фильтр ордеров в dashboard
+        $(document).on('change', '#select-orders', function () {
+            var selectedOrders = $(this).val();
+
+            $.ajax({
+                type: 'GET',
+                url: '/ajax/admin?page=1'  + '&select=' + selectedOrders,
+                success: function (data) {
+
+                    $('#latestOrder').html(data);
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error');
+                    }
+                },
+            });
+        });
+
+        //Поиск товара в админке
         $('#searchItem').on('keyup', function(){
             var $result = $('#itemsTable');
             var search = $(this).val();

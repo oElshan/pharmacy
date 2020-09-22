@@ -1,7 +1,9 @@
 package isha.ishop.services.impl;
 
 import isha.ishop.entity.ClientOrder;
+import isha.ishop.entity.Status;
 import isha.ishop.repository.OrderRepo;
+import isha.ishop.repository.StatusRepo;
 import isha.ishop.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     OrderRepo orderRepo;
+
+    @Autowired
+    StatusRepo statusRepo;
 
     public List<ClientOrder>  getAllNewOrders() {
        return orderRepo.findAllByStatusName("new");
@@ -40,14 +45,31 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<ClientOrder> getOrdersLimit(int page, int limit) {
+
        return   orderRepo.findAll(PageRequest.of(page-1,limit, Sort.Direction.DESC,"created"));
-//       return   orderRepo.findALL(PageRequest.of(page-1,limit));
+    }
+
+    @Override
+    public Page<ClientOrder> getOrdersLimit(int page, int limit, String status) {
+
+//      return orderRepo.findAllByStatusSelect(status, PageRequest.of(page - 1, limit, Sort.Direction.DESC, "created"));
+        return orderRepo.findAllByStatusName(status, PageRequest.of(page - 1, limit, Sort.Direction.DESC, "created"));
     }
 
     @Override
     public ClientOrder findOrderByPhone(String phone) {
 
-
         return orderRepo.findAllByClientPhone(phone);
     }
+
+
+    public List<Status>  getAllStatusOrders() {
+        return statusRepo.findAll();
+    }
+
+    @Override
+    public ClientOrder findClientOrderById(long id) {
+        return orderRepo.findById(id);
+    }
+
 }

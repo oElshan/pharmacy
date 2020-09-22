@@ -3,9 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<div >
-
-    <div class="col-xl-8 col-sm-12 col-md-8" th:fragment="dataLatestOrder">
+    <div  th:fragment="dataLatestOrder">
+    <div class="col-xl-12 col-sm-12 col-md-12"  th:fragment="AjaxDataLatestOrder">
         <div class="card">
             <div class="card-body">
                 <h4 class="mt-0 header-title mb-4">Latest Order</h4>
@@ -34,38 +33,45 @@
                                 <!--<p class="font-13 text-muted mb-0">8:26AM</p>-->
                             <!--</td>-->
                             <td th:text="${#arrays.length(order.orderItems)}">$104</td>
-                            <td ><span class="badge  badge-danger" th:text="${order.status.name}"><i class="mdi mdi-checkbox-blank-circle text-primary"></i> new </span></td>
+                            <td >
+                                <!--<a href="#" class="inline-status" data-type="select" data-pk="1" data-value="" data-title="Select status" th:text="${order.status.name}"></a>-->
+
+                                <span class="badge  badge-info " th:text="${order.status.name}" th:class="${order.status.name}=='new'? 'badge  badge-danger':'badge  badge-info'"><i class="mdi mdi-checkbox-blank-circle text-primary"></i> new </span>
+                            </td>
                             <td th:text="${order.created}">
                                 Matthew Drapeau
                             </td>
-                            <!--<td>-->
-                                <!--<div>-->
-                                    <!--<a href="#" class="btn btn-primary btn-sm">update</a>-->
-                                <!--</div>-->
-                            <!--</td>-->
+                            <td>
+                                <a th:href="'/ajax/admin/delete-order?id='+${order.id}"  class="btn btn-danger btn-sm"><i class="ion-android-close" ></i> Delete</a>
+
+                            </td>
+                            <td>
+                                <!--<a th:href="'/ajax/admin/edit-order?id='+${order.id}"  class="btn btn-link btn-sm"><i class="ion-edit" ></i> Edit</a>-->
+                                <a href="javascript:void(0)" order-id="" th:attr="order-id=${order.id}" class="btn btn-link btn-sm"><i class="ion-edit" ></i> Edit</a>
+
+                                    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-xl">Extra large modal</button>-->
+
+                                    <div  th:id="${order.id}"> </div>
+
+
+                            </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <nav aria-label="...">
-                    <ul class="pagination justify-content-center" th:if="${clientOrdersPage.totalPages > 0}" >
+                    <ul class="pagination justify-content-center" id="orders-pagination" th:if="${clientOrdersPage.totalPages > 0}" >
                         <li class="page-item disabled">
                             <a class="page-link" href="#" tabindex="-1">Previous</a>
                         </li>
                         <li th:each="pageNumber : ${pageNumbers}" th:class="${pageNumber==clientOrdersPage.number + 1} ? 'page-item active' : page-item">
-                            <a class="page-link" th:href="@{/admin(page=${pageNumber})}" th:text="${pageNumber}" >1</a>
+                            <a class="page-link" page-number = "" th:attr="page-number=${pageNumber}" th:text="${pageNumber}" >1</a>
                         </li>
                         <li class="page-item disabled" >
                             <a class="page-link" href="#">Next</a>
                         </li>
                     </ul>
                 </nav>
-                <!--<div th:if="${clientOrdersPage.totalPages > 0}" class="pagination">-->
-                    <!--<a th:each="pageNumber : ${pageNumbers}" th:href="@{/listBooks(size=${clientOrdersPage.size}, page=${pageNumber})}"-->
-                       <!--th:text="${pageNumber}"-->
-                       <!--th:class="${pageNumber==clientOrdersPage.number + 1} ? active"></a>-->
-                <!--</div>-->
-
 
             </div>
         </div>

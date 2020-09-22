@@ -3,6 +3,7 @@ package isha.ishop.controllers.ajax;
 import isha.ishop.entity.ClientOrder;
 import isha.ishop.entity.Product;
 import isha.ishop.form.OrderForm;
+import isha.ishop.form.SearchForm;
 import isha.ishop.model.ShoppingCart;
 import isha.ishop.services.ClientService;
 import isha.ishop.services.ProductService;
@@ -10,15 +11,18 @@ import isha.ishop.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Controller
-public class ClientController {
+public class AjaxClientController {
 
     @Autowired
     ClientService clientService;
@@ -48,6 +52,16 @@ public class ClientController {
         return "fragment/orderComplete :: orderComplete";
     }
 
+    @RequestMapping( value = "/ajax/json/search-items",method = RequestMethod.POST, produces = "application/json")
+    public ModelAndView shoppingCartStatus(@RequestBody SearchForm search, ModelMap modelMap) {
+
+        System.out.println(search);
+
+//        List<Product> products = productService.findProductByNameLike(search.getSearchName());
+        List<Product> products = productService.findByNameContaining(search.getSearchName());
+        modelMap.addAttribute("products", products);
+        return new ModelAndView("fragment/dataTableItems :: dataTableItems", modelMap);
+    }
 
 
     /**
@@ -59,7 +73,7 @@ public class ClientController {
      */
 
     @GetMapping("/ajax/json/product/add")
-    public String addShopingCart(@RequestParam("idProduct") long idProduct, HttpSession session) {
+    public String addShoppingCart(@RequestParam("idProduct") long idProduct, HttpSession session) {
 
         System.out.println("запрос принят "+idProduct);
         Product product =  productService.findProductById(idProduct);

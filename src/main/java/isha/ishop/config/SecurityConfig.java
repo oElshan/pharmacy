@@ -49,6 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID");
+        http
+                .rememberMe().key("uniqueAndSecret");
         // TODO: 2020-02-21 post запрос на logout и шифрование паролей
 //        http.csrf()
 //                .disable()

@@ -49,7 +49,7 @@ public class Product {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_specCategory",foreignKey = @ForeignKey(name = "product_spCategory__fk"))
+    @JoinColumn(name = "id_specCategory",foreignKey = @ForeignKey(name = "product_specCategory__fk"))
     public SpecCategory getSpecCategory() {
         return specCategory;
     }

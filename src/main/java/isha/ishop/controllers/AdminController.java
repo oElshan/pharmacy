@@ -2,6 +2,7 @@ package isha.ishop.controllers;
 
 import isha.ishop.entity.ClientOrder;
 import isha.ishop.entity.Product;
+import isha.ishop.entity.Status;
 import isha.ishop.form.EditProductForm;
 import isha.ishop.form.NewProductForm;
 import isha.ishop.services.OrderService;
@@ -29,7 +30,7 @@ import java.util.stream.IntStream;
 @Controller
 public class AdminController {
 
-   private static final Logger logger = LoggerFactory.getLogger("chapters.introduction.HelloWorld1");
+    private static final Logger logger = LoggerFactory.getLogger("chapters.introduction.HelloWorld1");
 
     @Autowired
     ProductService productService;
@@ -38,8 +39,9 @@ public class AdminController {
     OrderService orderService;
 
 
-   @GetMapping(value = "/admin/single-product")
-    public String editItem( Model model) {
+    @GetMapping(value = "/admin/single-product")
+
+    public String editItem(Model model) {
         model.addAttribute("loginError", true);
         return "/single-product";
     }
@@ -50,8 +52,8 @@ public class AdminController {
         Product product = productService.findProductById(id);
         model.addAttribute("editProduct", product);
         model.addAttribute("editProductForm", new EditProductForm());
-        model.addAttribute("specCategoryList",productService.listAllSpecCategory());
-        System.out.println("Product id"+id);
+        model.addAttribute("specCategoryList", productService.listAllSpecCategory());
+        System.out.println("Product id" + id);
         return "edit-items";
     }
 
@@ -59,15 +61,15 @@ public class AdminController {
     public String editItem(@Valid @ModelAttribute("editProductForm") EditProductForm editProductForm, BindingResult bindingResult, Model model) throws IOException {
         Product product = productService.findProductById(editProductForm.getId());
 
-       if (bindingResult.hasErrors()){
-           System.out.println(editProductForm);
-           model.addAttribute("editProduct", product);
-           model.addAttribute("specCategoryList",productService.listAllSpecCategory());
-           return "edit-items";
-       }
-       Product editProduct =  productService.editProduct(editProductForm);
-       model.addAttribute("editProduct", editProduct);
-       model.addAttribute("specCategoryList",productService.listAllSpecCategory());
+        if (bindingResult.hasErrors()) {
+            System.out.println(editProductForm);
+            model.addAttribute("editProduct", product);
+            model.addAttribute("specCategoryList", productService.listAllSpecCategory());
+            return "edit-items";
+        }
+        Product editProduct = productService.editProduct(editProductForm);
+        model.addAttribute("editProduct", editProduct);
+        model.addAttribute("specCategoryList", productService.listAllSpecCategory());
 
 
         System.out.println(product);
@@ -76,15 +78,15 @@ public class AdminController {
     }
 
     @GetMapping(value = "/admin/create/product")
-    public String newProduct( Model model) {
+    public String newProduct(Model model) {
         model.addAttribute("newProductForm", new NewProductForm());
-        model.addAttribute("specCategoryList",productService.listAllSpecCategory());
+        model.addAttribute("specCategoryList", productService.listAllSpecCategory());
         return "create-product";
     }
 
 
     @PostMapping(value = "/admin/create/product")
-    public String createProduct(@Valid @ModelAttribute("newProductForm") NewProductForm newProductForm,BindingResult bindingResult, Model model) {
+    public String createProduct(@Valid @ModelAttribute("newProductForm") NewProductForm newProductForm, BindingResult bindingResult, Model model) {
 
         if (bindingResult != null) {
             logger.info("Ошибка валидации формы товара");
@@ -98,24 +100,25 @@ public class AdminController {
     }
 
 
-
     @RequestMapping(value = "/admin/search-orders", method = RequestMethod.GET)
-    public String showOrders( String name  , Model model, HttpSession session) {
+    public String showOrders(String name, Model model, HttpSession session) {
         return "orders";
     }
 
     @RequestMapping(value = "/admin/items", method = RequestMethod.GET)
-    public String showItems(Model model,HttpSession session) {
+    public String showItems(Model model, HttpSession session) {
 
         return "items";
     }
 
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String adminPage(@RequestParam("page") Optional<Integer> page, Model model, HttpSession session) {
+    public String adminPage(@RequestParam("page") Optional<Integer> page, @RequestParam("select") Optional<String> select, Model model, HttpSession session) {
         int currentPage = page.orElse(1);
-        Page<ClientOrder> clientOrdersPage =orderService.getOrdersLimit(currentPage,10);
-//        ArrayList<Integer> pageNumbers = new ArrayList<Integer>(clientOrdersPage.getTotalPages());
+        String curentSelect = select.orElse("all");
+        Page<ClientOrder> clientOrdersPage = orderService.getOrdersLimit(currentPage, 10);
+        List<Status> statuses = orderService.getAllStatusOrders();
+
         int totalPages = clientOrdersPage.getTotalPages();
 
         if (totalPages > 0) {
@@ -124,16 +127,18 @@ public class AdminController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-        model.addAttribute("clientOrdersPage",clientOrdersPage) ;
+
+        model.addAttribute("statuses", statuses);
+        model.addAttribute("clientOrdersPage", clientOrdersPage);
         model.addAttribute("orders", clientOrdersPage.getContent());
         return "admin";
     }
 
     @GetMapping("/admin/new-orders")
     public ModelAndView showNewOrder(ModelMap model) {
-        List<ClientOrder> clientOrders =  orderService.getAllNewOrders();
+        List<ClientOrder> clientOrders = orderService.getAllNewOrders();
         model.addAttribute("orders", clientOrders);
-        return new ModelAndView("new-orders",model);
+        return new ModelAndView("new-orders", model);
     }
 
 

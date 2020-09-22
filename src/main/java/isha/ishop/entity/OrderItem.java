@@ -24,7 +24,7 @@ public class OrderItem {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_order",foreignKey = @ForeignKey(name = "order_item_order__fk"))
+    @JoinColumn(name = "id_order",foreignKey = @ForeignKey(name = "orderItem_clientOrder_fk"))
     public ClientOrder getClientOrder() {
         return clientOrder;
     }
