@@ -1,6 +1,7 @@
 package isha.ishop.controllers.ajax;
 
 import isha.ishop.entity.ClientOrder;
+import isha.ishop.entity.OrderItem;
 import isha.ishop.entity.Status;
 import isha.ishop.form.EditOrder;
 import isha.ishop.form.SearchForm;
@@ -52,7 +53,14 @@ public class AjaxAdminController {
     public ModelAndView editOrder(@RequestParam long id, ModelMap model) {
 
         ClientOrder clientOrder = orderService.findClientOrderById(id);
+
+        List<OrderItem> orderItems = clientOrder.getOrderItems();
+
+        List<Status> statuses = orderService.getAllStatusOrders();
+
+        model.addAttribute("statuses", statuses);
         model.addAttribute("clientOrder", clientOrder);
+        model.addAttribute("orderItems", orderItems);
 
         return new ModelAndView("fragment/editOrderModal :: editOrderModal", model);
     }

@@ -19,7 +19,7 @@
                                     <div class="card-body">
 
 
-                                        <form  action="/ajax/admin/edit-order" method="post"  enctype="multipart/form-data" >
+                                        <form  action="/ajax/admin/edit-order" method="post"  >
 
                                             <div class="form-group hidden row">
                                                 <div class="col-sm-10">
@@ -28,106 +28,93 @@
                                             </div>
 
                                             <div class="form-group row">
-                                                <label for="name" class="col-sm-2 col-form-label"> Client Name</label>
+                                                <label for="clientName" class="col-sm-2 col-form-label"> Client Name</label>
                                                 <div class="col-sm-4">
-                                                    <input class="form-control" name="clientName" type="text" th:name="clientName" th:value="|*{client.firstName} *{client.lastName}|" id="name" >
+                                                    <input class="form-control" name="clientName" type="text" th:name="clientName" th:value="|*{client.firstName} *{client.lastName}|" id="clientName" >
                                                 </div>
 
-                                                <label for="name" class="col-sm-2 col-form-label"> Client phone</label>
+                                                <label for="clientPhone" class="col-sm-2 col-form-label"> Client phone</label>
                                                 <div class="col-sm-4">
-                                                    <input class="form-control" name="clientPhone" type="text" th:name="clientPhone" th:value="*{client.phone}" id="name" >
+                                                    <input class="form-control" name="clientPhone" type="text" th:name="clientPhone" th:value="*{client.phone}" id="clientPhone" >
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
-                                                <label for="name" class="col-sm-2 col-form-label"> Client address</label>
+                                                <label for="clientAddress" class="col-sm-2 col-form-label"> Client address</label>
                                                 <div class="col-sm-4">
-                                                    <input class="form-control" name="clientAddress" type="text" th:name="clientAddress" th:value="|*{client.streetAddress}; *{client.town}|" id="name" >
+                                                    <input class="form-control" name="clientAddress" type="text" th:name="clientAddress" th:value="|*{client.streetAddress}; *{client.town}|" id="clientAddress" >
                                                 </div>
 
-                                                <label for="name" class="col-sm-2 col-form-label"> Client email</label>
+                                                <label for="clientEmail" class="col-sm-2 col-form-label"> Client email</label>
                                                 <div class="col-sm-4">
-                                                    <input class="form-control" name="clientName" type="text" th:name="clientEmail" th:value="*{client.email}" id="name" >
+                                                    <input class="form-control" name="clientEmail" type="text" th:name="clientEmail" th:value="*{client.email}" id="clientEmail" >
                                                 </div>
                                             </div>
-                                            <!--<div class="form-group row">-->
-                                                <!--<label for="price" class="col-sm-2 col-form-label">Price(Azn)</label>-->
-                                                <!--<div class="col-sm-10">-->
-                                                    <!--<input class="form-control" name="price" type="text" th:value="${editProduct.price}" id="price" th:field="${editProduct.price}">-->
-                                                    <!--<p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="alert alert-danger" >Error field</p>-->
 
-                                                <!--</div>-->
-                                            <!--</div>-->
+                                            <div class="form-group row">
+                                                <label for="clientEmail" class="col-sm-2 col-form-label"> Order status</label>
+                                                <div class="col-sm-4">
+                                                    <select class="form-control" name="orderStatus">
+                                                        <option th:each="status:${statuses}" th:value="${status.name}" th:text="${status.name}"
+                                                                th:selected="${status.name==clientOrder.status.name?true:false}"
+                                                        >Select</option>
+                                                    </select>
+                                                </div>
+                                            </div>
 
-                                            <!--<div class="form-group row">-->
-                                                <!--<label for="elm1" class="col-sm-2 col-form-label">Description</label>-->
-                                                <!--<div class="col-sm-10">-->
-                                                    <!--&lt;!&ndash;<input class="form-control" id="elm1" name="area" type="search"  id="description">&ndash;&gt;-->
-                                                    <!--<textarea id="elm1" name="description" th:value="${editProduct.description}"></textarea>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
 
-                                            <!--<div class="form-group row">-->
-                                                <!--<label for="date" class="col-sm-2 col-form-label">Date</label>-->
-                                                <!--<div class="col-sm-10">-->
-                                                    <!--<input class="form-control" type="text" name="dateCreation" placeholder="Date" id="date">-->
-                                                <!--</div>-->
-                                                <!--&lt;!&ndash; input-group &ndash;&gt;-->
-                                            <!--</div>-->
 
-                                            <!--<div class="form-group row">-->
-                                                <!--<label class="col-sm-2 col-form-label">Catalog(Category)</label>-->
-                                                <!--<div class="col-sm-10">-->
-                                                    <!--<select class="form-control" name="category" >-->
-                                                        <!--<option th:each="category:${#servletContext.getAttribute('CATEGORY_LIST')}" th:value="${category.name}" th:text="${category.name}"-->
-                                                        <!--&lt;!&ndash;th:selected="${category.name==editProduct.subcategory.name?true:false}"&ndash;&gt;-->
-                                                        <!--&gt;Select</option>-->
-                                                        <!--&lt;!&ndash;<option th:each="category:${#servletContext.getAttribute('CATEGORY_LIST')}"&ndash;&gt;-->
-                                                        <!--&lt;!&ndash;th:text="${category.name==editProduct.subcategory}?${editProduct.subcategory}:${category.name}"&ndash;&gt;-->
-                                                        <!--&lt;!&ndash;&gt;Select</option>&ndash;&gt;-->
-                                                    <!--</select>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
 
-                                            <!--<div class="form-group row">-->
-                                                <!--<label class="col-sm-2 col-form-label">Special Category</label>-->
-                                                <!--<div class="col-sm-10">-->
-                                                    <!--<select class="form-control" name="specCategory">-->
-                                                        <!--<option th:each="category:${specCategoryList}" th:value="${category.name}" th:text="${category.name}"-->
-                                                                <!--th:selected="${category.name==editProduct.specCategory.name?true:false}"-->
-                                                        <!--&gt;Select</option>-->
-                                                    <!--</select>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
+                                            <!---->
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="card m-b-20">
+                                                        <div class="card-body">
 
-                                            <!--<div class="form-group row">-->
-                                                <!--<label class="col-sm-2 col-form-label">Visible</label>-->
-                                                <!--<div class="col-sm-10">-->
-                                                    <!--<input type="checkbox" id="switch1" name="visible" switch="none" checked/>-->
-                                                    <!--<label for="switch1" data-on-label="On"-->
-                                                           <!--data-off-label="Off"></label>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
+                                                            <h4 class="mt-0 header-title">Shopping cart</h4>
 
-                                            <!--<div class="form-group row">-->
-                                                <!--<label for="photo" class="col-sm-2 col-form-label">Product photo</label>-->
-                                                <!--<div class="col-sm-10">-->
-                                                    <!--&lt;!&ndash;<h4 class="mt-0 header-title">Photo product</h4>&ndash;&gt;-->
+                                                            <table class="table mb-0">
+                                                                <thead class="thead-default">
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>Name</th>
+                                                                    <th>Count</th>
+                                                                    <th>Cost</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <th scope="row">
+                                                                                <div class="media m-b-30">
+                                                                                    <img class="d-flex mr-3 shadow rounded-0" src="/static/images/products/fuflomicin.jpg" alt="Generic placeholder image" height="64">
+                                                                                </div>
+                                                                    </th>
+                                                                    <td>Mark</td>
+                                                                    <td>
+                                                                        <input id="demo0" type="text" value="55" name="demo0" data-bts-min="0" data-bts-max="100" data-bts-init-val="" data-bts-step="1" data-bts-decimal="0" data-bts-step-interval="100" data-bts-force-step-divisibility="round" data-bts-step-interval-delay="500" data-bts-prefix="" data-bts-postfix="" data-bts-prefix-extra-class="" data-bts-postfix-extra-class="" data-bts-booster="true" data-bts-boostat="10" data-bts-max-boosted-step="false" data-bts-mousewheel="true" data-bts-button-down-class="btn btn-default" data-bts-button-up-class="btn btn-default"/>
 
-                                                    <!--<div class="m-b-30">-->
-                                                        <!--<div class="fallback">-->
-                                                            <!--<input id="photo" name="photo" type="file" multiple="multiple" >-->
-                                                        <!--</div>-->
-                                                    <!--</div>-->
+                                                                    </td>
+                                                                    <td>@mdo</td>
+                                                                    <td>
+                                                                        <a href="/ajax/admin/delete-order?id="  class="btn btn-danger btn-sm"><i class="ion-android-close" ></i> Delete</a>
 
-                                                    <!--&lt;!&ndash;<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" id="example-text-input-sm">&ndash;&gt;-->
-                                                <!--</div>-->
-                                            <!--</div>-->
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
 
                                             <div class="text-center m-t-15">
-                                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Send Files</button>
+                                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Save changes</button>
                                             </div>
                                         </form>
+
 
 
 

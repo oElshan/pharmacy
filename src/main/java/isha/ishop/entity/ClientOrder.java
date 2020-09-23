@@ -18,6 +18,8 @@ public class ClientOrder implements Serializable {
     private Client client;
     @JsonView(Views.Public.class)
     private List<OrderItem> orderItems;
+    @JsonView(Views.Public.class)
+    private Status status;
 
     private Date created;
 
@@ -30,8 +32,7 @@ public class ClientOrder implements Serializable {
         this.created = created;
     }
 
-    @JsonView(Views.Public.class)
-    private Status status;
+
 
 
     @ManyToOne(fetch = FetchType.EAGER)
