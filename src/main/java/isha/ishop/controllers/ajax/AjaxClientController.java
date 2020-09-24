@@ -35,7 +35,7 @@ public class AjaxClientController {
 
 
         if (bindingResult.hasErrors()) {
-            return "fragment/checkout_page :: checkout";
+            return "fragment/checkout-page :: checkout";
         }
         System.out.println(orderForm);
         ShoppingCart shoppingCart = (ShoppingCart) session.getAttribute(Constants.CURRENT_SHOPPING_CART);
@@ -49,7 +49,7 @@ public class AjaxClientController {
         model.addAttribute("clientOrder", clientOrder);
         System.out.println(clientOrder);
 
-        return "fragment/orderComplete :: orderComplete";
+        return "fragment/order-complete :: order-complete";
     }
 
     @RequestMapping( value = "/ajax/json/search-items",method = RequestMethod.POST, produces = "application/json")
@@ -60,7 +60,7 @@ public class AjaxClientController {
 //        List<Product> products = productService.findProductByNameLike(search.getSearchName());
         List<Product> products = productService.findByNameContaining(search.getSearchName());
         modelMap.addAttribute("products", products);
-        return new ModelAndView("fragment/dataTableItems :: dataTableItems", modelMap);
+        return new ModelAndView("fragment/data-table-items :: data-table-items", modelMap);
     }
 
 
@@ -83,7 +83,7 @@ public class AjaxClientController {
         shoppingCart.addProduct(product,1);
         session.setAttribute(Constants.CURRENT_SHOPPING_CART, shoppingCart);
 /** возвращаем из  sopingCart.html  фрагемент shopingCart */
-        return "fragment/shopingCart :: shopingCart";
+        return "fragment/shopping-cart :: shopping-cart";
     }
 
 }

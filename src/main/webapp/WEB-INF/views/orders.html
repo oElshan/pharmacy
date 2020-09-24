@@ -28,10 +28,10 @@
         <!-- Begin page -->
         <div id="wrapper">
             <!-- Top Bar Start -->
-            <div th:replace="~{templates/adminTempl :: topbar}"> </div>
+            <div th:replace="~{templates/admin/adminTempl :: topbar}"> </div>
             <!-- Top Bar End -->
             <!-- ========== Left Sidebar Start ========== -->
-            <div th:replace="~{templates/adminTempl :: side-menu}"> </div>
+            <div th:replace="~{templates/admin/adminTempl :: side-menu}"> </div>
             <!-- Left Sidebar End -->
             <!-- ============================================================== -->
             <!-- Start right Content here -->
@@ -83,19 +83,19 @@
                                                 <!--<div id="search_box-result"></div>-->
                                             </div>
 
-                                            <div class="row" id="ordersTable" th:insert="~{fragment/dataTableOrders :: dataTableOrders}"></div>
+                                            <div class="row" id="ordersTable" th:insert="~{fragment/data-table-orders :: data-table-orders}"></div>
 
 
                                             <!--<div class="table-rep-plugin">-->
                                             <!--<div class="table-responsive b-0" data-pattern="priority-columns">-->
-                                            <!--<table th:insert="~{fragment/dataTableItems :: dataTableItems}"  id="tech-companies-1" class="table  table-striped" ></table>-->
+                                            <!--<table th:insert="~{fragment/data-table-items :: data-table-items}"  id="tech-companies-1" class="table  table-striped" ></table>-->
 
                                             <!--</div>-->
 
                                             <!--</div>-->
 
 
-                                            <!--<table th:insert="~{fragment/dataTableItems :: dataTableItems}"  id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;"></table>-->
+                                            <!--<table th:insert="~{fragment/data-table-items :: data-table-items}"  id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;"></table>-->
 
 
                                         </div>

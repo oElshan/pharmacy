@@ -62,7 +62,7 @@ public class AjaxAdminController {
         model.addAttribute("clientOrder", clientOrder);
         model.addAttribute("orderItems", orderItems);
 
-        return new ModelAndView("fragment/editOrderModal :: editOrderModal", model);
+        return new ModelAndView("fragment/edit-order-modal :: edit-order-modal", model);
     }
 
     @RequestMapping(path = "/ajax/admin/edit-order", method = RequestMethod.POST, produces = "application/json")
@@ -70,7 +70,7 @@ public class AjaxAdminController {
         System.out.println(editOrder);
 
 
-        return new ModelAndView("fragment/editOrderModal :: editOrderModal", model);
+        return new ModelAndView("fragment/edit-order-modal :: edit-order-modal", model);
     }
 
     @RequestMapping(path = "/ajax/admin", method = RequestMethod.GET)
@@ -93,7 +93,7 @@ public class AjaxAdminController {
         model.addAttribute("clientOrdersPage",clientOrdersPage) ;
         model.addAttribute("orders", clientOrdersPage.getContent());
 
-        return  "fragment/dataLatestOrder :: AjaxDataLatestOrder";
+        return  "fragment/data-latest-order :: AjaxDataLatestOrder";
     }
 
 
@@ -104,6 +104,6 @@ public class AjaxAdminController {
         List<ClientOrder> orders = orderService.findOrderByName(search.getSearchName());
         modelMap.addAttribute("orders", orders);
 
-        return new ModelAndView("fragment/dataTableOrders :: dataTableOrders", modelMap);
+        return new ModelAndView("fragment/data-table-orders :: data-table-orders", modelMap);
     }
 }

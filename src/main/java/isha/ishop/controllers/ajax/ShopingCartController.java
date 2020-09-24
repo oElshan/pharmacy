@@ -31,13 +31,13 @@ public class ShopingCartController {
        shoppingCart.removeProduct(idProduct,1);
        session.setAttribute(Constants.CURRENT_SHOPPING_CART,shoppingCart);
 
-        return "fragment/shopingCart :: shopingCart";
+        return "fragment/shopping-cart :: shopping-cart";
     }
 
     @GetMapping("/ajax/deleteItemFromShoppingCart")
     public String deleteItemFromShoppingCartView(HttpSession session) {
 
-        return "fragment/viewShoppingCart :: viewSoppingCart";
+        return "fragment/view-shopping-cart :: view-sopping-cart";
     }
 
 }
