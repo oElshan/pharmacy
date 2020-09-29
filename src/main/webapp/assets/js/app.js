@@ -80,8 +80,8 @@
                 type: 'GET',
                 url: '/ajax/admin/edit-order?id='+orderId,
                 success: function (data) {
-                    $('#'+orderId).html(data);
-                    $('#'+orderId+' .bd-example-modal-lg').modal('show');
+                    $('#edit-order-modal').html(data);
+                    $('#edit-order-modal .bd-example-modal-lg').modal('show');
                 },
                 error : function(xhr) {
                     if (xhr.status == 400) {
@@ -93,10 +93,56 @@
             });
 
         });
-        $(document).on('click', '#latestOrder .btn-sm', function () {
 
 
+        // //Submit the order changes to a server
+        var editClientsOrder = function (orderForm) {
+
+            $.ajax({
+                url : '/ajax/admin/edit-order',
+                method : 'POST',
+                contentType: 'application/json',
+                data:   JSON.stringify(orderForm),
+                dataType: "html",
+                success : function(data) {
+                    $('#js-load>.spinner-grow').addClass('d-none');
+                    $('#edit-order-modal').html(data);
+                    $('#edit-order-modal .bd-example-modal-lg').modal('show');
+                    // $('#'+orderId).html(data);
+                    // $('#'+orderId+' .bd-example-modal-lg').modal('+show');
+
+
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error new clients order');
+                        alert(JSON.stringify(orderForm));
+                    }
+                }
+            });
+
+        };
+
+
+        $(document).on('click', '#js-load', function () {
+
+            $('#js-load>.spinner-grow').removeClass('d-none');
+
+            var orderForm = {
+                "id": $('[name="id"]').val(),
+                "clientName": $('[name="clientName"]').val(),
+                "clientPhone": $('[name="clientPhone"]').val(),
+                "clientAddress": $('[name="clientAddress"]').val(),
+                "clientEmail": $('[name="clientEmail"]').val(),
+                "orderStatus": $('[name="orderStatus"]').val()
+            };
+            editClientsOrder(orderForm);
+
+            // editClientsOrder(orderForm);
         });
+
 
         //загрузка ордеров в dashboard
         $(document).on('click', '.page-link', function () {

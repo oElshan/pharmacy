@@ -8,6 +8,8 @@ import isha.ishop.form.SearchForm;
 import isha.ishop.model.OrderStatus;
 import isha.ishop.services.ProductService;
 import isha.ishop.services.impl.OrderServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ import java.util.stream.IntStream;
 
 @Controller
 public class AjaxAdminController {
+    private static final Logger logger = LoggerFactory.getLogger(AjaxAdminController.class);
+
 
     @Autowired
     OrderServiceImpl orderService;
@@ -65,10 +69,19 @@ public class AjaxAdminController {
         return new ModelAndView("fragment/edit-order-modal :: edit-order-modal", model);
     }
 
-    @RequestMapping(path = "/ajax/admin/edit-order", method = RequestMethod.POST, produces = "application/json")
-    public ModelAndView changeOrder(@Valid @ModelAttribute EditOrder editOrder, ModelMap model) {
-        System.out.println(editOrder);
+    @RequestMapping(path = "/ajax/admin/edit-order", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    public ModelAndView changeOrder(@Valid @RequestBody EditOrder editOrder, ModelMap model) {
+        logger.info(editOrder.toString());
 
+        ClientOrder clientOrder = orderService.findClientOrderById(editOrder.getId());
+
+        List<OrderItem> orderItems = clientOrder.getOrderItems();
+
+        List<Status> statuses = orderService.getAllStatusOrders();
+
+        model.addAttribute("statuses", statuses);
+        model.addAttribute("clientOrder", clientOrder);
+        model.addAttribute("orderItems", orderItems);
 
         return new ModelAndView("fragment/edit-order-modal :: edit-order-modal", model);
     }
