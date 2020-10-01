@@ -91,10 +91,11 @@
                                                                         </div>
                                                                     </th>
                                                                     <td th:text="${orderItem.product.name}">Mark</td>
-                                                                    <td>
-                                                                        <input class="form-control" name="productCount" type="text" th:name="productCount" th:value="${orderItem.count}" >
-
+                                                                    <td >
+                                                                        <input class="form-control col-lg-4" name="productCount" type="text" th:name="productCount" th:value="${orderItem.count}" >
+                                                                        <a href="/ajax/admin/delete-order?id="  class="btn btn-success btn-sm col-lg-4"><i class="ion-e dit" ></i> change</a>
                                                                     </td>
+
                                                                     <td th:text="|${orderItem.product.price*orderItem.count} Azn|">@mdo</td>
                                                                     <td>
                                                                         <a href="/ajax/admin/delete-order?id="  class="btn btn-danger btn-sm"><i class="ion-android-close" ></i> Delete</a>
