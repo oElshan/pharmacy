@@ -9,6 +9,8 @@ import java.util.List;
 public interface OrderService {
     List<ClientOrder> getAllNewOrders();
 
+
+
     long getCountNewOrders(String status);
 
     List<ClientOrder> getTodayOrder();
@@ -24,6 +26,8 @@ public interface OrderService {
     List<Status> getAllStatusOrders();
 
     ClientOrder findClientOrderById(long id);
+
+    public ClientOrder updateClientOrderItem(long orderId, long productId, int count);
 
 
 }

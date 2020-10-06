@@ -14,7 +14,7 @@
 
         /** изменямемая форма использует библиотеку https://vitalets.github.io/x-editable/
          * изменение статуса ордера в LatestOrder не допилино
-        **/
+         **/
         // $.fn.editableform.buttons =
         //     '<button type="submit" class="btn btn-success editable-submit btn-sm waves-effect waves-light"><i class="mdi mdi-check"></i></button>' +
         //     '<button type="button" class="btn btn-danger editable-cancel btn-sm waves-effect waves-light"><i class="mdi mdi-close"></i></button>';
@@ -45,10 +45,45 @@
         //     }
         // });
 
+        $(document).on('click', '.order-count', function () {
+            // var productCount = $('[name="productCount"]').val();
+            // var productId  = $(this).attr('product-id');
+            // var orderId  = $(this).attr('order-id');
+            // alert(productCount);
+            // alert(productId);
+            // alert(orderId);
+            var productId = $(this).attr('product-id');
 
+            var editOrderItem = {
+                "productCount":$('.'+productId).val(),
+                "productId": $(this).attr('product-id'),
+                "orderId": $(this).attr('order-id')
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/ajax/admin/edit-order-item',
+                contentType: 'application/json',
+                data:   JSON.stringify(editOrderItem),
+                success: function (data) {
+                    $('#edit-order-modal').html(data);
+                    $('#edit-order-modal .bd-example-modal-lg').modal('show');
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error');
+                    }
+                },
+            });
+
+
+
+        });
 
         //проверка новых ордеров
-        var interval = 5000;  // 1000 = 1 second, 3000 = 3 seconds
+        var interval = 20000;  // 1000 = 1 second, 3000 = 3 seconds
         function doAjax() {
             $.ajax({
                 dataType: "json",
@@ -74,7 +109,7 @@
         setTimeout(doAjax, interval);
 
         //здесь будет изменение ордера и вызов модалки edit order
-        $(document).on('click', '#latestOrder .btn-sm', function () {
+        $(document).on('click', '#ordersTable .btn-sm', function () {
             var orderId = $(this).attr("order-id");
             $.ajax({
                 type: 'GET',
@@ -107,11 +142,7 @@
                 success : function(data) {
                     $('#js-load>.spinner-grow').addClass('d-none');
                     $('#edit-order-modal').html(data);
-                    $('#edit-order-modal .bd-example-modal-lg').modal('show');
-                    // $('#'+orderId).html(data);
-                    // $('#'+orderId+' .bd-example-modal-lg').modal('+show');
-
-
+                    $('#edit-order-modal .bd-example-modal-lg').modal('show ');
                 },
                 error : function(xhr) {
                     if (xhr.status == 400) {
@@ -153,7 +184,7 @@
                 url: '/ajax/admin?page=' + pageNumber + '&select=' + selectOrders,
                 success: function (data) {
 
-                    $('#latestOrder').html(data);
+                    $('#ordersTable').html(data);
                 },
                 error : function(xhr) {
                     if (xhr.status == 400) {

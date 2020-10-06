@@ -4,10 +4,11 @@ import isha.ishop.entity.ClientOrder;
 import isha.ishop.entity.OrderItem;
 import isha.ishop.entity.Status;
 import isha.ishop.form.EditOrder;
+import isha.ishop.form.EditOrderItem;
 import isha.ishop.form.SearchForm;
 import isha.ishop.model.OrderStatus;
+import isha.ishop.services.OrderService;
 import isha.ishop.services.ProductService;
-import isha.ishop.services.impl.OrderServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,7 +35,7 @@ public class AjaxAdminController {
 
 
     @Autowired
-    OrderServiceImpl orderService;
+    OrderService orderService;
 
     @Autowired
     ProductService productService;
@@ -53,8 +57,23 @@ public class AjaxAdminController {
     }
 
 
+    @RequestMapping(path = "/ajax/admin/edit-order-item", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    public String editOrderItem (@Valid @RequestBody EditOrderItem editOrderItem, BindingResult bindingResult , RedirectAttributes redirAttr, ModelMap model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("editOrderItem", editOrderItem);
+            model.addAttribute("bindingResult", bindingResult);
+            return "redirect:/ajax/admin/edit-order?id=" + editOrderItem.getOrderId();
+
+        }
+
+        ClientOrder clientOrder =  orderService.updateClientOrderItem(editOrderItem.getOrderId(), editOrderItem.getProductId(), Integer.parseInt(editOrderItem.getProductCount()));
+        return "redirect:/ajax/admin/edit-order?id="+editOrderItem.getOrderId() ;
+    }
+
     @RequestMapping(path = "/ajax/admin/edit-order", method = RequestMethod.GET)
     public ModelAndView editOrder(@RequestParam long id, ModelMap model) {
+
 
         ClientOrder clientOrder = orderService.findClientOrderById(id);
 
@@ -62,9 +81,17 @@ public class AjaxAdminController {
 
         List<Status> statuses = orderService.getAllStatusOrders();
 
+        BigDecimal totalCost = BigDecimal.ZERO;
+        for (OrderItem orderItem : orderItems) {
+            totalCost =  totalCost.add(orderItem.getProduct().getPrice());
+        }
+
         model.addAttribute("statuses", statuses);
         model.addAttribute("clientOrder", clientOrder);
         model.addAttribute("orderItems", orderItems);
+        model.addAttribute("editOrderItem", new EditOrderItem());
+        model.addAttribute("totalCost", totalCost);
+
 
         return new ModelAndView("fragment/edit-order-modal :: edit-order-modal", model);
     }
@@ -77,11 +104,17 @@ public class AjaxAdminController {
 
         List<OrderItem> orderItems = clientOrder.getOrderItems();
 
+        BigDecimal totalCost = BigDecimal.ZERO;
+        for (OrderItem orderItem : orderItems) {
+            totalCost.add(orderItem.getProduct().getPrice());
+        }
+
         List<Status> statuses = orderService.getAllStatusOrders();
 
         model.addAttribute("statuses", statuses);
         model.addAttribute("clientOrder", clientOrder);
         model.addAttribute("orderItems", orderItems);
+        model.addAttribute("totalCost", totalCost);
 
         return new ModelAndView("fragment/edit-order-modal :: edit-order-modal", model);
     }

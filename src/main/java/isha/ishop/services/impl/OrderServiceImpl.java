@@ -1,20 +1,26 @@
 package isha.ishop.services.impl;
 
 import isha.ishop.entity.ClientOrder;
+import isha.ishop.entity.OrderItem;
 import isha.ishop.entity.Status;
 import isha.ishop.repository.OrderRepo;
 import isha.ishop.repository.StatusRepo;
 import isha.ishop.services.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Autowired
     OrderRepo orderRepo;
@@ -22,6 +28,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     StatusRepo statusRepo;
 
+
+
+    @Override
     public List<ClientOrder>  getAllNewOrders() {
        return orderRepo.findAllByStatusName("new");
     }
@@ -63,6 +72,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    @Override
     public List<Status>  getAllStatusOrders() {
         return statusRepo.findAll();
     }
@@ -72,4 +82,20 @@ public class OrderServiceImpl implements OrderService {
         return orderRepo.findById(id);
     }
 
+
+    @Transactional
+    @Override
+    public ClientOrder updateClientOrderItem(long orderId, long productId, int count) {
+        ClientOrder clientOrder = orderRepo.findById(orderId);
+        List<OrderItem> orderItems = clientOrder.getOrderItems();
+        for (OrderItem orderItem : orderItems) {
+            int index = orderItems.indexOf(orderItem);
+            if (orderItem.getId() == productId) {
+                orderItem.setCount(count);
+                orderItems.set(index, orderItem);
+            }
+        }
+        clientOrder.setOrderItems(orderItems);
+        return orderRepo.save(clientOrder);
+    }
 }

@@ -84,7 +84,7 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                <tr th:each="orderItem:${orderItems}">
+                                                                <tr th:each="orderItem:${orderItems}"  th:id="${orderItem.id}" >
                                                                     <th scope="row">
                                                                         <div class="media m-b-30">
                                                                             <img class="d-flex mr-3 shadow rounded-0" src="/static/images/products/fuflomicin.jpg" alt="Generic placeholder image" height="64">
@@ -92,8 +92,10 @@
                                                                     </th>
                                                                     <td th:text="${orderItem.product.name}">Mark</td>
                                                                     <td >
-                                                                        <input class="form-control col-lg-4" name="productCount" type="text" th:name="productCount" th:value="${orderItem.count}" >
-                                                                        <a href="/ajax/admin/delete-order?id="  class="btn btn-success btn-sm col-lg-4"><i class="ion-e dit" ></i> change</a>
+                                                                        <input th:class="|form-control col-lg-4 ${orderItem.id}|" name="productCount" type="text" th:name="productCount" th:value="${orderItem.count}" >
+                                                                        <!--<p th:if="${#fields.hasErrors('productCount')}" th:errors="*{productCount}"></p>-->
+                                                                        <!--<p th:if="${bindingResult.hasErrors}" >Error</p>-->
+                                                                        <a  href="javascript:void(0)" class="order-count btn btn-success btn-sm col-lg-4"   product-id="" order-id="" th:attr="order-id=${clientOrder.id},product-id=${orderItem.id}" ><i class="ion-edit" ></i> change</a>
                                                                     </td>
 
                                                                     <td th:text="|${orderItem.product.price*orderItem.count} Azn|">@mdo</td>
@@ -101,7 +103,9 @@
                                                                         <a href="/ajax/admin/delete-order?id="  class="btn btn-danger btn-sm"><i class="ion-android-close" ></i> Delete</a>
 
                                                                     </td>
+
                                                                 </tr>
+
                                                                 </tbody>
                                                             </table>
 
@@ -113,6 +117,11 @@
 
 
                                         </form>
+
+                                        <div class="text-right m-t-15">
+                                                <span class="h2 text-primary" th:text="|Total cost = ${totalCost} Azn|"> </span>
+
+                                        </div>
 
                                         <div class="text-center m-t-15">
                                             <button class="btn btn-primary" type="button" id="js-load">
