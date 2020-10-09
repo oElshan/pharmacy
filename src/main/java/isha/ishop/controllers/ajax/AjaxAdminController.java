@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.math.BigDecimal;
@@ -58,38 +59,43 @@ public class AjaxAdminController {
 
 
     @RequestMapping(path = "/ajax/admin/edit-order-item", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    public String editOrderItem (@Valid @RequestBody EditOrderItem editOrderItem, BindingResult bindingResult , RedirectAttributes redirAttr, ModelMap model) {
+    public String editOrderItem (@Valid @RequestBody EditOrderItem editOrderItem, BindingResult bindingResult, RedirectAttributes redirectAttributes ) {
+
+
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("editOrderItem", editOrderItem);
-            model.addAttribute("bindingResult", bindingResult);
-            return "redirect:/ajax/admin/edit-order?id=" + editOrderItem.getOrderId();
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editOrderItem",  bindingResult);
+            redirectAttributes.addFlashAttribute("editOrderItem",  editOrderItem);
 
+            return "redirect:/ajax/admin/edit-order?id="+editOrderItem.getOrderId() ;
         }
 
+
         ClientOrder clientOrder =  orderService.updateClientOrderItem(editOrderItem.getOrderId(), editOrderItem.getProductId(), Integer.parseInt(editOrderItem.getProductCount()));
+
         return "redirect:/ajax/admin/edit-order?id="+editOrderItem.getOrderId() ;
     }
 
     @RequestMapping(path = "/ajax/admin/edit-order", method = RequestMethod.GET)
-    public ModelAndView editOrder(@RequestParam long id, ModelMap model) {
+    public ModelAndView editOrder(@RequestParam long id, ModelMap model, HttpServletRequest request) {
 
+
+        if (!model.containsAttribute("editOrderItem")) {
+            model.addAttribute("editOrderItem", new EditOrderItem());
+        }
 
         ClientOrder clientOrder = orderService.findClientOrderById(id);
-
         List<OrderItem> orderItems = clientOrder.getOrderItems();
-
         List<Status> statuses = orderService.getAllStatusOrders();
 
         BigDecimal totalCost = BigDecimal.ZERO;
         for (OrderItem orderItem : orderItems) {
-            totalCost =  totalCost.add(orderItem.getProduct().getPrice());
+            totalCost = totalCost.add(orderItem.getProduct().getPrice().multiply(BigDecimal.valueOf(orderItem.getCount())));
         }
 
         model.addAttribute("statuses", statuses);
         model.addAttribute("clientOrder", clientOrder);
         model.addAttribute("orderItems", orderItems);
-        model.addAttribute("editOrderItem", new EditOrderItem());
         model.addAttribute("totalCost", totalCost);
 
 

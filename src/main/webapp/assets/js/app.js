@@ -109,7 +109,7 @@
         setTimeout(doAjax, interval);
 
         //здесь будет изменение ордера и вызов модалки edit order
-        $(document).on('click', '#ordersTable .btn-sm', function () {
+        $(document).on('click', '#ordersTable .edit-order', function () {
             var orderId = $(this).attr("order-id");
             $.ajax({
                 type: 'GET',
