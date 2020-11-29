@@ -48,7 +48,7 @@ public class RootConfig {
         adapter.setDatabase(Database.MYSQL);
         adapter.setShowSql(false);
         adapter.setGenerateDdl(true);
-        adapter.setDatabasePlatform("org.hibernate.dialect.MySQL5Dialect");
+        adapter.setDatabasePlatform("org.hibernate.dialect.MySQL8Dialect");
         return adapter;
     }
     @Bean
@@ -60,20 +60,22 @@ public class RootConfig {
     }
 
     @Bean
-    public EntityManagerFactory entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+
+
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setJpaProperties(getHibernateProperties());
         emf.setDataSource(dataSource());
         emf.setJpaVendorAdapter(getJpaVendorAdapter());
         emf.setPackagesToScan("isha.ishop.entity");
         emf.afterPropertiesSet();
-        return emf.getNativeEntityManagerFactory();
+        return emf;
     }
 
     @Bean
-    public JpaTransactionManager transactionManager() {
+    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
-        jpaTransactionManager.setEntityManagerFactory(entityManagerFactory());
+        jpaTransactionManager.setEntityManagerFactory(entityManagerFactory);
         return jpaTransactionManager;
     }
 

@@ -30,7 +30,7 @@ import java.util.stream.IntStream;
 @Controller
 public class AdminController {
 
-    private static final Logger logger = LoggerFactory.getLogger("chapters.introduction.HelloWorld1");
+    private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     @Autowired
     ProductService productService;
@@ -46,7 +46,7 @@ public class AdminController {
         return "/single-product";
     }
 
-    @GetMapping(value = "/admin/editItem{id}")
+    @GetMapping(value = "/admin/editItem")
     public String viewEditItem(@RequestParam("id") Long id, Model model) {
 
         Product product = productService.findProductById(id);
@@ -140,6 +140,16 @@ public class AdminController {
         model.addAttribute("orders", clientOrders);
         return new ModelAndView("new-orders", model);
     }
+
+
+    @GetMapping("/admin/orders/delete")
+    public String deleteOrder(@RequestParam("id") Long id, ModelMap model)  {
+        logger.info("...........................................deleting client order N"+id);
+        orderService.deleteOrder(id);
+
+        return "redirect:/admin";
+    }
+
 
 
 }

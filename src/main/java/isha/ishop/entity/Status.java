@@ -12,7 +12,7 @@ public class Status {
     private List<ClientOrder> clientOrders;
 
 
-    @OneToMany(mappedBy = "status", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "status", fetch = FetchType.LAZY, cascade =  {CascadeType.PERSIST,CascadeType.MERGE})
     public List<ClientOrder> getClientOrders() {
         return clientOrders;
     }

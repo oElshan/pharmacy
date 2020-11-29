@@ -2,6 +2,7 @@ package isha.ishop.controllers.ajax;
 
 import isha.ishop.entity.ClientOrder;
 import isha.ishop.entity.Product;
+import isha.ishop.entity.SpecCategory;
 import isha.ishop.form.OrderForm;
 import isha.ishop.form.SearchForm;
 import isha.ishop.model.ShoppingCart;
@@ -16,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.math.BigDecimal;
@@ -28,6 +30,9 @@ public class AjaxClientController {
     ClientService clientService;
     @Autowired
     ProductService productService;
+
+    @Autowired
+    ServletContext servletContext;
 
 
     @RequestMapping(value = "ajax/client/order", method = RequestMethod.POST, produces = "application/json")
@@ -85,5 +90,16 @@ public class AjaxClientController {
 /** возвращаем из  sopingCart.html  фрагемент shopingCart */
         return "fragment/shopping-cart :: shopping-cart";
     }
+
+    @GetMapping("/ajax/products")
+    public String getProductsListForSpecCategory(@RequestParam("idCatalog") int idCatalog, Model model) {
+        List<SpecCategory> specCategories = (List<SpecCategory>) servletContext.getAttribute(Constants.SPECCATEGORY_LIST);
+        model.addAttribute("specCategory", specCategories.get(idCatalog-1));
+        model.addAttribute("products", productService.listAllProductsForSpecCategory(idCatalog, 1, Constants.MAX_PRODUCTS_PER_HTML_PAGE));
+
+
+        return "fragment/products-list-home :: products";
+    }
+
 
 }

@@ -7,7 +7,7 @@ public class EditOrderItem {
 
 
     @NotEmpty
-    @Pattern(regexp = "^\\d+$")
+    @Pattern(regexp = "^\\d+$",message = "Error, only use integers")
     private String productCount;
     private long productId;
     private long orderId;

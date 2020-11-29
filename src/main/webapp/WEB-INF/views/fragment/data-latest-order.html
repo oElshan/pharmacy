@@ -42,7 +42,20 @@
                                 Matthew Drapeau
                             </td>
                             <td>
-                                <a th:href="'/ajax/admin/delete-order?id='+${order.id}"  class="btn btn-danger btn-sm"><i class="ion-android-close" ></i> Delete</a>
+                                <button type="button" class="btn btn-danger btn-sm " th:id="${order.id}" data-toggle="modal" ><i class="ion-android-close"></i> Delete</button>
+                                <div  th:class="'modal fade '+${order.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="alert alert-danger text-center h4" role="alert" th:text="|Delete order No ${order.id}?|">Are you sure?</div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a  class="btn btn-danger .delete-order"  th:href = "'/admin/orders/delete?id='+${order.id}">Yes</a>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </td>
                             <td>
@@ -67,7 +80,7 @@
                         <li th:each="pageNumber : ${pageNumbers}" th:class="${pageNumber==clientOrdersPage.number + 1} ? 'page-item active' : page-item">
                             <a class="page-link" page-number = "" th:attr="page-number=${pageNumber}" th:text="${pageNumber}" href="javascript:void(0)" >1</a>
                         </li>
-                        <li class="page-item" >
+                        <li class="page-item disabled" >
                             <a class="page-link" href="#">Next</a>
                         </li>
                     </ul>

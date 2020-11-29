@@ -85,6 +85,37 @@
         //     // });
         //     return false;
         // })
+        $(document).on('click', '#products-category a', function () {
+            var idCatalog = $(this).attr('id-speccategory');
+            showProductListBySpecCatalog(idCatalog);
+        });
+
+        var showProductListBySpecCatalog = function (idCatalog) {
+
+            $.ajax({
+                url : '/ajax/products?idCatalog='+idCatalog,
+                method : 'GET',
+                cache: false,
+                success : function(productList) {
+
+                    $('#products').html(productList);
+                    echo.init({
+                        offset: 100,
+                        throttle: 250,
+                        unload: false
+                    });
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error');
+                    }
+                }
+            });
+
+        };
+
 
 
 
@@ -95,7 +126,7 @@
                 method : 'GET',
                 cache: false,
                 success : function(shoppingCart) {
-                    $('#shoppingCart').html(shoppingCart);
+                    $('.shoppingCart').html(shoppingCart);
                 },
                 error : function(xhr) {
                     if (xhr.status == 400) {
@@ -116,7 +147,7 @@
                 method : 'GET',
                 cache: false,
                 success : function(shoppingCart) {
-                    $('#shoppingCart').html(shoppingCart);
+                    $('.shoppingCart').html(shoppingCart);
                 },
                 error : function(xhr) {
                     if (xhr.status == 400) {
@@ -129,7 +160,7 @@
 
         };
 
-        $(document).on('click', '.basket-item .close-btn', deleteItemfromShoppingCart);
+        // $(document).on('click', '.basket-item .close-btn', deleteItemfromShoppingCart);
 
         $(document).on('click', '.plus', function () {
             var countItems = $('countItems').attr('value');
@@ -137,25 +168,27 @@
 
         });
 
-        $(document).on('click', '.cart-item .close-btn',function () {
+        $(document).on('click', '#cart-page .close-btn',function () {
             var idProduct = $(this).attr('data-product_id');
             deleteItemfromViewShoppingCart(idProduct);
-
-            $.ajax({
-                url : '/ajax/deleteItemFromShoppingCart',
-                method : 'GET',
-                cache: false,
-                success : function(viewCart) {
-                    $('#cart-page').html(viewCart);
-                },
-                error : function(xhr) {
-                    if (xhr.status == 400) {
-                        alert(xhr.responseJSON.message);
-                    } else {
-                        alert('Error');
-                    }
-                }
+            $('#cart-page').load('/ajax/deleteItemFromShoppingCart',function(){
             });
+
+            // $.ajax({
+            //     url : '/ajax/deleteItemFromShoppingCart',
+            //     method : 'GET',
+            //     cache: false,
+            //     success : function(viewCart) {
+            //         $('#cart-page').html(viewCart);
+            //     },
+            //     error : function(xhr) {
+            //         if (xhr.status == 400) {
+            //             alert(xhr.responseJSON.message);
+            //         } else {
+            //             alert('Error');
+            //         }
+            //     }
+            // });
 
 
         });
@@ -173,7 +206,7 @@
                 method : 'GET',
                 cache: false,
                 success : function(shoppingCart) {
-                    $('#shoppingCart').html(shoppingCart);
+                    $('.shoppingCart').html(shoppingCart);
                     $('#add-'+idProduct).text("added!");
                     setTimeout(function () {
                         $('#add-'+idProduct).text("add to cart");
@@ -192,7 +225,8 @@
         };
 
 
-        $(".product-item .le-button").on('click',addProductToCart);
+        $(document).on('click', '.product-item .le-button', addProductToCart);
+
 
 
         //обновление статуса корзины

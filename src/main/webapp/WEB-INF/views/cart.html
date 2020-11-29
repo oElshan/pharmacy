@@ -15,26 +15,61 @@
     <!-- ============================================================= HEADER : END ============================================================= -->
 
     <div class="animate-dropdown">
-        <!-- ========================================= BREADCRUMB ========================================= -->
-        <div id="top-mega-nav">
-            <div class="container">
-                <nav>
-                    <ul class="inline">
+        <!-- ========================================= BREADCRUMB ========================================= --><div id="top-mega-nav">
+        <div class="container">
+            <nav>
+                <ul class="inline">
+                    <li class="dropdown le-dropdown">
+                        <a href="#" class="dropdown-toggle tex" data-toggle="dropdown">
+                            <i class="fa fa-list"></i> Shop by Department
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li th:each="category:${#servletContext.getAttribute('CATEGORY_LIST')}">
+                                <a href="#" th:text="${category.name}">Computer Cases &amp; Accessories</a>
+                                <ul class="dropdown-menu mega-menu">
+                                    <li class="yamm-content">
+                                        <!-- ================================== MEGAMENU VERTICAL ================================== -->
+                                        <div class="row">
+                                            <div class="col-xs-12 col-lg-6 col-md-6">
+                                                <ul>
+                                                    <li th:each="subcategory:${#servletContext.getAttribute('SUBCATEGORY_LIST')}" th:if="${category.id == subcategory.category.id}"><a th:href="${subcategory.url}" th:text="${subcategory.name}">Computer Cases &amp; Accessories</a></li>
+                                                </ul>
+                                            </div>
 
-                        <li class="breadcrumb-nav-holder">
-                            <ul>
-                                <li class="breadcrumb-item">
-                                    <a href="/">Home</a>
-                                </li>
-                                <li class="breadcrumb-item current gray">
-                                    <a href="/cart">Shopping Cart</a>
-                                </li>
-                            </ul>
-                        </li><!-- /.breadcrumb-nav-holder -->
-                    </ul>
-                </nav>
-            </div><!-- /.container -->
-        </div><!-- /#top-mega-nav -->
+                                            <!--<div class="col-xs-12 col-lg-4">-->
+                                            <!--<ul>-->
+                                            <!--<li><a href="#">Power Supplies Power</a></li>-->
+                                            <!--<li><a href="#">Power Supply Testers Sound</a></li>-->
+                                            <!--<li><a href="#">Sound Cards (Internal)</a></li>-->
+                                            <!--<li><a href="#">Video Capture &amp; TV Tuner Cards</a></li>-->
+                                            <!--<li><a href="#">Other</a></li>-->
+                                            <!--</ul>-->
+                                            <!--</div>-->
+
+                                            <!--<div class="dropdown-banner-holder">-->
+                                            <!--<a href="#"><img alt="" src="/static/images/banners/banner-side.png" /></a>-->
+                                            <!--</div>-->
+                                        </div>
+                                        <!-- ================================== MEGAMENU VERTICAL ================================== -->
+                                    </li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li class="breadcrumb-nav-holder">
+                        <ul>
+                            <li class="breadcrumb-item current gray">
+                                <a href="#">Checkout Process</a>
+                            </li>
+                        </ul>
+                    </li><!-- /.breadcrumb-nav-holder -->
+                </ul>
+            </nav>
+        </div><!-- /.container -->
+    </div><!-- /#top-mega-nav -->
+
         <!-- ========================================= BREADCRUMB : END ========================================= -->
     </div>
 

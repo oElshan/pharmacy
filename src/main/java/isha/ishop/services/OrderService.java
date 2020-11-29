@@ -2,14 +2,13 @@ package isha.ishop.services;
 
 import isha.ishop.entity.ClientOrder;
 import isha.ishop.entity.Status;
+import isha.ishop.form.EditOrder;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface OrderService {
     List<ClientOrder> getAllNewOrders();
-
-
 
     long getCountNewOrders(String status);
 
@@ -27,7 +26,17 @@ public interface OrderService {
 
     ClientOrder findClientOrderById(long id);
 
-    public ClientOrder updateClientOrderItem(long orderId, long productId, int count);
+    ClientOrder updateClientOrderItem(long orderId, long productId, int count);
+
+    ClientOrder updateClientOrder(EditOrder editOrder);
+
+    void deleteOrder(Long id);
+
+    void deleteOrder(ClientOrder clientOrder);
+
+    void deleteItemFromClientOrder( long productId, long orderId);
+
+
 
 
 }

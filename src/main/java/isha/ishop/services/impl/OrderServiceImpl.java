@@ -1,8 +1,11 @@
 package isha.ishop.services.impl;
 
+import isha.ishop.entity.Client;
 import isha.ishop.entity.ClientOrder;
 import isha.ishop.entity.OrderItem;
 import isha.ishop.entity.Status;
+import isha.ishop.form.EditOrder;
+import isha.ishop.repository.OrderItemRepo;
 import isha.ishop.repository.OrderRepo;
 import isha.ishop.repository.StatusRepo;
 import isha.ishop.services.OrderService;
@@ -27,6 +30,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     StatusRepo statusRepo;
+    @Autowired
+    OrderItemRepo orderItemRepo;
 
 
 
@@ -50,6 +55,27 @@ public class OrderServiceImpl implements OrderService {
 
         List<ClientOrder> clientOrders = orderRepo.searchOrderByNameLike(name);
         return clientOrders;
+    }
+
+
+    @Transactional
+    @Override
+    public ClientOrder updateClientOrder(EditOrder editOrder) {
+
+        ClientOrder clientOrder = orderRepo.findById(editOrder.getId().longValue());
+        Client client = clientOrder.getClient();
+        client.setFirstName(editOrder.getClientFirstName());
+        client.setLastName(editOrder.getClientLastName());
+        client.setEmail(editOrder.getClientEmail());
+        client.setTown(editOrder.getClientStreetTown());
+        client.setStreetAddress(editOrder.getClientStreetAddress());
+        client.setPhone(editOrder.getClientPhone());
+        Status status = statusRepo.findByName(editOrder.getOrderStatus());
+        clientOrder.setClient(client);
+        clientOrder.setStatus(status);
+        orderRepo.save(clientOrder);
+
+        return orderRepo.save(clientOrder);
     }
 
     @Override
@@ -98,4 +124,24 @@ public class OrderServiceImpl implements OrderService {
         clientOrder.setOrderItems(orderItems);
         return orderRepo.save(clientOrder);
     }
+
+    @Transactional
+    @Override
+    public void deleteOrder(Long id) {
+        logger.info("...........................................deleting client order N"+id);
+        orderRepo.deleteById(id);
+    }
+
+
+    @Override
+    public void deleteOrder(ClientOrder clientOrder) {
+        orderRepo.delete(clientOrder);
+    }
+
+    @Transactional
+    @Override
+    public void deleteItemFromClientOrder( long productId, long orderId) {
+        orderItemRepo.deleteByIdAndClientOrder_Id(productId, orderId);
+    }
+
 }

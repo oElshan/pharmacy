@@ -5,7 +5,6 @@ import isha.ishop.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContext;
@@ -25,6 +24,7 @@ public class ContextOnListener implements ApplicationListener<ContextRefreshedEv
         servletContext.setAttribute(Constants.CATEGORY_LIST,productService.findAllCategory());
         servletContext.setAttribute(Constants.SUBCATEGORY_LIST, productService.findAllSubCategory());
         servletContext.setAttribute(Constants.PRODUCER_LIST, productService.findAllProducer());
+        servletContext.setAttribute(Constants.SPECCATEGORY_LIST, productService.listAllSpecCategory());
 
     }
 

@@ -23,7 +23,7 @@ import java.util.UUID;
 
 
 @Service
-public class ProductServiceImpl implements   ProductService {
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ProductRepo productRepo;
@@ -42,6 +42,11 @@ public class ProductServiceImpl implements   ProductService {
     @Autowired
     Environment env;
 
+    @Override
+    public Page<Product> findAllProductBySubCategoryName(String subCategory,int page, int limit) {
+
+        return productRepo.findBySubcategory_Name(subCategory, PageRequest.of(page-1,limit));
+    }
 
     @Override
     public List<SpecCategory> listAllSpecCategory() {
@@ -67,6 +72,10 @@ public class ProductServiceImpl implements   ProductService {
     @Override
     public List<Product> listAllProducts(int page, int limit) {
         return productRepo.findAll(PageRequest.of(page - 1, limit)).getContent();
+    }
+
+    public List<Product> listAllProductsForSpecCategory(int id,int page, int limit) {
+      return  productRepo.findBySpecCategory_Id(id, PageRequest.of(page - 1, limit)).getContent();
     }
 
     @Override

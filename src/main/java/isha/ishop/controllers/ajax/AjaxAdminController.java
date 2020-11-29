@@ -84,6 +84,10 @@ public class AjaxAdminController {
             model.addAttribute("editOrderItem", new EditOrderItem());
         }
 
+        if (!model.containsAttribute("editOrder")) {
+            model.addAttribute("editOrder", new EditOrder());
+        }
+
         ClientOrder clientOrder = orderService.findClientOrderById(id);
         List<OrderItem> orderItems = clientOrder.getOrderItems();
         List<Status> statuses = orderService.getAllStatusOrders();
@@ -99,30 +103,43 @@ public class AjaxAdminController {
         model.addAttribute("totalCost", totalCost);
 
 
+
         return new ModelAndView("fragment/edit-order-modal :: edit-order-modal", model);
     }
 
+
+
+
     @RequestMapping(path = "/ajax/admin/edit-order", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    public ModelAndView changeOrder(@Valid @RequestBody EditOrder editOrder, ModelMap model) {
+    public String changeOrder(@Valid @RequestBody EditOrder editOrder,BindingResult bindingResult,RedirectAttributes redirectAttributes , Model model) {
+
         logger.info(editOrder.toString());
 
-        ClientOrder clientOrder = orderService.findClientOrderById(editOrder.getId());
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editOrder", bindingResult);
+            redirectAttributes.addFlashAttribute("editOrder", editOrder);
+
+            return "redirect:/ajax/admin/edit-order?id=" + editOrder.getId();
+        }
+
+        ClientOrder clientOrder = orderService.updateClientOrder(editOrder);
 
         List<OrderItem> orderItems = clientOrder.getOrderItems();
 
         BigDecimal totalCost = BigDecimal.ZERO;
         for (OrderItem orderItem : orderItems) {
-            totalCost.add(orderItem.getProduct().getPrice());
+            totalCost = totalCost.add(orderItem.getProduct().getPrice().multiply(BigDecimal.valueOf(orderItem.getCount())));
         }
 
         List<Status> statuses = orderService.getAllStatusOrders();
 
+        model.addAttribute("editOrderItem", new EditOrderItem());
         model.addAttribute("statuses", statuses);
         model.addAttribute("clientOrder", clientOrder);
         model.addAttribute("orderItems", orderItems);
         model.addAttribute("totalCost", totalCost);
 
-        return new ModelAndView("fragment/edit-order-modal :: edit-order-modal", model);
+        return "fragment/edit-order-modal :: edit-order-modal";
     }
 
     @RequestMapping(path = "/ajax/admin", method = RequestMethod.GET)
@@ -157,5 +174,12 @@ public class AjaxAdminController {
         modelMap.addAttribute("orders", orders);
 
         return new ModelAndView("fragment/data-table-orders :: data-table-orders", modelMap);
+    }
+
+    @GetMapping("/ajax/admin/orders/delete-item")
+    public String deleteOrderItem(@RequestParam("orderItemId") long orderItemId,@RequestParam("orderId") long orderId, ModelMap model)  {
+        orderService.deleteItemFromClientOrder(orderItemId,orderId);
+
+        return "redirect:/ajax/admin/edit-order?id=" + orderId;
     }
 }

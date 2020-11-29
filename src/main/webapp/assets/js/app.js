@@ -45,6 +45,26 @@
         //     }
         // });
 
+
+        // $("button[data-toggle='modal']").on("click");
+
+        // $(document).on('click', '.order-count', function () {
+        //
+        //
+        // });
+
+
+
+        $(document).on('click',"button[data-toggle='modal']", function () {
+            var orderId = $(this).attr("id");
+            $('.'+orderId).modal();
+        });
+
+        //обновление таблицы при закрытии модалки ордера
+        $('#edit-order-modal').on('hidden.bs.modal', function (e) {
+            location.reload();
+        });
+        //изменение количество товара в оредере
         $(document).on('click', '.order-count', function () {
             // var productCount = $('[name="productCount"]').val();
             // var productId  = $(this).attr('product-id');
@@ -77,8 +97,6 @@
                     }
                 },
             });
-
-
 
         });
 
@@ -129,6 +147,27 @@
 
         });
 
+        $(document).on('click', '.delete-orderItem', function () {
+            var orderId = $(this).attr("order-id");
+            var orderItemId = $(this).attr("product-id");
+            alert("helo"+orderItemId+" "+orderId);
+            $.ajax({
+                type: 'GET',
+                url: '/ajax/admin/orders/delete-item?orderItemId=' + orderItemId + "&orderId=" + orderId,
+                success: function (data) {
+                    $('#edit-order-modal').html(data);
+                    $('#edit-order-modal .bd-example-modal-lg').modal('show');
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error');
+                    }
+                },
+            });
+
+        });
 
         // //Submit the order changes to a server
         var editClientsOrder = function (orderForm) {
@@ -142,7 +181,7 @@
                 success : function(data) {
                     $('#js-load>.spinner-grow').addClass('d-none');
                     $('#edit-order-modal').html(data);
-                    $('#edit-order-modal .bd-example-modal-lg').modal('show ');
+                    $('#edit-order-modal .bd-example-modal-lg').modal('show');
                 },
                 error : function(xhr) {
                     if (xhr.status == 400) {
@@ -163,10 +202,12 @@
 
             var orderForm = {
                 "id": $('[name="id"]').val(),
-                "clientName": $('[name="clientName"]').val(),
+                "clientFirstName": $('[name="clientFirstName"]').val(),
+                "clientLastName": $('[name="clientLastName"]').val(),
                 "clientPhone": $('[name="clientPhone"]').val(),
-                "clientAddress": $('[name="clientAddress"]').val(),
                 "clientEmail": $('[name="clientEmail"]').val(),
+                "clientStreetAddress": $('[name="clientStreetAddress"]').val(),
+                "clientStreetTown": $('[name="clientStreetTown"]').val(),
                 "orderStatus": $('[name="orderStatus"]').val()
             };
             editClientsOrder(orderForm);
@@ -205,7 +246,7 @@
                 url: '/ajax/admin?page=1'  + '&select=' + selectedOrders,
                 success: function (data) {
 
-                    $('#latestOrder').html(data);
+                    $('#ordersTable').html(data);
                 },
                 error : function(xhr) {
                     if (xhr.status == 400) {

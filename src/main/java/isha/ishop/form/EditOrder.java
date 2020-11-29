@@ -1,5 +1,6 @@
 package isha.ishop.form;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -8,12 +9,18 @@ public class EditOrder {
     @NotNull
     private Long id;
     @NotEmpty(message = "client name cannot be empty!")
-    private String clientName;
+    private String clientFirstName;
+    @NotEmpty(message = "client name cannot be empty!")
+    private String clientLastName;
     @NotEmpty(message = "client phone cannot be empty!")
     private String clientPhone;
-    @NotEmpty(message = "client address cannot be empty!")
-    private String clientAddress;
+    @Email
     private String clientEmail;
+    @NotEmpty(message = "client address cannot be empty!")
+    private String clientStreetAddress;
+    @NotEmpty(message = "client address cannot be empty!")
+    private String clientStreetTown;
+    private String orderStatus;
 
 
 
@@ -25,12 +32,20 @@ public class EditOrder {
         this.id = id;
     }
 
-    public String getClientName() {
-        return clientName;
+    public String getClientFirstName() {
+        return clientFirstName;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setClientFirstName(String clientFirstName) {
+        this.clientFirstName = clientFirstName;
+    }
+
+    public String getClientLastName() {
+        return clientLastName;
+    }
+
+    public void setClientLastName(String clientLastName) {
+        this.clientLastName = clientLastName;
     }
 
     public String getClientPhone() {
@@ -41,29 +56,50 @@ public class EditOrder {
         this.clientPhone = clientPhone;
     }
 
-    public String getClientAddress() {
-        return clientAddress;
+    public String getClientStreetAddress() {
+        return clientStreetAddress;
     }
 
-    public void setClientAddress(String clientAddress) {
-        this.clientAddress = clientAddress;
+    public void setClientStreetAddress(String clientStreetAddress) {
+        this.clientStreetAddress = clientStreetAddress;
+    }
+
+    public String getClientStreetTown() {
+        return clientStreetTown;
+    }
+
+    public void setClientStreetTown(String clientStreetTown) {
+        this.clientStreetTown = clientStreetTown;
     }
 
     public String getClientEmail() {
         return clientEmail;
     }
 
-    public void setClientEmail(String clientEmail){
+    public void setClientEmail(String clientEmail) {
         this.clientEmail = clientEmail;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     @Override
     public String toString() {
         return "EditOrder{" +
-                "clientName='" + clientName + '\'' +
+                "id=" + id +
+                ", clientFirstName='" + clientFirstName + '\'' +
+                ", clientLastName='" + clientLastName + '\'' +
                 ", clientPhone='" + clientPhone + '\'' +
-                ", clientAddress='" + clientAddress + '\'' +
+                ", clientStreetAddress='" + clientStreetAddress + '\'' +
+                ", clientStreetTown='" + clientStreetTown + '\'' +
                 ", clientEmail='" + clientEmail + '\'' +
+                ", orderStatus='" + orderStatus + '\'' +
                 '}';
     }
 }
+

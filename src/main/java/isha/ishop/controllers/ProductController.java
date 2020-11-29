@@ -20,7 +20,20 @@ public class ProductController {
     ProductService productService;
 
     @RequestMapping(value = "/subcategory/{value}" ,method = RequestMethod.GET)
-    public  String showProducrBySubcategory(@PathVariable String value) {
+    public  String showProducrBySubcategory(@PathVariable String subCategory,@RequestParam("page") Optional<Integer> page, Model model) {
+
+        int currentPage = page.orElse(1);
+        Page<Product> productsPage = productService.findAllProductBySubCategoryName(subCategory, currentPage, 12);
+        model.addAttribute("products", productsPage.getContent());
+        model.addAttribute("productsPage", productsPage);
+        model.addAttribute("search", subCategory);
+        int totalPages = productsPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
 
         return "category-grid";
     }

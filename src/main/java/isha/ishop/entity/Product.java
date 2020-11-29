@@ -70,7 +70,7 @@ public class Product {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER ,cascade =  {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinColumn(name = "id_producer",foreignKey = @ForeignKey(name = "product_producer__fk"))
     public Producer getProducer() {
         return producer;

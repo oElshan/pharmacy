@@ -19,7 +19,7 @@
                                     <div class="card-body">
 
 
-                                        <form  action="/ajax/admin/edit-order"   >
+                                        <form  action="/ajax/admin/edit-order" >
 
                                             <div class="form-group hidden row">
                                                 <div class="col-sm-10">
@@ -28,31 +28,59 @@
                                             </div>
 
                                             <div class="form-group row">
-                                                <label for="clientName" class="col-sm-2 col-form-label"> Client Name</label>
+                                                <label for="clientFirstName" class="col-sm-2 col-form-label"> Client first name</label>
                                                 <div class="col-sm-4">
-                                                    <input class="form-control" name="clientName" type="text" th:name="clientName" th:value="|*{client.firstName} *{client.lastName}|" id="clientName" >
+                                                    <input class="form-control" name="clientFirstName" type="text" th:name="clientFirstName" th:value="*{client.firstName}" id="clientFirstName" >
+                                                    <p  th:errors="${editOrder.clientFirstName}" class="alert-danger text-center"></p>
+
                                                 </div>
+
+                                                <label for="clientLastName" class="col-sm-2 col-form-label"> Client last name</label>
+                                                <div class="col-sm-4">
+                                                    <input class="form-control" name="clientLastName" type="text" th:name="clientLastName" th:value="*{client.lastName}" id="clientLastName" >
+                                                    <p  th:errors="${editOrder.clientLastName}" class="alert-danger text-center"></p>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group row">
 
                                                 <label for="clientPhone" class="col-sm-2 col-form-label"> Client phone</label>
                                                 <div class="col-sm-4">
                                                     <input class="form-control" name="clientPhone" type="text" th:name="clientPhone" th:value="*{client.phone}" id="clientPhone" >
-                                                </div>
-                                            </div>
+                                                    <p  th:errors="${editOrder.clientPhone}" class="alert-danger text-center"></p>
 
-                                            <div class="form-group row">
-                                                <label for="clientAddress" class="col-sm-2 col-form-label"> Client address</label>
-                                                <div class="col-sm-4">
-                                                    <input class="form-control" name="clientAddress" type="text" th:name="clientAddress" th:value="|*{client.streetAddress}; *{client.town}|" id="clientAddress" >
                                                 </div>
 
                                                 <label for="clientEmail" class="col-sm-2 col-form-label"> Client email</label>
                                                 <div class="col-sm-4">
                                                     <input class="form-control" name="clientEmail" type="text" th:name="clientEmail" th:value="*{client.email}" id="clientEmail" >
+                                                    <p  th:errors="${editOrder.clientEmail}" class="alert-danger text-center"></p>
+
                                                 </div>
                                             </div>
 
+
                                             <div class="form-group row">
-                                                <label for="clientEmail" class="col-sm-2 col-form-label"> Order status</label>
+                                                <label for="clientStreetAddress" class="col-sm-2 col-form-label"> Client street address</label>
+                                                <div class="col-sm-4">
+                                                    <input class="form-control" name="clientStreetAddress" type="text" th:name="clientStreetAddress" th:value="*{client.streetAddress}" id="clientStreetAddress" >
+                                                    <p  th:errors="${editOrder.clientStreetAddress}" class="alert-danger text-center"></p>
+
+                                                </div>
+
+                                                <label for="clientStreetTown" class="col-sm-2 col-form-label">Town</label>
+                                                <div class="col-sm-4">
+                                                    <input class="form-control" name="clientStreetTown" type="text" th:name="clientStreetTown" th:value="*{client.town}" id="clientStreetTown" >
+                                                    <p  th:errors="${editOrder.clientStreetTown}" class="alert-danger text-center"></p>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label  class="col-sm-2 col-form-label"> Order status</label>
                                                 <div class="col-sm-4">
                                                     <select class="form-control" name="orderStatus">
                                                         <option th:each="status:${statuses}" th:value="${status.name}" th:text="${status.name}"
@@ -60,8 +88,8 @@
                                                         >Select</option>
                                                     </select>
                                                 </div>
-                                            </div>
 
+                                            </div>
 
 
 
@@ -84,8 +112,10 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
+                                                                <p  th:errors="${editOrderItem.productCount}" class="alert-danger text-center"></p>
+
                                                                 <tr th:each="orderItem:${orderItems}"  th:id="${orderItem.id}"  >
-                                                                    <form th th:object="${editOrderItem}">
+                                                                    <!--<form th th:object="${editOrderItem}">-->
 
                                                                     <th scope="row">
                                                                         <div class="media m-b-30">
@@ -96,20 +126,20 @@
                                                                     <td >
                                                                         <input th:class="|form-control col-lg-4 ${orderItem.id}|" type="text" th:name="productCount" th:value="${orderItem.count}" >
 
-                                                                        <p  th:if="${#fields.hasErrors('productCount')}" th:errors="*{productCount}"></p>
-                                                                        <div class="col-lg-3 col-md-6 m-b-30">
-                                                                            <button type="button" class="btn btn-primary waves-effect waves-light" id="sa-basic">Click me</button>
-                                                                        </div>
+                                                                        <!--<p  th:if="${#fields.hasErrors('productCount')}" th:errors="*{productCount}" class="alert-danger"></p>-->
+
                                                                         <!--<p th:if="${bindingResult.hasErrors}" >Error</p>-->
                                                                         <a  href="javascript:void(0)" class="order-count btn btn-success btn-sm col-lg-4"   product-id="" order-id="" th:attr="order-id=${clientOrder.id},product-id=${orderItem.id}"  ><i class="ion-edit" ></i> change</a>
                                                                     </td>
 
                                                                     <td th:text="|${orderItem.product.price*orderItem.count} Azn|">@mdo</td>
                                                                     <td>
-                                                                        <a href="/ajax/admin/delete-order?id="  class="btn btn-danger btn-sm"><i class="ion-android-close" ></i> Delete</a>
+                                                                        <!--<a th:href="|/admin/orders/delete-item?orderId=*{id}&orderItemId=${orderItem.id}|"  class="btn btn-danger btn-sm .delete-orderItem" order-id="" th:attr="order-id=${clientOrder.id}"><i class="ion-android-close" ></i> Delete</a>-->
+                                                                        <a href="javascript:void(0)"  class="btn btn-danger btn-sm delete-orderItem"  product-id="" order-id="" th:attr="product-id=${orderItem.id},order-id=${clientOrder.id}"><i class="ion-android-close" ></i> Delete</a>
 
                                                                     </td>
-                                                                    </form>>
+
+                                                                    <!--</form>-->
                                                                 </tr>
 
 
