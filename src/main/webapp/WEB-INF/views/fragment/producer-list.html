@@ -1,0 +1,10 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+        <ul th:fragment="producer-list" id="producer-list">
+            <li  th:each="producer:${producerList}"><input  class="le-checkbox" type="checkbox"><i class="fake-box"></i> <span  th:text="${producer.name}">Samsung</span> <hr></li>
+        </ul>
+
+</html>

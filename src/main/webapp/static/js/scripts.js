@@ -4,6 +4,13 @@
 
     $(document).ready(function () {
 
+
+        $(document).on('click', '.filter-button a', function () {
+            alert($('.price-slider').text);
+
+        });
+
+
         //AJAX для заказа
         var newClientsOrder = function (orderForm) {
             
@@ -43,48 +50,44 @@
             };
             newClientsOrder(orderForm);
         });
-        // $('#orderForm').submit(function (){
-        //
-        //     var orderForm = {
-        //         firstName: $('[name="firstName"]').val(),
-        //         lastName: $('[name="lastName"]').val(),
-        //         streetAddress: $('[name="streetAddress"]').val(),
-        //         town: $('[name="town"]').val(),
-        //         zipCode: $('[name="zipCode"]').val(),
-        //         email: $('[name="email"]').val(),
-        //         phone: $('[name="phone"]').val()
-        //     };
-        //     alert(JSON.stringify(orderForm));
-        //
-        //     newClientsOrder(orderForm);
-        //     // $.ajax({
-        //     //     type: "POST",
-        //     //     url: "/sign-up",
-        //     //     cache: false,
-        //     //     contentType : "text",
-        //     //     // data: JSON.stringify(jsonSignUp),
-        //     //     data:   JSON.stringify(jsonSignUp),
-        //     //     // contentType: 'text; charset=UTF-8',
-        //     //     // dataType: 'json',
-        //     //     success : function(data){
-        //     //         // alert(JSON.stringify(data));
-        //     //         // alert(JSON.stringify(data));
-        //     //         alert(data);
-        //     //         $('#regWindow').modal('hide');
-        //     //     },
-        //     //     error:  function(xhr, str){
-        //     //
-        //     //         $('#regWindow').modal('hide');
-        //     //         alert("Ошибка")
-        //     //         alert(JSON.stringify($('#signUpForm').serialize()));
-        //     //         alert(JSON.stringify(jsonSignUp));
-        //     //
-        //     //
-        //     //     }
-        //     //
-        //     // });
-        //     return false;
-        // })
+
+        $('#searchProducer').on('keyup', function(){
+            var $result = $('#producer-list');
+            var search = $(this).val();
+            if ((search !== '') && (search.length > 2)){
+                $.ajax({
+                    type: "POST",
+                    url: "/ajax/json/search-producer",
+                    data: JSON.stringify({
+                        searchName: search
+                    }),
+                    contentType: 'application/json',
+                    success: function(msg){
+                        $result.html(msg);
+                        if(msg !== ''){
+                            $result.fadeIn();
+                        }
+                        else {
+                            $result.fadeOut(100);
+                        }
+                    },
+                    error : function(xhr) {
+                        if (xhr.status == 400) {
+                            alert(xhr.responseJSON.message);
+                        } else {
+                            alert('Error');
+                        }
+                    }
+
+                });
+            }
+            else {
+                // $result.html('');
+                $result.fadeOut(100);
+            }
+        });
+
+
         $(document).on('click', '#products-category a', function () {
             var idCatalog = $(this).attr('id-speccategory');
             showProductListBySpecCatalog(idCatalog);
@@ -585,7 +588,7 @@
                 min: 100,
                 max: 700,
                 step: 10,
-                value: [100, 400],
+                value: [100,400],
                 handle: "square"
 
             });

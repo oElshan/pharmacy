@@ -11,7 +11,9 @@
 
 			<!-- ============================================================= HEADER ============================================================= -->
 			<div th:replace="~{templates/header :: header}"></div>
+            <!-- ============================================================= HEADER : END ============================================================= -->
 
+            <!-- ========================================= HOME BANNERS ========================================= -->
             <div id="top-banner-and-menu" >
                 <div class="container">
                     <div class="col-xs-12 col-sm-4 col-md-3 sidemenu-holder">
@@ -71,7 +73,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12 col-lg-6 col-md-6">
                                                         <ul>
-                                                            <li th:each="subcategory:${#servletContext.getAttribute('SUBCATEGORY_LIST')}" th:if="${category.id == subcategory.category.id}"><a th:href="${subcategory.url}" th:text="${subcategory.name}">Computer Cases &amp; Accessories</a></li>
+                                                            <li th:each="subcategory:${#servletContext.getAttribute('SUBCATEGORY_LIST')}" th:if="${category.id == subcategory.category.id}"><a th:href="${category.url+subcategory.url}+'/'+${subcategory.id}" th:text="${subcategory.name}">Computer Cases &amp; Accessories</a></li>
                                                         </ul>
                                                     </div>
 
@@ -105,11 +107,11 @@
                         <div id="hero">
                             <div id="owl-main" class="owl-carousel owl-inner-nav owl-ui-sm">
 
-                                <div class="item" style="background-image: url(/static/images/sliders/1.jpg);">
+                                <div class="item" style="background-image: url(/static/images/sliders/_MG_8769.jpg);">
                                     <div class="container-fluid">
                                         <div class="caption vertical-center text-left hidden-xs hidden-sm hidden-md">
                                             <!--<div class="big-text fadeInDown-1">-->
-                                                <!--ekonom aptek-->
+                                            <!--ekonom aptek-->
                                             <!--</div>-->
 
                                             <!--<div class="excerpt fadeInDown-2">-->
@@ -124,7 +126,7 @@
                                     </div><!-- /.container-fluid -->
                                 </div><!-- /.item -->
 
-                                <div class="item" style="background-image: url(/static/images/sliders/main.jpg);">
+                                <div class="item" style="background-image: url(/static/images/sliders/1.jpg);">
                                     <div class="container-fluid">
                                         <div class="caption vertical-center text-right">
                                             <div class="big-text fadeInDown-1">
@@ -147,52 +149,6 @@
                     </div><!-- /.homebanner-holder -->
                 </div><!-- /.container -->
             </div><!-- /#top-banner-and-menu -->
-
-            <!-- ============================================================= HEADER : END ============================================================= -->
-
-            <!--<div id="top-banner-and-menu" class="homepage2">-->
-                <!--<div class="container">-->
-                    <!--<div class="col-xs-12">-->
-                        <!--&lt;!&ndash; ========================================== SECTION – HERO ========================================= &ndash;&gt;-->
-                        <!--<div id="hero">-->
-                            <!--<div id="owl-main" class="owl-carousel height-lg owl-inner-nav owl-ui-lg">-->
-
-                                <!--<div class="item" style="background-image: url(/static/images/sliders/_MG_8786.jpg);">-->
-                                    <!--<div class="container-fluid">-->
-                                        <!--<div class="caption vertical-center text-left" style="padding-right:0; ">-->
-                                            <!--<div class="big-text fadeInDown-1">-->
-                                                <!--Ekonom aptek<span class="big"><span class="sign"></span>Get a discount when buying online</span>-->
-                                            <!--</div>-->
-                                        <!--</div>&lt;!&ndash; /.caption &ndash;&gt;-->
-                                    <!--</div>&lt;!&ndash; /.container-fluid &ndash;&gt;-->
-                                <!--</div>&lt;!&ndash; /.item &ndash;&gt;-->
-
-                                <!--<div class="item" style="background-image: url(/static/images/sliders/_MG_8786.jpg);">-->
-                                    <!--<div class="container-fluid">-->
-                                        <!--<div class="caption vertical-center text-left" style="padding-left:7%;">-->
-                                            <!--<div class="big-text fadeInDown-1">-->
-                                                <!--Want a<span class="big"><span class="sign">$</span>200</span>Discount?-->
-                                            <!--</div>-->
-                                            <!--<div class="excerpt fadeInDown-2">-->
-                                                <!--on desktop pcs-->
-                                            <!--</div>-->
-                                            <!--<div class="small fadeInDown-2">-->
-                                                <!--terms and conditions apply-->
-                                            <!--</div>-->
-                                            <!--<div class="button-holder fadeInDown-3">-->
-                                                <!--<a href="single-product.html" class="big le-button ">shop now</a>-->
-                                            <!--</div>-->
-                                        <!--</div>&lt;!&ndash; /.caption &ndash;&gt;-->
-                                    <!--</div>&lt;!&ndash; /.container-fluid &ndash;&gt;-->
-                                <!--</div>&lt;!&ndash; /.item &ndash;&gt;-->
-                            <!--</div>&lt;!&ndash; /.owl-carousel &ndash;&gt;-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash; ========================================= SECTION – HERO : END ========================================= &ndash;&gt;-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>&lt;!&ndash; /.homepage2 &ndash;&gt;-->
-
-            <!-- ========================================= HOME BANNERS ========================================= -->
             <!-- ========================================= HOME BANNERS : END ========================================= -->
 
             <div id="products-tab" class="wow fadeInUp">

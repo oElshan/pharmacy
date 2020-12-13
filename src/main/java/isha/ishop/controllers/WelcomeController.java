@@ -53,7 +53,7 @@ public class WelcomeController {
     @RequestMapping(value = "/checkout" ,method = RequestMethod.GET)
     public  String createOrder(  Model model) {
         model.addAttribute("orderForm", new OrderForm());
-
+        model.addAttribute("breadcrumb", "Checkout Process");
         return "checkout";
     }
 }

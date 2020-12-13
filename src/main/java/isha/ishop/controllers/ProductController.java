@@ -1,13 +1,18 @@
 package isha.ishop.controllers;
 
 import isha.ishop.entity.Product;
+import isha.ishop.entity.Subcategory;
 import isha.ishop.services.ProductService;
+import isha.ishop.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,25 +23,49 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+    @Autowired
+    ServletContext servletContext;
+    // TODO: 2020-11-30 вопрос по реквесту метода get каким образом запрашивать категории праметром или url
+    @RequestMapping(value = "/category/*/*/{idCategory}" ,method = RequestMethod.GET)
+    public  String showProductBySubcategory(@PathVariable long idCategory , @RequestParam("page") Optional<Integer> page, Model model, HttpServletRequest request) {
 
-    @RequestMapping(value = "/subcategory/{value}" ,method = RequestMethod.GET)
-    public  String showProducrBySubcategory(@PathVariable String subCategory,@RequestParam("page") Optional<Integer> page, Model model) {
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(idCategory);
+        System.out.println(request.getRequestURI());
+
 
         int currentPage = page.orElse(1);
-        Page<Product> productsPage = productService.findAllProductBySubCategoryName(subCategory, currentPage, 12);
+        Page<Product> productsPage = productService.findAllProductBySubCategoryId(idCategory, currentPage, 12);
         model.addAttribute("products", productsPage.getContent());
+        model.addAttribute("breadcrumb", productService.findSubcategoryById(idCategory).getName());
         model.addAttribute("productsPage", productsPage);
-        model.addAttribute("search", subCategory);
-        int totalPages = productsPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
-
-        return "category-grid";
+        model.addAttribute("urlPagination", request.getRequestURI()+"?");
+        model.addAttribute("pageNumbers", pagination(productsPage));
+        return "product-grid";
     }
+
+    @RequestMapping(value = "/category/*/{idCategory}", method = RequestMethod.GET)
+    public String showProductByCategory(@PathVariable int idCategory, @RequestParam("page") Optional<Integer> page, Model model,HttpServletRequest request) {
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(idCategory);
+        System.out.println(request.getRequestURI());
+
+        List<Subcategory> subcategories = (List<Subcategory>) servletContext.getAttribute(Constants.SUBCATEGORY_LIST);
+        int currentPage = page.orElse(1);
+        Page<Product> productsPage = productService.findAllProductByCategoryId(idCategory, currentPage, 12);
+        model.addAttribute("products", productsPage.getContent());
+        model.addAttribute("isSubCat", true);
+        model.addAttribute("category", productService.findCategoryById(idCategory));
+        model.addAttribute("subcategories", subcategories.stream().filter(s -> s.getCategory().getId() == idCategory).collect(Collectors.toList()));
+
+        model.addAttribute("breadcrumb", productService.findCategoryById(idCategory).getName());
+        model.addAttribute("productsPage", productsPage);
+        model.addAttribute("urlPagination", request.getRequestURI()+"?");
+        model.addAttribute("pageNumbers", pagination(productsPage));
+        return "product-grid";
+    }
+
+
 
     //    Реализуй тут можно добавлять в метод аргументы и спринг тебе их поставит уже готовые , но тольок те которые сам знает
 //    если у него нет такиих обьектов допустим ты написала какой то класс , надо обявить его бином и спринг будет знать о нем
@@ -44,31 +73,36 @@ public class ProductController {
     /** @see @link https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-arguments*/
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
     public String showCart(Model model) {
-        model.addAttribute("x1", "'это x1 ");
+        model.addAttribute("breadcrumb", "Checkout Process");
 //        теперь в cart можно типлифом найти  перменную x1 и распечатать в нудный тег
         return "cart";
     }
 
     @GetMapping(value = "/search")
-    public String searchItemGrid(@RequestParam("search") String search,@RequestParam("page") Optional<Integer> page, Model model) {
+    public String searchItemGrid(@RequestParam("search") String search,@RequestParam("page") Optional<Integer> page, Model model,HttpServletRequest request) {
         int currentPage = page.orElse(1);
         Page<Product> productsPage = productService.findProductByNameLike(search,currentPage,12);
         List<Product> products = productsPage.getContent();
-        int totalPages = productsPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
+        model.addAttribute("pageNumbers", pagination(productsPage));
         model.addAttribute("products", products);
         model.addAttribute("productsPage", productsPage);
-        model.addAttribute("search", search);
+        model.addAttribute("breadcrumb", search);
+//        model.addAttribute("url", "/search/?search="+search+"&");
+        model.addAttribute("urlPagination", request.getRequestURI()+"/?search="+search+"&");
 
-        return "category-grid";
+        return "product-grid";
     }
 
-
+    public List pagination(Page pages) {
+        int totalPages = pages.getTotalPages();
+        List<Integer> pageNumbers = new ArrayList<>();
+        if (totalPages > 0) {
+           pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+        }
+        return pageNumbers;
+    }
 
 
 }

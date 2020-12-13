@@ -43,9 +43,25 @@ public class ProductServiceImpl implements ProductService {
     Environment env;
 
     @Override
-    public Page<Product> findAllProductBySubCategoryName(String subCategory,int page, int limit) {
+    public Page<Product> findAllProductBySubCategoryId(long subCategory,int page, int limit) {
 
-        return productRepo.findBySubcategory_Name(subCategory, PageRequest.of(page-1,limit));
+        return productRepo.findBySubcategory_Id(subCategory, PageRequest.of(page-1,limit));
+    }
+
+    @Override
+    public Page<Product> findAllProductByCategoryId(long categoryId, int page, int limit) {
+        return productRepo.findByCategory_Id(categoryId,PageRequest.of(page-1,limit));
+    }
+
+    @Override
+    public Subcategory findSubcategoryById(long id) {
+
+        return subCategoryRepo.findById(id).get();
+    }
+
+    @Override
+    public Category findCategoryById(int id) {
+        return categoryRepo.findById(id);
     }
 
     @Override

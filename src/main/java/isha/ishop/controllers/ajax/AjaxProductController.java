@@ -24,7 +24,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
-public class AjaxClientController {
+public class AjaxProductController {
 
     @Autowired
     ClientService clientService;
@@ -68,6 +68,15 @@ public class AjaxClientController {
         return new ModelAndView("fragment/data-table-items :: data-table-items", modelMap);
     }
 
+
+    @RequestMapping( value = "/ajax/json/search-producer",method = RequestMethod.POST, produces = "application/json")
+    public ModelAndView searchProducer(@RequestBody SearchForm search, ModelMap modelMap) {
+
+        System.out.println(search);
+        modelMap.addAttribute("producerList",servletContext.getAttribute(Constants.PRODUCER_LIST));
+
+        return new ModelAndView("fragment/producer-list :: producer-list", modelMap);
+    }
 
     /**
      * Метод добовляет товар в корзину( ShoppingCart) и возвращает шаблон представления sopingCart.html

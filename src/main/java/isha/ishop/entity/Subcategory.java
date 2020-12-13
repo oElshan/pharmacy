@@ -78,15 +78,13 @@ public class Subcategory {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Subcategory subcategory = (Subcategory) o;
-        return Objects.equals(id, subcategory.id) &&
-                Objects.equals(name, subcategory.name) &&
-                Objects.equals(count, subcategory.count) &&
-                Objects.equals(url, subcategory.url);
+        Subcategory that = (Subcategory) o;
+        return id.equals(that.id) &&
+                name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, count, url);
+        return Objects.hash(id, name);
     }
 }

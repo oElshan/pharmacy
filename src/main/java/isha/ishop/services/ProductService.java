@@ -30,9 +30,16 @@ public interface ProductService {
 
     Product createProduct(NewProductForm productForm);
 
-     List<Product> listAllProductsForSpecCategory(int id, int page, int limit);
+    List<Product> listAllProductsForSpecCategory(int id, int page, int limit);
 
-    Page<Product> findAllProductBySubCategoryName(String subCategory,int page, int limit);
+    Subcategory findSubcategoryById(long id);
+
+
+    Category findCategoryById(int id);
+
+    Page<Product> findAllProductBySubCategoryId(long subCategory,int page, int limit);
+
+    Page<Product> findAllProductByCategoryId(long category,int page, int limit);
 
 
 
