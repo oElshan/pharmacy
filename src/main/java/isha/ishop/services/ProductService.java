@@ -6,6 +6,7 @@ import isha.ishop.form.NewProductForm;
 import org.springframework.data.domain.Page;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductService {
@@ -41,10 +42,11 @@ public interface ProductService {
 
     Page<Product> findAllProductByCategoryId(long category,int page, int limit);
 
+    BigDecimal[] getMinMaxPriceProductByCategory(long id);
 
+    BigDecimal[] getMinMaxPriceProductBySearchName(String search) ;
 
-
-
+    public List<Producer> getProducersBySearchProduct(String search);
 
 
     }

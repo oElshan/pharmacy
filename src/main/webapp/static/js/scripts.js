@@ -5,8 +5,38 @@
     $(document).ready(function () {
 
 
+
         $(document).on('click', '.filter-button a', function () {
-            alert($('.price-slider').text);
+            var priceValues = $( "#price-filter" ).val();
+            // alert($('#price-filter').attr('data-min'));
+            // alert($( "#price-filter" ).val());
+            var arrayOfStrings = priceValues.split(',');
+
+            var data = {
+                'min': arrayOfStrings[0],
+                'max': arrayOfStrings[1]
+            };
+
+            alert(JSON.stringify(data));
+
+            $.ajax({
+                url : '/ajax/filter-price/?min='+arrayOfStrings[0]+'&max='+arrayOfStrings[1],
+                method : 'GET',
+                // cache: false,
+                // contentType: 'application/json',
+                // data:   JSON.stringify(priceValues),
+                success : function() {
+                    // alert(priceValues);
+                },
+                error : function(xhr) {
+                    if (xhr.status == 400) {
+                        alert(xhr.responseJSON.message);
+                    } else {
+                        alert('Error new clients order');
+                        alert(JSON.stringify(orderForm));
+                    }
+                }
+            });
 
         });
 
@@ -64,6 +94,7 @@
                     contentType: 'application/json',
                     success: function(msg){
                         $result.html(msg);
+                        $result.addClass("scroll-filter");
                         if(msg !== ''){
                             $result.fadeIn();
                         }
@@ -583,12 +614,15 @@
         });
 
         // Price Slider
+        var min =parseFloat( $('#price-filter').attr('data-min'));
+        var max = parseFloat($('#price-filter').attr('data-max'));
+
         if ($('.price-slider').length > 0) {
             $('.price-slider').slider({
-                min: 100,
-                max: 700,
-                step: 10,
-                value: [100,400],
+                min: min,
+                max: max,
+                step: 1,
+                value: [min,max],
                 handle: "square"
 
             });

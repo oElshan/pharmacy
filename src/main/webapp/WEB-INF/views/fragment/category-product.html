@@ -3,10 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <div th:fragment="category-product" >
-        <div class="animate-dropdown">
+    <div th:fragment="category-product">
+        <div class="animate-dropdown ">
             <!-- ========================================= BREADCRUMB ========================================= -->
-            <div id="top-mega-nav">
+            <div id="top-mega-nav" >
                 <div class="container">
                     <nav>
                         <ul class="inline">
@@ -15,9 +15,12 @@
                                     <i class="fa fa-list"></i> Shop by Department
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li th:each="category:${#servletContext.getAttribute('CATEGORY_LIST')}">
+                                    <!---->
+                                    <!---->
+                                    <li  th:each="category:${#servletContext.getAttribute('CATEGORY_LIST')}">
                                         <a th:href="${category.url+'/'+category.id}"  th:text="${category.name}">Computer Cases &amp; Accessories</a>
-                                        <ul class="dropdown-menu mega-menu">
+                                        <!--<a class="dropdown-item" th:text="${category.name}">Computer Cases &amp; Accessories</a>-->
+                                        <ul class="dropdown-menu">
                                             <li class="yammcontent">
                                                 <!-- ================================== MEGAMENU VERTICAL ================================== -->
                                                 <div class="row">

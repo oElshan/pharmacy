@@ -60,6 +60,12 @@ Table of Contents
 /*===================================================================================*/
 /*  Helper
 /*===================================================================================*/
+.scroll-filter{
+  height: 200px;
+  overflow: auto ;
+}
+
+
 .light-bg {
   background-color: #f8f8f8; }
 
@@ -999,7 +1005,8 @@ header {
       font-weight: 700; }
       #top-mega-nav nav .le-dropdown:first-child {
         display: inline-block;
-        float: left; }
+        float: left;
+      }
 
 #top-megamenu-nav {
   margin: 33px 0 0 0;

@@ -56,6 +56,7 @@ public class RootConfig {
         Properties properties = new Properties();
         properties.put("javax.persistence.validation.mode", "none");
         properties.put("hibernate.show_sql", "true");
+//        properties.put("hibernate.enable_lazy_load_no_trans", "true");
         return properties;
     }
 

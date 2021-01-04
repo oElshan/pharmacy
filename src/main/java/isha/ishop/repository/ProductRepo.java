@@ -6,13 +6,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductRepo extends JpaRepository<Product, Long> {
 
     Product findProductById(Long id);
 
+    @Query(value = "SELECT max(price) FROM ishop.product as p WHERE  p.id_subcategory=?",
+            nativeQuery = true)
+     BigDecimal maxPriceBySubCategory(long id);
+
+    @Query(value = "SELECT min(price) FROM ishop.product as p WHERE  p.id_subcategory=?",
+            nativeQuery = true)
+    BigDecimal minPriceBySubCategory(long id);
+
     List <Product> findByNameContaining(String name,Pageable pageable);
+
+    List <Product> findByNameContaining(String name);
+    List <Product> findDistinctByNameContaining(String name);
 
     //    @Query("SELECT p FROM Product p WHERE p.name LIKE %:name% ")
     @Query(value = "SELECT * FROM ishop.product p WHERE p.name LIKE %?1%",
@@ -20,6 +32,13 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
             nativeQuery = true)
     Page<Product> searchByNameLike(String name, Pageable pageable);
 
+    @Query(value = "SELECT max(price) FROM ishop.product p WHERE p.name LIKE %?1%",
+            nativeQuery = true)
+    BigDecimal searchMaxPriceProductByNameLike(String name);
+
+    @Query(value = "SELECT min(price) FROM ishop.product p WHERE p.name LIKE %?1%",
+            nativeQuery = true)
+    BigDecimal searchMinPriceProductByNameLike(String name);
 
     Product getById(long id);
 

@@ -16,10 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+// TODO: 2020-12-26 добавить абстрактный класс для сервиса
+// TODO: 2020-12-26 реализовать метод потчета максимальной и мнимианльной цены для товаров по поиску имени
 
 
 @Service
@@ -106,10 +105,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> findProductByNameLike(String name, int page, int limit) {
-//       List <Product> products = productRepo.findByNameContaining(name);
        Page <Product> products = productRepo.searchByNameLike(name,PageRequest.of(page-1,limit));
         return products;
     }
+
+
+
 
     @Override
     public List<Product> findByNameContaining(String name) {
@@ -176,6 +177,22 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    @Override
+    public BigDecimal[] getMinMaxPriceProductByCategory(long id) {
+        BigDecimal[] minMax = new BigDecimal[2];
+        minMax[0] = productRepo.minPriceBySubCategory(id);
+        minMax[1] = productRepo.maxPriceBySubCategory(id);
+        return minMax;
+    }
+
+    @Override
+    public BigDecimal[] getMinMaxPriceProductBySearchName(String search) {
+        BigDecimal[] minMax = new BigDecimal[2];
+        minMax[0] = productRepo.searchMinPriceProductByNameLike(search);
+        minMax[1] = productRepo.searchMaxPriceProductByNameLike(search);
+        return minMax;
+    }
+
 
     private void uploadImgProduct(MultipartFile file, Product product) {
         if (file != null && !file.getOriginalFilename().isEmpty()) {
@@ -196,4 +213,20 @@ public class ProductServiceImpl implements ProductService {
             product.setImgLink(resultFilename);
         }
     }
+
+
+    @Transactional
+    @Override
+    public List<Producer> getProducersBySearchProduct(String search) {
+        List<Product> products =  productRepo.findDistinctByNameContaining(search);
+        List<Producer> producers = new ArrayList<>();
+
+        for (Product product : products) {
+            if (product.getProducer() != null) {
+                producers.add(product.getProducer());
+            }
+        }
+        return producers;
+    }
+
 }

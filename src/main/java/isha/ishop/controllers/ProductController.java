@@ -1,5 +1,6 @@
 package isha.ishop.controllers;
 
+import isha.ishop.entity.Category;
 import isha.ishop.entity.Product;
 import isha.ishop.entity.Subcategory;
 import isha.ishop.services.ProductService;
@@ -37,32 +38,49 @@ public class ProductController {
         int currentPage = page.orElse(1);
         Page<Product> productsPage = productService.findAllProductBySubCategoryId(idCategory, currentPage, 12);
         model.addAttribute("products", productsPage.getContent());
+        model.addAttribute("category", productService.findSubcategoryById(idCategory));
         model.addAttribute("breadcrumb", productService.findSubcategoryById(idCategory).getName());
         model.addAttribute("productsPage", productsPage);
         model.addAttribute("urlPagination", request.getRequestURI()+"?");
         model.addAttribute("pageNumbers", pagination(productsPage));
+        model.addAttribute("minMax", productService.getMinMaxPriceProductByCategory(idCategory));
         return "product-grid";
     }
 
+//    @RequestMapping(value = "/category/*/{idCategory}", method = RequestMethod.GET)
+//    public String showProductByCategory(@PathVariable int idCategory, @RequestParam("page") Optional<Integer> page, Model model,HttpServletRequest request) {
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        System.out.println(idCategory);
+//        System.out.println(request.getRequestURI());
+//
+//        List<Subcategory> subcategories = (List<Subcategory>) servletContext.getAttribute(Constants.SUBCATEGORY_LIST);
+//        int currentPage = page.orElse(1);
+//        Page<Product> productsPage = productService.findAllProductByCategoryId(idCategory, currentPage, 12);
+//        model.addAttribute("products", productsPage.getContent());
+//        model.addAttribute("isSubCat", true);
+//        model.addAttribute("category", productService.findCategoryById(idCategory));
+//        model.addAttribute("subcategories", subcategories.stream().filter(s -> s.getCategory().getId() == idCategory).collect(Collectors.toList()));
+//
+//        model.addAttribute("breadcrumb", productService.findCategoryById(idCategory).getName());
+//        model.addAttribute("productsPage", productsPage);
+//        model.addAttribute("urlPagination", request.getRequestURI()+"?");
+//        model.addAttribute("pageNumbers", pagination(productsPage));
+//        return "product-grid";
+//    }
+
+//
     @RequestMapping(value = "/category/*/{idCategory}", method = RequestMethod.GET)
     public String showProductByCategory(@PathVariable int idCategory, @RequestParam("page") Optional<Integer> page, Model model,HttpServletRequest request) {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println(idCategory);
         System.out.println(request.getRequestURI());
-
+        Category category = productService.findCategoryById(idCategory);
         List<Subcategory> subcategories = (List<Subcategory>) servletContext.getAttribute(Constants.SUBCATEGORY_LIST);
-        int currentPage = page.orElse(1);
-        Page<Product> productsPage = productService.findAllProductByCategoryId(idCategory, currentPage, 12);
-        model.addAttribute("products", productsPage.getContent());
-        model.addAttribute("isSubCat", true);
-        model.addAttribute("category", productService.findCategoryById(idCategory));
         model.addAttribute("subcategories", subcategories.stream().filter(s -> s.getCategory().getId() == idCategory).collect(Collectors.toList()));
+        model.addAttribute("category", category);
+        model.addAttribute("breadcrumb", category.getName());
 
-        model.addAttribute("breadcrumb", productService.findCategoryById(idCategory).getName());
-        model.addAttribute("productsPage", productsPage);
-        model.addAttribute("urlPagination", request.getRequestURI()+"?");
-        model.addAttribute("pageNumbers", pagination(productsPage));
-        return "product-grid";
+        return "category-grid";
     }
 
 
@@ -88,7 +106,9 @@ public class ProductController {
         model.addAttribute("productsPage", productsPage);
         model.addAttribute("breadcrumb", search);
 //        model.addAttribute("url", "/search/?search="+search+"&");
-        model.addAttribute("urlPagination", request.getRequestURI()+"/?search="+search+"&");
+        model.addAttribute("minMax", productService.getMinMaxPriceProductBySearchName(search));
+        model.addAttribute("urlPagination", request.getRequestURI()+"?search="+search+"&");
+        model.addAttribute("producers", productService.getProducersBySearchProduct(search));
 
         return "product-grid";
     }

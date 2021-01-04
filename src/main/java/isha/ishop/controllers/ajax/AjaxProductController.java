@@ -73,9 +73,20 @@ public class AjaxProductController {
     public ModelAndView searchProducer(@RequestBody SearchForm search, ModelMap modelMap) {
 
         System.out.println(search);
-        modelMap.addAttribute("producerList",servletContext.getAttribute(Constants.PRODUCER_LIST));
+        modelMap.addAttribute("producers",servletContext.getAttribute(Constants.PRODUCER_LIST));
 
         return new ModelAndView("fragment/producer-list :: producer-list", modelMap);
+    }
+
+
+    @RequestMapping( value = "/ajax/filter-price",method = RequestMethod.GET)
+    public String filterProductByPrice(@RequestParam BigDecimal min,@RequestParam BigDecimal max, ModelMap modelMap) {
+
+
+        System.out.println(min+"--"+max);
+//        modelMap.addAttribute("producerList",servletContext.getAttribute(Constants.PRODUCER_LIST));
+
+        return "redirect:/";
     }
 
     /**
