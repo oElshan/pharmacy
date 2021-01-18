@@ -105,7 +105,6 @@ public class NewProductForm {
                 ", category='" + category + '\'' +
                 ", specCategory='" + specCategory + '\'' +
                 ", visible='" + visible + '\'' +
-                ", photo=" + photo +
                 '}';
     }
 }

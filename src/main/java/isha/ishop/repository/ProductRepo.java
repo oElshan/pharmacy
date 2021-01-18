@@ -46,6 +46,8 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     Page<Product> findBySubcategory_Id(long id, Pageable pageable);
 
+    List<Product> findAllBySubcategory_Id(long id);
+
     @Query(value = "SELECT * FROM ishop.product as p right join ishop.subcategory s on p.id_subcategory=s.id left join ishop.category c on s.id_category = c.id where c.id =?",
             countQuery = "SELECT count(*) FROM ishop.product as p right join ishop.subcategory s on p.id_subcategory=s.id left join ishop.category c on s.id_category = c.id where c.id =?",
             nativeQuery = true)

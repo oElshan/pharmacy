@@ -5,7 +5,44 @@
     $(document).ready(function () {
 
 
+    // <input  class="le-checkbox " type="checkbox"><i class="fake-box"></i>
+        //выбор производителя
+        $(document).on('click', '.producer-filter', function () {
+            var producerFilter = $(this).val();
 
+            alert(producerFilter);
+            var checked = [];
+            $("input:checkbox:checked").each(function(){
+                 var producer  = $(this).val();
+                checked.push(producer)
+            });
+
+
+            alert(checked.toString())
+
+            // $.ajax({
+            //     url : '/ajax/filter-price/?min='+arrayOfStrings[0]+'&max='+arrayOfStrings[1],
+            //     method : 'GET',
+            //     // cache: false,
+            //     // contentType: 'application/json',
+            //     // data:   JSON.stringify(priceValues),
+            //     success : function() {
+            //         // alert(priceValues);
+            //     },
+            //     error : function(xhr) {
+            //         if (xhr.status == 400) {
+            //             alert(xhr.responseJSON.message);
+            //         } else {
+            //             alert('Error new clients order');
+            //             alert(JSON.stringify(orderForm));
+            //         }
+            //     }
+            // });
+
+        });
+
+
+        //филтр по цене
         $(document).on('click', '.filter-button a', function () {
             var priceValues = $( "#price-filter" ).val();
             // alert($('#price-filter').attr('data-min'));

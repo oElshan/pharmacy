@@ -46,7 +46,10 @@ public interface ProductService {
 
     BigDecimal[] getMinMaxPriceProductBySearchName(String search) ;
 
-    public List<Producer> getProducersBySearchProduct(String search);
+    List<Producer> getProducersBySearchProduct(String search);
 
+    Product createOrEditProduct(Product product, final NewProductForm productForm);
+
+    List<Producer> getProducersBySubCategory(long id);
 
     }

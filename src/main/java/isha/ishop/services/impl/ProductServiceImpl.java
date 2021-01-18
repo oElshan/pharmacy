@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 // TODO: 2020-12-26 добавить абстрактный класс для сервиса
 // TODO: 2020-12-26 реализовать метод потчета максимальной и мнимианльной цены для товаров по поиску имени
 
@@ -121,27 +122,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public Product editProduct(EditProductForm editProductForm)  {
         Product product =  productRepo.findProductById(editProductForm.getId());
-        product.setName(editProductForm.getProductName());
-        product.setPrice(new BigDecimal(editProductForm.getPrice()));
-        product.setDescription(editProductForm.getDescription());
-        SpecCategory specCategory = specCategoryRepo.findByName(editProductForm.getSpecCategory());
-        product.setSpecCategory(specCategory);
-        Subcategory subcategory = subCategoryRepo.findByName(editProductForm.getCategory());
-        product.setSubcategory(subcategory);
-        product.setVisible(editProductForm.getVisible());
-
-        MultipartFile file = editProductForm.getPhoto();
-        uploadImgProduct(file, product);
-
-        Producer producer = producerRepo.findByName(editProductForm.getProducer());
-        if (producer == null) {
-            producer = new Producer();
-            producer.setName(editProductForm.getProducer());
-
-        }
-        producer.setProducts(new ArrayList<Product>(Arrays.asList(product)));
-        product.setProducer(producer);
-        productRepo.save(product);
+        createOrEditProduct(product, editProductForm);
         return product;
     }
 
@@ -152,6 +133,14 @@ public class ProductServiceImpl implements ProductService {
     public Product createProduct(NewProductForm productForm) {
 
         Product product = new Product();
+        createOrEditProduct(product, productForm);
+        return product;
+    }
+
+
+
+    public Product createOrEditProduct( Product product, final NewProductForm productForm) {
+
         product.setName(productForm.getProductName());
         product.setDescription(productForm.getDescription());
         product.setPrice(new BigDecimal(productForm.getPrice()));
@@ -176,6 +165,7 @@ public class ProductServiceImpl implements ProductService {
         return product;
 
     }
+
 
     @Override
     public BigDecimal[] getMinMaxPriceProductByCategory(long id) {
@@ -227,6 +217,18 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         return producers;
+    }
+
+    @Override
+    public List<Producer> getProducersBySubCategory(long id) {
+
+        List<Producer> producers = new ArrayList<>();
+
+        for (Product product : productRepo.findAllBySubcategory_Id(id)) {
+            producers.add(product.getProducer());
+        }
+        return producers.stream().distinct().collect(Collectors.toList());
+
     }
 
 }
