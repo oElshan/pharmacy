@@ -60,6 +60,12 @@ Table of Contents
 /*===================================================================================*/
 /*  Helper
 /*===================================================================================*/
+.scroll-filter{
+  height: 200px;
+  overflow: auto ;
+}
+
+
 .light-bg {
   background-color: #f8f8f8; }
 
@@ -966,7 +972,7 @@ header {
   width: 100%; }
   .megamenu-horizontal .nav > li > a {
     color: #636363;
-    font-weight: 600; }
+    font-weight: 300; }
     .megamenu-horizontal .nav > li > a:focus, .megamenu-horizontal .nav > li > a:hover {
       color: #fff; }
       .megamenu-horizontal .nav > li > a:focus:after, .megamenu-horizontal .nav > li > a:hover:after {
@@ -999,7 +1005,8 @@ header {
       font-weight: 700; }
       #top-mega-nav nav .le-dropdown:first-child {
         display: inline-block;
-        float: left; }
+        float: left;
+      }
 
 #top-megamenu-nav {
   margin: 33px 0 0 0;
@@ -1812,14 +1819,14 @@ header {
   padding-bottom: 14vh; }
 
 #owl-main .caption.text-center {
-  padding-left: 10%;
-  padding-right: 10%; }
-
-#owl-main .caption.text-left {
+  padding-left: 30%;
   padding-right: 20%; }
 
+#owl-main .caption.text-left {
+  padding-right: 40%; }
+
 #owl-main .caption.text-right {
-  padding-left: 20%; }
+  padding-left: 50%; }
 
 #owl-main .owl-controls {
   display: block;
@@ -2047,7 +2054,7 @@ header {
       font-weight: bold; }
   .product-item-holder .body .brand {
     font-size: 10px;
-    line-height: 30px;
+    line-height: 20px;
     color: #3D3D3D; }
 
 .product-grid-holder.medium .product-item-holder .prices {
@@ -2132,12 +2139,12 @@ header {
   .grid-list-products .control-bar {
     background-color: #F9F9F9;
     border-radius: 5px;
-    padding: 13px; }
+    padding-bottom: 20px; }
     .grid-list-products .control-bar #popularity-sort {
       width: 190px;
       margin: 0 18px 0 0; }
   .grid-list-products .grid-list-buttons {
-    padding: 7px;
+    /*padding: 7px;*/
     float: right; }
     .grid-list-products .grid-list-buttons ul li {
       min-width: 49px;
@@ -3383,7 +3390,7 @@ header {
 .sidebar.wide {
   width: 77%; }
 .sidebar .price-filter {
-  border-top: 1px solid #e0e0e0;
+  /*border-top: 1px solid #e0e0e0;*/
   margin: 19px 0 0 0;
   padding: 10px 0 0 0; }
 .sidebar .price-range-holder {
@@ -3616,7 +3623,9 @@ select.top-drop-menu {
   background-color: #fff; }
 
 .navbar-collapse {
-  max-height: none; }
+  max-height: none;
+
+}
 
 /* Extra small devices (phones, less than 768px) */
 @media (max-width: 767px) {
@@ -3638,6 +3647,10 @@ select.top-drop-menu {
   .top-bar > .container > div > ul > li > a {
     font-size: 11px !important;
     padding: 0 9px !important; }
+  .logo-holder{
+      right: 10px ;
+      top: -30px;
+  }
   .logo > a {
     display: block;
     margin-bottom: 0px; }
@@ -3808,7 +3821,14 @@ select.top-drop-menu {
   .top-bar > .container > div > ul > li > a {
     font-size: 12px !important;
     padding: 0 9px !important; }
-  .logo > a {
+    .logo-holder{
+        right: 30px ;
+        top: -30px;
+    }
+    .contact-row{
+        padding-left: 30px ;
+    }
+    .logo > a {
     display: block;
     margin-bottom: 0px; }
     .logo > a > svg {
@@ -3833,7 +3853,8 @@ select.top-drop-menu {
     margin-bottom: 10px;
     text-align: center; }
   .top-cart-row-container {
-    text-align: center; }
+    /*text-align: center; */
+  }
   .sidemenu-holder {
     width: 33.333% !important; }
   .homebanner-holder {
@@ -3896,14 +3917,16 @@ select.top-drop-menu {
   #footer .link-list-row .link-widget {
     width: 30.33% !important; }
   header .logo svg {
-    width: 100% !important; }
+    /*width: 100% !important;*/
+  }
   header .top-search-holder {
     margin: 0;
     width: 41.6667% !important; }
     header .top-search-holder .search-field {
       width: 50% !important; }
   header .top-cart-row {
-    width: 33.333%; }
+    /*width: 33.333%; */
+  }
   .products-list .product-item .row .body-holder {
     width: 42%; }
   .products-list .product-item .row .price-area {
@@ -3923,6 +3946,7 @@ select.top-drop-menu {
 @media (min-width: 1200px) {
   .owl-buttons {
     display: block; } }
+
 .whatsapp-button {
   position: fixed;
   right: 13px;

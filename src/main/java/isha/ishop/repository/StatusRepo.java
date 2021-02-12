@@ -7,4 +7,5 @@ public interface StatusRepo extends JpaRepository<Status, Integer> {
 
     Status getById(Integer id);
 
+    Status findByName(String name);
 }

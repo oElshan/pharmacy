@@ -1,8 +1,10 @@
 package isha.ishop.services.impl;
 
+import isha.ishop.dto.EditProductForm;
+import isha.ishop.dto.FilterProduct;
+import isha.ishop.dto.NewProductForm;
 import isha.ishop.entity.*;
-import isha.ishop.form.EditProductForm;
-import isha.ishop.form.NewProductForm;
+import isha.ishop.exception.InternalServerErrorException;
 import isha.ishop.repository.*;
 import isha.ishop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
+// TODO: 2020-12-26 добавить абстрактный класс для сервиса
+// TODO: 2020-12-26 реализовать метод потчета максимальной и мнимианльной цены для товаров по поиску имени
 
 
 @Service
-public class ProductServiceImpl implements   ProductService {
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ProductRepo productRepo;
@@ -42,6 +44,16 @@ public class ProductServiceImpl implements   ProductService {
     @Autowired
     Environment env;
 
+    @Override
+    public Page<Product> findAllProductByCategoryURL(String categoryName,int page, int limit) {
+
+        return productRepo.findBySubcategory_Url(categoryName, PageRequest.of(page-1,limit));
+    }
+
+    @Override
+    public Category findCategoryByUrl(String url) {
+        return categoryRepo.findByUrl(url);
+    }
 
     @Override
     public List<SpecCategory> listAllSpecCategory() {
@@ -57,16 +69,8 @@ public class ProductServiceImpl implements   ProductService {
         return subCategoryRepo.findAll();
     }
 
-    /**
-     * метод возвращает список продуктов , передаются праметры
-     * @param page номер старницы
-     * @param limit скольок будет данных на странице
-     * этот обьект используется методом для того чтобы запросить данный по лимиту , каждая страничка это опредленый лимит данных
-     * @return
-     */
-    @Override
-    public List<Product> listAllProducts(int page, int limit) {
-        return productRepo.findAll(PageRequest.of(page - 1, limit)).getContent();
+    public List<Product> listAllProductsForSpecCategory(int id,int page, int limit) {
+      return  productRepo.findBySpecCategory_Id(id, PageRequest.of(page - 1, limit)).getContent();
     }
 
     @Override
@@ -80,10 +84,24 @@ public class ProductServiceImpl implements   ProductService {
     }
 
     @Override
-    public Page<Product> findProductByNameLike(String name, int page, int limit) {
-//       List <Product> products = productRepo.findByNameContaining(name);
-       Page <Product> products = productRepo.searchByNameLike(name,PageRequest.of(page-1,limit));
-        return products;
+    public Page<Product> findProductBySearch(String name, BigDecimal[] price, Set<Long> producers, int page, int limit) {
+
+        if (price == null && producers == null) {
+
+            return productRepo.findByNameLike(name, PageRequest.of(page - 1, limit));
+
+        } else if (price != null && producers == null) {
+
+            return productRepo.findByNameContainingAndPriceBetween(name, price[0], price[1], PageRequest.of(page - 1, limit));
+
+        } else if (price == null && producers != null) {
+
+            return productRepo.findByNameContainingAndProducer_IdIn(name,  producers, PageRequest.of(page - 1, limit));
+
+        } else {
+            return productRepo.findByNameContainingAndPriceBetweenAndProducer_IdIn(name, price[0], price[1], producers, PageRequest.of(page - 1, limit));
+        }
+
     }
 
     @Override
@@ -95,37 +113,21 @@ public class ProductServiceImpl implements   ProductService {
     @Transactional
     public Product editProduct(EditProductForm editProductForm)  {
         Product product =  productRepo.findProductById(editProductForm.getId());
-        product.setName(editProductForm.getProductName());
-        product.setPrice(new BigDecimal(editProductForm.getPrice()));
-        product.setDescription(editProductForm.getDescription());
-        SpecCategory specCategory = specCategoryRepo.findByName(editProductForm.getSpecCategory());
-        product.setSpecCategory(specCategory);
-        Subcategory subcategory = subCategoryRepo.findByName(editProductForm.getCategory());
-        product.setSubcategory(subcategory);
-        product.setVisible(editProductForm.getVisible());
-
-        MultipartFile file = editProductForm.getPhoto();
-        uploadImgProduct(file, product);
-
-        Producer producer = producerRepo.findByName(editProductForm.getProducer());
-        if (producer == null) {
-            producer = new Producer();
-            producer.setName(editProductForm.getProducer());
-
-        }
-        producer.setProducts(new ArrayList<Product>(Arrays.asList(product)));
-        product.setProducer(producer);
-        productRepo.save(product);
+        createOrEditProduct(product, editProductForm);
         return product;
     }
-
 
     @Transactional
     @Override
 
     public Product createProduct(NewProductForm productForm) {
-
         Product product = new Product();
+        createOrEditProduct(product, productForm);
+        return product;
+    }
+
+    public Product createOrEditProduct( Product product, final NewProductForm productForm) {
+
         product.setName(productForm.getProductName());
         product.setDescription(productForm.getDescription());
         product.setPrice(new BigDecimal(productForm.getPrice()));
@@ -152,6 +154,28 @@ public class ProductServiceImpl implements   ProductService {
     }
 
 
+    @Override
+    public Map<String,BigDecimal> getMinMaxPriceProductByCategoryURL(String category) {
+        Map<String, BigDecimal> minMaxPrice = new HashMap<>();
+        List<BigDecimal[]> minMax = productRepo.minMaxPriceBySubCategory(category);
+        for (BigDecimal[] m : minMax) {
+            minMaxPrice.put("min", m[0]);
+            minMaxPrice.put("max", m[1]);
+        }
+        return minMaxPrice;
+    }
+
+    @Override
+    public Map<String,BigDecimal> getMinMaxPriceProductBySearchName(String search) {
+        Map<String, BigDecimal> minMaxPrice = new HashMap<>();
+        List<BigDecimal[]> minMax = productRepo.searchMinMaxPriceProductByNameLike(search);
+        for (BigDecimal[] m : minMax) {
+            minMaxPrice.put("min", m[0]);
+            minMaxPrice.put("max", m[1]);
+        }
+        return minMaxPrice;
+    }
+
     private void uploadImgProduct(MultipartFile file, Product product) {
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(env.getProperty("upload.path"));
@@ -170,5 +194,63 @@ public class ProductServiceImpl implements   ProductService {
             }
             product.setImgLink(resultFilename);
         }
+    }
+
+
+    @Override
+    public List<Producer> getProducersBySearchProduct(String search) {
+        List<Product> products =  productRepo.findDistinctByNameContaining(search);
+        List<Producer> producers = products.stream().map(Product::getProducer).filter(Objects::nonNull).distinct().collect(Collectors.toList());
+        return producers;
+    }
+
+
+    @Override
+    public Page<Product> getProductByFilter(FilterProduct filterProduct,int page, int limit) {
+        Page<Product> productPage;
+
+        if (filterProduct.getProducers() == null) {
+            productPage = productRepo.findBySubcategory_IdAndPriceBetween(filterProduct.getIdCategory(), filterProduct.getPrice()[0], filterProduct.getPrice()[1],PageRequest.of(page - 1, limit));
+
+        } else {
+
+            productPage = productRepo.findBySubcategory_IdAndPriceBetweenAndProducer_IdIn(
+                    filterProduct.getIdCategory(), filterProduct.getPrice()[0], filterProduct.getPrice()[1],
+                    filterProduct.getProducers(), PageRequest.of(page - 1, limit));
+        }
+
+        return productPage;
+    }
+
+
+
+
+    @Override
+    public List<Producer> getProducersByCategoryURL(String categoryName) {
+
+        List<Producer> producers = new ArrayList<>();
+
+        for (Product product : productRepo.findAllBySubcategory_Url(categoryName)) {
+            producers.add(product.getProducer());
+        }
+        return producers.stream().distinct().collect(Collectors.toList());
+
+    }
+
+
+    @Override
+    public  Page<Product> findProductByCategoryIDWherePriceAndProducer(long categoryId, BigDecimal min, BigDecimal max, Set<Long> producerId,int page,int limit) {
+        Page<Product> productPage = productRepo.findBySubcategory_IdAndPriceBetweenAndProducer_IdIn(categoryId, min, max, producerId,PageRequest.of(page-1,limit));
+
+        return productPage;
+    }
+
+    @Override
+    public Subcategory findSubcategoryByURL(String categoryURl) {
+        Subcategory subcategory = subCategoryRepo.findByUrl(categoryURl);
+        if (subcategory == null) {
+            throw new InternalServerErrorException("category not found by url " +categoryURl);
+    }
+        return subcategory;
     }
 }

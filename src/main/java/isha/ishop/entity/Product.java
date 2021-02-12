@@ -70,7 +70,7 @@ public class Product {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER ,cascade =  {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinColumn(name = "id_producer",foreignKey = @ForeignKey(name = "product_producer__fk"))
     public Producer getProducer() {
         return producer;
@@ -146,31 +146,19 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Objects.equals(id, product.id) &&
-                Objects.equals(name, product.name) &&
-                Objects.equals(imgLink, product.imgLink) &&
-                Objects.equals(price, product.price);
+        return id.equals(product.id) &&
+                name.equals(product.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, imgLink, price);
+        return Objects.hash(id, name);
     }
 
     @Override
     public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", subcategory=" + subcategory +
-                ", description='" + description + '\'' +
-                ", imgLink='" + imgLink + '\'' +
-                ", price=" + price +
-                ", producer=" + producer +
-                ", specCategory=" + specCategory +
-                ", visible='" + visible + '\'' +
-                ", date=" + date +
-                '}';
+        return new StringBuilder("Product{").append("id=").append(id).append(", name=").append(name).toString();
+
     }
 }
 

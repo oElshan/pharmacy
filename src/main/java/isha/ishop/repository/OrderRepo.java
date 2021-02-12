@@ -34,7 +34,10 @@ public interface OrderRepo extends JpaRepository<ClientOrder, Long> {
 
     Page<ClientOrder> findAllByStatusName(String name, Pageable page);
 
-
     ClientOrder findById(long id);
+
+    void deleteById(Long id);
+
+
 
 }

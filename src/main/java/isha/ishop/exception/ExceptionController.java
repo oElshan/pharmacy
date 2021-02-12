@@ -26,9 +26,9 @@ public class ExceptionController  {
 //        return "404";
 //    }
 
-    @ExceptionHandler(RuntimeException.class)
-    public String handleRuntimeException(HttpServletRequest request, Exception e)   {
-        System.out.println( "Request: " + request.getRequestURL() + " raised " + e);
-        return "404";
-    }
+//    @ExceptionHandler(RuntimeException.class)
+//    public String handleRuntimeException(HttpServletRequest request, Exception e)   {
+//        System.out.println( "Request: " + request.getRequestURL() + " raised " + e);
+//        return "404";
+//    }
 }

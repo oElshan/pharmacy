@@ -3,16 +3,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <head th:replace="~{templates/adminTempl :: head}"> </head>
+    <head th:replace="~{templates/admin/adminTempl :: head}"> </head>
 
     <body>
     <!-- Begin page -->
     <div id="wrapper">
         <!-- Top Bar Start -->
-        <div th:replace="~{templates/adminTempl :: topbar}"> </div>
+        <div th:replace="~{templates/admin/adminTempl :: topbar}"> </div>
         <!-- Top Bar End -->
         <!-- ========== Left Sidebar Start ========== -->
-        <div th:replace="~{templates/adminTempl :: side-menu}"> </div>
+        <div th:replace="~{templates/admin/adminTempl :: side-menu}"> </div>
             <!-- Left Sidebar End -->
 
             <!-- ============================================================== -->
@@ -94,9 +94,9 @@
                                                     <label class="col-sm-2 col-form-label">Catalog(Category)</label>
                                                     <div class="col-sm-10">
                                                         <select class="form-control" name="category" >
-                                                            <option th:each="category:${#servletContext.getAttribute('CATEGORY_LIST')}" th:value="${category.name}" th:text="${category.name}"
+                                                            <option th:each="category:${#servletContext.getAttribute('CATEGORY_LIST')}" th:value="${category.name}" th:text="${category.name}">Select</option>
                                                                     <!--th:selected="${category.name==editProduct.subcategory.name?true:false}"-->
-                                                            >Select</option>
+
                                                             <!--<option th:each="category:${#servletContext.getAttribute('CATEGORY_LIST')}"-->
                                                              <!--th:text="${category.name==editProduct.subcategory}?${editProduct.subcategory}:${category.name}"-->
                                                             <!--&gt;Select</option>-->
@@ -109,8 +109,7 @@
                                                     <div class="col-sm-10">
                                                         <select class="form-control" name="specCategory">
                                                             <option th:each="category:${specCategoryList}" th:value="${category.name}" th:text="${category.name}"
-                                                                    th:selected="${category.name==editProduct.specCategory.name?true:false}"
-                                                            >Select</option>
+                                                                    <!--th:selected="${category.name==editProduct.specCategory.name?true:false}">Select</option>-->
                                                         </select>
                                                     </div>
                                                 </div>

@@ -5,7 +5,7 @@ import isha.ishop.entity.Client;
 import isha.ishop.entity.ClientOrder;
 import isha.ishop.entity.OrderItem;
 import isha.ishop.entity.Status;
-import isha.ishop.form.OrderForm;
+import isha.ishop.dto.OrderForm;
 import isha.ishop.model.ShoppingCart;
 import isha.ishop.model.ShoppingCartItem;
 import isha.ishop.repository.*;

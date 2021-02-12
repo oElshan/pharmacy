@@ -28,6 +28,7 @@ public class ShoppingCartInterceptor extends HandlerInterceptorAdapter {
         ShoppingCart shoppingCart;
 
         if (!webService.isCurrentShoppingCartCreated(request)) {
+
             Cookie cookieShoppingCart = webService.findShoppingCartCookie(request);
             if (cookieShoppingCart != null) {
               shoppingCart = deserializeShoppingCart(cookieShoppingCart.getValue());

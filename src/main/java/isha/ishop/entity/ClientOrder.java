@@ -35,7 +35,7 @@ public class ClientOrder implements Serializable {
 
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinColumn(name = "id_status",foreignKey = @ForeignKey(name = "clientOrder_status__fk"))
     public Status getStatus() {
         return status;
@@ -56,7 +56,7 @@ public class ClientOrder implements Serializable {
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "clientOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "clientOrder", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,CascadeType.MERGE} )
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }
@@ -65,7 +65,7 @@ public class ClientOrder implements Serializable {
         this.orderItems = orderItems;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST,CascadeType.MERGE},optional = false)
     @JoinColumn(name = "id_client")
     public Client getClient() {
         return client;
@@ -95,7 +95,6 @@ public class ClientOrder implements Serializable {
         return "ClientOrder{" +
                 "id=" + id +
                 ", clientPhone=" + client.getPhone() +
-                ", orderItems=" + orderItems +
                 '}';
     }
 }

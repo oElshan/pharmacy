@@ -13,32 +13,10 @@
     <div th:replace="~{templates/header :: header}"></div>
 
     <!-- ============================================================= HEADER : END ============================================================= -->
+    <div th:replace="~{fragment/category-product :: category-product}"></div>
 
-    <div class="animate-dropdown">
-        <!-- ========================================= BREADCRUMB ========================================= -->
-        <div id="top-mega-nav">
-            <div class="container">
-                <nav>
-                    <ul class="inline">
 
-                        <li class="breadcrumb-nav-holder">
-                            <ul>
-                                <li class="breadcrumb-item">
-                                    <a href="/">Home</a>
-                                </li>
-                                <li class="breadcrumb-item current gray">
-                                    <a href="/cart">Shopping Cart</a>
-                                </li>
-                            </ul>
-                        </li><!-- /.breadcrumb-nav-holder -->
-                    </ul>
-                </nav>
-            </div><!-- /.container -->
-        </div><!-- /#top-mega-nav -->
-        <!-- ========================================= BREADCRUMB : END ========================================= -->
-    </div>
-
-    <section id="cart-page"  th:insert="~{fragment/viewShoppingCart :: viewSoppingCart}"></section>
+    <section id="cart-page"  th:insert="~{fragment/view-shopping-cart :: viewSoppingCart}"></section>
 
     <!-- ============================================================= FOOTER ============================================================= -->
     <div th:replace="~{templates/footer :: footer}"></div>

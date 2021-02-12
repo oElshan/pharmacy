@@ -27,7 +27,7 @@ public class Client {
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     public List<ClientOrder> getClientOrders() {
         return clientOrders;
     }
