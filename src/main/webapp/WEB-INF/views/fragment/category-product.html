@@ -18,7 +18,7 @@
                                     <!---->
                                     <!---->
                                     <li  th:each="category:${#servletContext.getAttribute('CATEGORY_LIST')}">
-                                        <a th:href="${category.url+'/'+category.id}"  th:text="${category.name}">Computer Cases &amp; Accessories</a>
+                                        <a th:href="${category.url}"  th:text="${category.name}">Computer Cases &amp; Accessories</a>
                                         <!--<a class="dropdown-item" th:text="${category.name}">Computer Cases &amp; Accessories</a>-->
                                         <ul class="dropdown-menu">
                                             <li class="yammcontent">

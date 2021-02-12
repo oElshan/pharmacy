@@ -11,4 +11,6 @@ public interface CategoryRepo extends JpaRepository<Category, Integer> {
 
     Category findById(int id);
 
+    Category findByUrl(String url);
+
 }

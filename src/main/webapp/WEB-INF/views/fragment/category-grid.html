@@ -15,7 +15,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <ul class="row">
-                        <li class="col-md-4" th:each="subCategory:${subcategories}" style="padding-bottom: 20px"><a class="h4" th:href="@{(${category.url+subCategory.url})+'/'+${subCategory.id}}"   th:text="${subCategory.name}"></a></li>
+                        <li class="col-md-4" th:each="subCategory:${subcategories}" style="padding-bottom: 20px"><a class="h4" th:href="@{(${category.url+'/'+subCategory.url})}"   th:text="${subCategory.name}"></a></li>
                     </ul>
                 </div>
             </div>

@@ -2,7 +2,7 @@ package isha.ishop.services;
 
 import isha.ishop.entity.ClientOrder;
 import isha.ishop.entity.Status;
-import isha.ishop.form.EditOrder;
+import isha.ishop.dto.EditOrder;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package isha.ishop.controllers;
+package isha.ishop.controllers.client;
 
 import isha.ishop.model.CurrentUser;
 import isha.ishop.services.ProductService;

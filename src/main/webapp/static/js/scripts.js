@@ -4,92 +4,43 @@
 
     $(document).ready(function () {
 
+        //----------------------------филтр по цене и по производителю----------------------------
+        $(document).on('click', '.filter-button button', function () {
+            var priceValues = $( "#price-filter" ).val();
+            var checkedProducer= [];
 
-    // <input  class="le-checkbox " type="checkbox"><i class="fake-box"></i>
-        //выбор производителя
-        $(document).on('click', '.producer-filter', function () {
-            var producerFilter = $(this).val();
 
-            alert(producerFilter);
-            var checked = [];
             $("input:checkbox:checked").each(function(){
-                 var producer  = $(this).val();
-                checked.push(producer)
+                var producer  = $(this).val();
+                checkedProducer.push(producer)
             });
 
-
-            alert(checked.toString())
-
-            // $.ajax({
-            //     url : '/ajax/filter-price/?min='+arrayOfStrings[0]+'&max='+arrayOfStrings[1],
-            //     method : 'GET',
-            //     // cache: false,
-            //     // contentType: 'application/json',
-            //     // data:   JSON.stringify(priceValues),
-            //     success : function() {
-            //         // alert(priceValues);
-            //     },
-            //     error : function(xhr) {
-            //         if (xhr.status == 400) {
-            //             alert(xhr.responseJSON.message);
-            //         } else {
-            //             alert('Error new clients order');
-            //             alert(JSON.stringify(orderForm));
-            //         }
-            //     }
-            // });
-
-        });
-
-
-        //филтр по цене
-        $(document).on('click', '.filter-button a', function () {
-            var priceValues = $( "#price-filter" ).val();
-            // alert($('#price-filter').attr('data-min'));
-            // alert($( "#price-filter" ).val());
             var arrayOfStrings = priceValues.split(',');
-
             var data = {
                 'min': arrayOfStrings[0],
                 'max': arrayOfStrings[1]
             };
 
-            alert(JSON.stringify(data));
 
-            $.ajax({
-                url : '/ajax/filter-price/?min='+arrayOfStrings[0]+'&max='+arrayOfStrings[1],
-                method : 'GET',
-                // cache: false,
-                // contentType: 'application/json',
-                // data:   JSON.stringify(priceValues),
-                success : function() {
-                    // alert(priceValues);
-                },
-                error : function(xhr) {
-                    if (xhr.status == 400) {
-                        alert(xhr.responseJSON.message);
-                    } else {
-                        alert('Error new clients order');
-                        alert(JSON.stringify(orderForm));
-                    }
-                }
-            });
 
+            if (checkedProducer.length==0) {
+                window.location.href = window.location.pathname + '?search='+$('#search').val()+ '&price=' + arrayOfStrings[0] + ',' + arrayOfStrings[1];
+            } else {
+                window.location.href = window.location.pathname  +'?search='+$('#search').val()+ '&price=' + arrayOfStrings[0] + ',' + arrayOfStrings[1]+'&producers='+checkedProducer.toString();
+            }
         });
 
 
-        //AJAX для заказа
+        //------------------------AJAX для заказа---------------------------------
         var newClientsOrder = function (orderForm) {
-            
-            
             $.ajax({
-                url : 'ajax/client/order',
+                url : '/ajax/orders/new',
                 method : 'POST',
                 cache: false,
                 contentType: 'application/json',
                 data:   JSON.stringify(orderForm),
-                success : function(ceckoutOrder) {
-                    $('#checkout-page').html(ceckoutOrder);
+                success : function(checkoutOrder) {
+                    $('#checkout-page').html(checkoutOrder);
                     basketStatus();
                 },
                 error : function(xhr) {
@@ -101,7 +52,6 @@
                     }
                 }
             });
-
         };
 
         // форма заказа слиента
@@ -118,17 +68,15 @@
             newClientsOrder(orderForm);
         });
 
+        //----------------------------Поиск производителя----------------------------
         $('#searchProducer').on('keyup', function(){
             var $result = $('#producer-list');
             var search = $(this).val();
             if ((search !== '') && (search.length > 2)){
                 $.ajax({
-                    type: "POST",
-                    url: "/ajax/json/search-producer",
-                    data: JSON.stringify({
-                        searchName: search
-                    }),
-                    contentType: 'application/json',
+                    type: "GET",
+                    url: '/ajax/producers/search',
+                    data: {name:search},
                     success: function(msg){
                         $result.html(msg);
                         $result.addClass("scroll-filter");
@@ -155,7 +103,7 @@
             }
         });
 
-
+        //----------------------------Товары по спец категориям----------------------------
         $(document).on('click', '#products-category a', function () {
             var idCatalog = $(this).attr('id-speccategory');
             showProductListBySpecCatalog(idCatalog);
@@ -189,12 +137,12 @@
 
 
 
-
+        //------------------------------------------------------------------------------------
         var deleteItemfromShoppingCart = function () {
             var idProduct = $(this).attr('data-product_id');
             $.ajax({
-                url : 'ajax/deleteItem?idProduct='+idProduct,
-                method : 'GET',
+                url : '/ajax/deleteItem?idProduct='+idProduct,
+                method : 'DELETE',
                 cache: false,
                 success : function(shoppingCart) {
                     $('.shoppingCart').html(shoppingCart);
@@ -210,12 +158,12 @@
 
         };
 
-
+        //
         var deleteItemfromViewShoppingCart = function (idProduct) {
 
             $.ajax({
-                url : 'ajax/deleteItem?idProduct='+idProduct,
-                method : 'GET',
+                url : '/ajax/deleteItem?idProduct='+idProduct,
+                method : 'DELETE',
                 cache: false,
                 success : function(shoppingCart) {
                     $('.shoppingCart').html(shoppingCart);
@@ -231,7 +179,7 @@
 
         };
 
-        // $(document).on('click', '.basket-item .close-btn', deleteItemfromShoppingCart);
+        $(document).on('click', '.basket-item .close-btn', deleteItemfromShoppingCart);
 
         $(document).on('click', '.plus', function () {
             var countItems = $('countItems').attr('value');
@@ -242,7 +190,7 @@
         $(document).on('click', '#cart-page .close-btn',function () {
             var idProduct = $(this).attr('data-product_id');
             deleteItemfromViewShoppingCart(idProduct);
-            $('#cart-page').load('/ajax/deleteItemFromShoppingCart',function(){
+            $('#cart-page').load('/ajax/shopping-cart',function(){
             });
 
             // $.ajax({
@@ -267,10 +215,10 @@
 
 
 
-        //добавление товара в корзину
+        //----------------------------добавление товара в корзину----------------------------
         var addProductToCart = function() {
             var idProduct = $(this).attr('data-product_id');
-            var url = '/ajax/json/product/add?idProduct=' + idProduct;
+            var url = '/ajax/shopping-cart/add?idProduct=' + idProduct;
             // $('#shoppingCart').load(url);
             $.ajax({
                 url : url,
@@ -300,10 +248,10 @@
 
 
 
-        //обновление статуса корзины
+        //-----------------------------------------------обновление статуса корзины------------------------------------
         var basketStatus = function () {
             $.ajax({
-                url : 'ajax/json/shoppingCart',
+                url : '/ajax/json/shoppingCart',
                 method : 'GET',
                 cache: false,
                 success : function(shoppingCart) {
@@ -323,7 +271,7 @@
         basketStatus();
 
     });
-
+    // --------------------------------------------------EnD USER SCRIPT-------------------------------------
 
     /*===================================================================================*/
     /*  WOW
@@ -661,9 +609,9 @@
                 step: 1,
                 value: [min,max],
                 handle: "square"
-
             });
         }
+
 
         $(document).ready(function(){
             $('select.styled').customSelect();

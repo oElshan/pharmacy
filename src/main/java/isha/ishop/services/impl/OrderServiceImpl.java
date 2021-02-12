@@ -4,7 +4,7 @@ import isha.ishop.entity.Client;
 import isha.ishop.entity.ClientOrder;
 import isha.ishop.entity.OrderItem;
 import isha.ishop.entity.Status;
-import isha.ishop.form.EditOrder;
+import isha.ishop.dto.EditOrder;
 import isha.ishop.repository.OrderItemRepo;
 import isha.ishop.repository.OrderRepo;
 import isha.ishop.repository.StatusRepo;

@@ -1,11 +1,11 @@
-package isha.ishop.controllers.ajax;
+package isha.ishop.controllers.admin;
 
 import isha.ishop.entity.ClientOrder;
 import isha.ishop.entity.OrderItem;
 import isha.ishop.entity.Status;
-import isha.ishop.form.EditOrder;
-import isha.ishop.form.EditOrderItem;
-import isha.ishop.form.SearchForm;
+import isha.ishop.dto.EditOrder;
+import isha.ishop.dto.EditOrderItem;
+import isha.ishop.dto.SearchForm;
 import isha.ishop.model.OrderStatus;
 import isha.ishop.services.OrderService;
 import isha.ishop.services.ProductService;
@@ -150,7 +150,6 @@ public class AjaxAdminController {
         clientOrdersPage = currentSelect.equalsIgnoreCase("all") ? orderService.getOrdersLimit(currentPage, 10) :  orderService.getOrdersLimit(currentPage, 10, currentSelect);
         List<Status> statuses = orderService.getAllStatusOrders();
         int totalPages = clientOrdersPage.getTotalPages();
-
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                     .boxed()
@@ -179,7 +178,6 @@ public class AjaxAdminController {
     @GetMapping("/ajax/admin/orders/delete-item")
     public String deleteOrderItem(@RequestParam("orderItemId") long orderItemId,@RequestParam("orderId") long orderId, ModelMap model)  {
         orderService.deleteItemFromClientOrder(orderItemId,orderId);
-
         return "redirect:/ajax/admin/edit-order?id=" + orderId;
     }
 }

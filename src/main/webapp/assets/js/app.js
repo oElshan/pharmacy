@@ -264,13 +264,9 @@
             var search = $(this).val();
             if ((search !== '') && (search.length > 2)){
                 $.ajax({
-                    type: "POST",
-                    url: "/ajax/json/search-items",
-                    data: JSON.stringify({
-                        searchName: search
-                    }),
-                    contentType: 'application/json',
-
+                    type: "GET",
+                    url: "/ajax/products/search",
+                    data: {'name':search},
                     success: function(msg){
                         $result.html(msg);
                         if(msg !== ''){

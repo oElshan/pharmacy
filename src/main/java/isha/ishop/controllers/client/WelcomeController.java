@@ -1,8 +1,7 @@
-package isha.ishop.controllers;
+package isha.ishop.controllers.client;
 
 import isha.ishop.entity.Product;
 import isha.ishop.entity.SpecCategory;
-import isha.ishop.form.OrderForm;
 import isha.ishop.services.ProductService;
 import isha.ishop.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +34,6 @@ public class WelcomeController {
         model.addAttribute("products", products);
         model.addAttribute("specCategory", specCategories.get(0));
         model.addAttribute("specCategoryList", specCategories);
-
-
 /**        1. Найти в сессии корзину
  *         2. если ее там нету найти ее в куки
  *              2.1 найти атрибут корзина = сериализация корзины
@@ -46,14 +43,7 @@ public class WelcomeController {
  *         5.сохранить данные карзины в куки
  *
  */
-        return "index-2";
+        return "index";
     }
 
-
-    @RequestMapping(value = "/checkout" ,method = RequestMethod.GET)
-    public  String createOrder(  Model model) {
-        model.addAttribute("orderForm", new OrderForm());
-        model.addAttribute("breadcrumb", "Checkout Process");
-        return "checkout";
-    }
 }

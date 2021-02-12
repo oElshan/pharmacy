@@ -1,10 +1,10 @@
-package isha.ishop.controllers;
+package isha.ishop.controllers.admin;
 
 import isha.ishop.entity.ClientOrder;
 import isha.ishop.entity.Product;
 import isha.ishop.entity.Status;
-import isha.ishop.form.EditProductForm;
-import isha.ishop.form.NewProductForm;
+import isha.ishop.dto.EditProductForm;
+import isha.ishop.dto.NewProductForm;
 import isha.ishop.services.OrderService;
 import isha.ishop.services.ProductService;
 import org.slf4j.Logger;

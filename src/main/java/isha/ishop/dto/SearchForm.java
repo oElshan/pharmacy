@@ -1,4 +1,4 @@
-package isha.ishop.form;
+package isha.ishop.dto;
 
 public class SearchForm {
     private String searchName;

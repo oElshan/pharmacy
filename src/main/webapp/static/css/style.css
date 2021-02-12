@@ -2054,7 +2054,7 @@ header {
       font-weight: bold; }
   .product-item-holder .body .brand {
     font-size: 10px;
-    line-height: 30px;
+    line-height: 20px;
     color: #3D3D3D; }
 
 .product-grid-holder.medium .product-item-holder .prices {
@@ -2139,12 +2139,12 @@ header {
   .grid-list-products .control-bar {
     background-color: #F9F9F9;
     border-radius: 5px;
-    padding: 13px; }
+    padding-bottom: 20px; }
     .grid-list-products .control-bar #popularity-sort {
       width: 190px;
       margin: 0 18px 0 0; }
   .grid-list-products .grid-list-buttons {
-    padding: 7px;
+    /*padding: 7px;*/
     float: right; }
     .grid-list-products .grid-list-buttons ul li {
       min-width: 49px;

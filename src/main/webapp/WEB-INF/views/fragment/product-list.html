@@ -11,52 +11,33 @@
                     <!-- ========================================= PRODUCT FILTER ========================================= -->
                     <div class="widget">
                         <h1>Product Filters</h1>
-                        <div class="body bordered">
-
-                            <div class="category-filter nav-item dropdown " th:if="${isSubCat}">
-                                 <h2 data-toggle="collapse" href="#collapseCategory" role="button" aria-expanded="true" aria-controls="collapseCategory">
-                                      <i class="fa fa-angle-down text-left" style="padding-right: 20%"></i> Categories</h2>
-
-                                <hr>
-                                <div class="collapse" id="collapseCategory">
-                                        <ul class="list-group scroll-filter ">
-                                            <li class="list-group-item d-flex justify-content-between align-items-center yamm-content " th:each="subcategory : ${subcategories}">
-                                                <a th:href="${category.url+subcategory.url}+'/'+${subcategory.id}"  th:text="${subcategory.name}" class="h6"></a>
-                                                <!--<span class="badge badge-primary badge-pill">14</span>-->
-                                            </li>
-                                        </ul>
-
+                        <div class="body bordered"  >
+                        <!--<form th:action="${urlForm}" method="get" class="body bordered"  >-->
+                            <input th:id="idCategory" th:if="${category != null}"  name="idCategory" type="hidden" th:value="${category.id}">
+                            <input th:id="search" th:if="${search != null}"  name="search" type="hidden" th:value="${search}">
+                            <div class="price-filter">
+                                <h2>Price</h2>
+                                <div class="price-range-holder">
+                                    <input id="price-filter" name="price" type="text" class="price-slider" data-min="" data-max ="" th:attr="data-min=${minMax['min']},data-max=${minMax['max']}"  th:value="|${minMax['min']},${minMax['max']}|" >
+                                    <span class="min-max" th:text="|Price: ${minMax['min']} - ${minMax['max']} Azn|">Price: $89 - $2899</span>
                                 </div>
-
-                            </div><!-- /.category-filter -->
+                            </div><!-- /.price-filter -->
+                            <hr>
 
                             <div class="category-filter">
                                     <h2 data-toggle="collapse" href="#collapseBrands" role="button" aria-expanded="false" aria-controls="collapseBrands"><i class="fa fa-angle-down" style="padding-right: 20%"></i>
                                         Brands</h2>
-                                <div class="collapse" id="collapseBrands">
+                                <div class="collapse in" id="collapseBrands">
                                         <input id="searchProducer" type="text" class="form-control" placeholder="Search by producer" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                         <div th:replace="~{fragment/producer-list :: producer-list}" ></div>
 
                                 </div>
                             </div>
-
-                            <div class="price-filter">
-                                <h2>Price</h2>
-                                <div class="price-range-holder">
-
-
-                                    <input id="price-filter" type="text" class="price-slider" data-min="" data-max ="" th:attr="data-min=${minMax[0]},data-max=${minMax[1]}"  th:value="|${minMax[0]},${minMax[1]}|" >
-                                    <!--<input id="price-filter" type="text" class="price-slider" data-min="" data-max =""  >-->
-
-                                    <span class="min-max" th:text="|Price: ${minMax[0]} - ${minMax[1]} Azn|">
-                                            Price: $89 - $2899
-                                        </span>
-                                    <span class="filter-button ">
-                                            <a class="btn btn-lg"  href="#">Ok</a>
-                                        </span>
-                                </div>
-                            </div><!-- /.price-filter -->
                             <hr>
+
+                            <span class="filter-button" >
+                                <button class="btn btn-success"  href="#" style="min-width: 100%;min-height: 100%;position: relative;" >Apply</button>
+                            </span>
 
                         </div><!-- /.body -->
                     </div><!-- /.widget -->
@@ -74,23 +55,11 @@
                             <h2 class="section-title" th:text="${breadcrumb}">Gaming</h2>
 
                             <div class="control-bar">
-                                <div id="popularity-sort" class="le-select" >
-                                    <select data-placeholder="sort by popularity">
-                                        <option value="1">1-100 players</option>
-                                        <option value="2">101-200 players</option>
-                                        <option value="3">200+ players</option>
-                                    </select>
-                                </div>
+                                  <span class="min-max text-danger" th:if="${filterPrice!=null}" th:text="|Filter Price: ${filterPrice[0]} - ${filterPrice[1]} Azn|" style="float: left">Price: $89 - $2899</span>
 
-                                <div id="item-count" class="le-select">
-                                    <select>
-                                        <option value="1">24 per page</option>
-                                        <option value="2">48 per page</option>
-                                        <option value="3">32 per page</option>
-                                    </select>
-                                </div>
 
                                 <div class="grid-list-buttons">
+
                                     <ul>
                                         <li class="grid-list-button-item active"><a data-toggle="tab" href="#grid-view"><i class="fa fa-th-large"></i> Grid</a></li>
                                         <li class="grid-list-button-item "><a data-toggle="tab" href="#list-view"><i class="fa fa-th-list"></i> List</a></li>
@@ -108,14 +77,14 @@
                                                 <div class="product-item">
                                                     <div class="ribbon red"><span>sale</span></div>
                                                     <div class="image">
-                                                        <img alt="" src="/static/images/products/fuflomicin.jpg" data-echo="/static/images/products/fuflomicin.jpg" />
+                                                        <img alt="" src="/static/images/products/fuflomicin256*186.jpg" data-echo="/static/images/products/fuflomicin256*186.jpg" />
                                                     </div>
                                                     <div class="body">
                                                         <div class="label-discount green">-50% sale</div>
                                                         <div class="title">
                                                             <a href="single-product.html" th:text="${product.name}">VAIO Fit Laptop - Windows 8 SVF14322CXW</a>
                                                         </div>
-                                                        <div class="brand">Bayer</div>
+                                                        <div class="brand" th:text="${product.producer!=null}? ${product.producer.name} :'no name'">Bayer</div>
                                                     </div>
                                                     <div class="prices">
                                                         <!--<div class="price-prev"  >$1399.00</div>-->
@@ -138,7 +107,8 @@
                                             <div class="col-xs-12 col-sm-6 text-left" >
                                                 <ul class="pagination pagination-sm flex-wrap"  th:if="${productsPage.totalPages > 0}">
                                                     <li th:each="pageNumber : ${pageNumbers}" th:class="${pageNumber==productsPage.number + 1} ? 'current':'page-item' ">
-                                                        <a th:href="|${urlPagination}page=${pageNumber}|" th:text="${pageNumber}" class="page-link">1</a>
+
+                                                        <a th:href="|${urlPagination}&page=${pageNumber}|" th:text="${pageNumber}" class="page-link">1</a>
                                                     </li>
                                                     <li>
                                                         <a >next</a>
@@ -201,7 +171,7 @@
                                             <div class="col-xs-12 col-sm-6 text-left" >
                                                 <ul class="pagination"  th:if="${productsPage.totalPages > 0}">
                                                     <li th:each="pageNumber : ${pageNumbers}" th:class="${pageNumber==productsPage.number + 1} ? 'current ' ">
-                                                        <a th:href="|${urlPagination}?page=${pageNumber}|" th:text="${pageNumber}"  >1</a>
+                                                        <a th:href="|${urlPagination}page=${pageNumber}|" th:text="${pageNumber}"  >1</a>
                                                     </li>
                                                     <li>
                                                         <a >next</a>

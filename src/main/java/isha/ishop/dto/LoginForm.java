@@ -1,4 +1,4 @@
-package isha.ishop.form;
+package isha.ishop.dto;
 
 
 import javax.validation.constraints.NotEmpty;
