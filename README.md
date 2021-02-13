@@ -92,9 +92,9 @@
         не поддерживает хранение параметров сессии;</li>
 </ul>
 
-#How to build
-Deploying Tomcat-based Java Web Applications with Webapp Runner.
-The following tools are required:
+<h3>How to build</h3>
+<p>Deploying Tomcat-based Java Web Applications with Webapp Runner.</p>
+<p>The following tools are required:</p>
 * **JDK 1.8 or later**
 * **Apache Maven**
 
