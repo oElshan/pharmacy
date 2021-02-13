@@ -1,0 +1,10 @@
+package isha.store.repository;
+
+import isha.store.entity.Client;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ClientRepo extends JpaRepository<Client, Long> {
+
+    Client findByPhone(String phone);
+
+}
