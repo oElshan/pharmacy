@@ -24,8 +24,8 @@ public interface OrderRepo extends JpaRepository<ClientOrder, Long> {
     List<ClientOrder> searchOrderByNameLike(@Param("name") String name);
 
     @Query(
-            value = "SELECT * FROM ishop.clientOrder c join ishop.status s ON c.id_status = s.id where s.name =?1;",
-            countQuery = "SELECT * FROM ishop.clientOrder c join ishop.status s ON c.id_status = s.id where s.name =?1;",
+            value = "SELECT * FROM clientOrder c join status s ON c.id_status = s.id where s.name =?1;",
+            countQuery = "SELECT * FROM clientOrder c join status s ON c.id_status = s.id where s.name =?1;",
             nativeQuery = true)
     Page<ClientOrder> findAllByStatusSelect(String name, Pageable page);
 
