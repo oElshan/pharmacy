@@ -14,11 +14,11 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     Product findProductById(Long id);
 
-    @Query(value = "SELECT max(price) FROM ishop.product as p WHERE  p.id_subcategory=?",
+    @Query(value = "SELECT max(price) FROM product as p WHERE  p.id_subcategory=?",
             nativeQuery = true)
      BigDecimal maxPriceBySubCategory(long id);
 
-    @Query(value = "SELECT min(price),max(price) FROM ishop.product as p JOIN ishop.subcategory s on p.id_subcategory=s.id WHERE  s.url=?",
+    @Query(value = "SELECT min(price),max(price) FROM  product as p JOIN subcategory s on p.id_subcategory=s.id WHERE  s.url=?",
             nativeQuery = true)
    List<BigDecimal[]> minMaxPriceBySubCategory(String url);
 
@@ -29,8 +29,8 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List <Product> findDistinctByNameContaining(String name);
 
     //    @Query("SELECT p FROM Product p WHERE p.name LIKE %:name% ")
-    @Query(value = "SELECT * FROM ishop.product p WHERE p.name LIKE %?1%",
-            countQuery = "SELECT count(*) FROM ishop.product p WHERE p.name LIKE %?1%",
+    @Query(value = "SELECT * FROM product p WHERE p.name LIKE %?1%",
+            countQuery = "SELECT count(*) FROM product p WHERE p.name LIKE %?1%",
             nativeQuery = true)
     Page<Product> findByNameLike(String name, Pageable pageable);
 
@@ -43,11 +43,11 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
 
 
-    @Query(value = "SELECT max(price) FROM ishop.product p WHERE p.name LIKE %?1%",
+    @Query(value = "SELECT max(price) FROM product p WHERE p.name LIKE %?1%",
             nativeQuery = true)
     BigDecimal searchMaxPriceProductByNameLike(String name);
 
-    @Query(value = "SELECT min(price),max(price) FROM ishop.product p WHERE p.name LIKE %?1%",
+    @Query(value = "SELECT min(price),max(price) FROM product p WHERE p.name LIKE %?1%",
             nativeQuery = true)
     List<BigDecimal[]> searchMinMaxPriceProductByNameLike(String name);
 
@@ -61,8 +61,8 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     List<Product> findAllBySubcategory_Url(String name);
 
-    @Query(value = "SELECT * FROM ishop.product as p right join ishop.subcategory s on p.id_subcategory=s.id left join ishop.category c on s.id_category = c.id where c.id =?",
-            countQuery = "SELECT count(*) FROM ishop.product as p right join ishop.subcategory s on p.id_subcategory=s.id left join ishop.category c on s.id_category = c.id where c.id =?",
+    @Query(value = "SELECT * FROM product as p right join subcategory s on p.id_subcategory=s.id left join category c on s.id_category = c.id where c.id =?",
+            countQuery = "SELECT count(*) FROM product as p right join subcategory s on p.id_subcategory=s.id left join category c on s.id_category = c.id where c.id =?",
             nativeQuery = true)
     Page<Product> findByCategory_Id(long id, Pageable pageable);
 

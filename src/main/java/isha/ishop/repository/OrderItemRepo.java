@@ -17,7 +17,7 @@ public interface OrderItemRepo extends JpaRepository<OrderItem, Long> {
    OrderItem save(OrderItem orderItem);
 
      @Modifying
-    @Query(value = "delete from ishop.order_item as oi where oi.id=:productId and oi.id_order=:orderId ",nativeQuery = true)
+    @Query(value = "delete from order_item as oi where oi.id=:productId and oi.id_order=:orderId ",nativeQuery = true)
     void deleteByIdAndClientOrder_Id(@Param("productId") long productId, @Param("orderId") long orderId);
 
     void deleteOrderItemByIdAndClientOrderId(Long id, Long orderId);
