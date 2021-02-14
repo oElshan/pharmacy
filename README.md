@@ -1,4 +1,4 @@
-##[Online pharmacy store](https://online-apteka-az.herokuapp.com/)
+<h1> Online pharmacy store</h1>
 
 <h2>Технологии</h2>
 
@@ -95,8 +95,9 @@
 <h3>How to build</h3>
 <p>Deploying Tomcat-based Java Web Applications with Webapp Runner.</p>
 <p>The following tools are required:</p>
-* **JDK 1.8 or later**
-* **Apache Maven**
+
+#####  - JDK 1.8 or later
+#####  - Apache Maven
 
 <p>To build your application simply run:</p>
 
