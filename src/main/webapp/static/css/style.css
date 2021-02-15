@@ -3675,8 +3675,15 @@ select.top-drop-menu {
         margin-bottom: 5px;
         display: block !important; }
     header .top-search-holder .search-area .search-button {
+      float: right;
+      display: inline-block;
+      text-align: center;
+      padding: 15px 15px 13px 15px;
+      margin: -3px -3px 0 0;
+      border-radius: 0 5px 5px 0;
       /*margin: -51px -3px 0 0;*/
-      border-radius: 0 0 5px 0; }
+      /*border-radius: 0 0 5px 0; */
+    }
     header .top-search-holder .search-area .categories-filter {
       border-top: 1px solid #e0e0e0;
       border-left: none;
